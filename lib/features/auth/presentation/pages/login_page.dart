@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(height: 5),
                   Center(
                     child: Text(
-                      'Welcome',
+                      'Welcome Back',
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),

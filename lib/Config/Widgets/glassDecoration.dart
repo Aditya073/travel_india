@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travel_india/Config/Theme/app_theme.dart';
 
-class GlassDecoration extends StatelessWidget {
-  const GlassDecoration({super.key, required this.text});
+class GlassDecoButton extends StatelessWidget {
+  const GlassDecoButton({super.key, required this.text});
 
   final String text;
   // final dynamic color;
@@ -13,7 +14,7 @@ class GlassDecoration extends StatelessWidget {
       style: TextButton.styleFrom(
         padding: EdgeInsets.all(15),
         minimumSize: Size(double.minPositive, 15),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3),
+        backgroundColor: AppTheme.darkColor.withOpacity(0.3),
         textStyle: TextStyle(fontSize: 20),
       ),
       child: Text(
