@@ -11,3 +11,13 @@
 
 
 */
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
+
+class AuthRepoimpl implements AuthRepo{
+  @override
+  Future<User> loginUsingEmailAndPassword(String email, String password) {
+    return 
+  }
+}
