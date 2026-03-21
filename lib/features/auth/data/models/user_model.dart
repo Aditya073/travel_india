@@ -6,5 +6,49 @@
 4. Phone.No
 5. Last location
 
-
 */
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class UserModel {
+  final String uid;
+  final String email;
+  final String password;
+  final String userName;
+  final String phoneNumber;
+  final String lastLocation;
+
+  UserModel({
+    required this.uid,
+    required this.email,
+    required this.password,
+    required this.userName,
+    required this.phoneNumber,
+    required this.lastLocation,
+  });
+
+
+//It’s a named constructor whose job is to convert Firestore data into a UserModel object safely.
+  factory UserModel.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+
+    return UserModel(
+      uid: doc.id,
+      email: data['email'] ?? '',
+      password: data['password'] ?? '',
+      userName: data['userName'] ?? '',
+      phoneNumber: data['phoneNumber'] ?? '',
+      lastLocation: data['lastLocation'] ?? '',
+    );
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      "uid": uid,
+      "userName": userName,
+      "email": email,
+      "password": password,
+      "phoneNumber": phoneNumber,
+      "lastLocation": lastLocation,
+    };
+  }
+}
