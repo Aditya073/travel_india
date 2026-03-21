@@ -10,9 +10,6 @@ class LoginPage extends StatelessWidget {
     TextEditingController userEmailID = TextEditingController();
     TextEditingController userPassword = TextEditingController();
 
-    // guest signIn method
-    // google signIn method
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -100,7 +97,7 @@ class LoginPage extends StatelessWidget {
                                 TextField(
                                   controller: userEmailID,
                                   decoration: const InputDecoration(
-                                    hintText: 'Email or Phone number',
+                                    hintText: 'Email',
                                     hintStyle: TextStyle(color: Colors.white),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.symmetric(
@@ -127,9 +124,12 @@ class LoginPage extends StatelessWidget {
 
                           const SizedBox(height: 35),
 
-                          const Text(
-                            'Forgot password?',
-                            style: TextStyle(color: Colors.white),
+                          GestureDetector(
+                            onTap: () {},
+                            child: const Text(
+                              'Forgot password?',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
 
                           const SizedBox(height: 35),
@@ -159,51 +159,50 @@ class LoginPage extends StatelessWidget {
                             },
                             style: TextButton.styleFrom(
                               minimumSize: const Size(double.infinity, 50),
-                              backgroundColor: AppTheme.powderBlue,
+                              backgroundColor: AppTheme.darkColor,
                               foregroundColor: Colors.white,
                             ),
                             child: const Text('Sign Up'),
                           ),
 
-                          const SizedBox(height: 35),
+                          // const SizedBox(height: 35),
 
-                          const Text(
-                            'Continue with other options',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          // const Text(
+                          //   'Continue with other options',
+                          //   style: TextStyle(color: Colors.white),
+                          // ),
 
-                          const SizedBox(height: 20),
+                          // const SizedBox(height: 20),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              // Other login options
-                              TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(
-                                  minimumSize: Size.fromRadius(30),
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.white,
-                                ),
-                                child: Image.asset(
-                                  height: 40,
-                                  width: 40,
-                                  'assets/images/Google_logo.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(
-                                  minimumSize: const Size(150, 40),
-                                  backgroundColor: Colors.grey,
-                                  foregroundColor: Colors.white,
-                                ),
-                                child: const Text('Guest'),
-                              ),
-                            ],
-                          ),
-
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //   children: [
+                          //     // Other login options
+                          //     TextButton(
+                          //       onPressed: () {},
+                          //       style: TextButton.styleFrom(
+                          //         minimumSize: Size.fromRadius(30),
+                          //         backgroundColor: Colors.white,
+                          //         foregroundColor: Colors.white,
+                          //       ),
+                          //       child: Image.asset(
+                          //         height: 40,
+                          //         width: 40,
+                          //         'assets/images/Google_logo.png',
+                          //         fit: BoxFit.cover,
+                          //       ),
+                          //     ),
+                          //     TextButton(
+                          //       onPressed: () {},
+                          //       style: TextButton.styleFrom(
+                          //         minimumSize: const Size(150, 40),
+                          //         backgroundColor: Colors.grey,
+                          //         foregroundColor: Colors.white,
+                          //       ),
+                          //       child: const Text('Guest'),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(height: 30),
                         ],
                       ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class GlassDecoTextfield extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  const GlassDecoTextfield({super.key, required this.text, required this.icon});
+  final Widget contant;
+  const GlassDecoTextfield({
+    super.key,
+    required this.contant,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +24,7 @@ class GlassDecoTextfield extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.white),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: text,
-                hintStyle: const TextStyle(color: Colors.white),
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: contant
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/auth/presentation/pages/login_page.dart';
 import 'package:travel_india/features/auth/presentation/pages/signup_page.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Travel India',
       theme: _themeMode,
-      home: SignupPage(),
+      home: LoginPage(),
 
       //  HomePage(onToggleTheme: toggleTheme)
     );
