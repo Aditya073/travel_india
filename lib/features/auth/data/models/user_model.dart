@@ -11,20 +11,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String uid;
-  final String email;
-  final String password;
-  final String userName;
-  final String phoneNumber;
-  final String lastLocation;
+  final String? uid;
+  final String? email;
+  final String? password;
+  final String? userName;
+  final String? phoneNumber;
+  final String? lastLocation;
 
   UserModel({
-    required this.uid,
-    required this.email,
-    required this.password,
-    required this.userName,
-    required this.phoneNumber,
-    required this.lastLocation,
+   this.uid,
+   this.email,
+   this.password,
+   this.userName,
+   this.phoneNumber,
+   this.lastLocation,
   });
 
 

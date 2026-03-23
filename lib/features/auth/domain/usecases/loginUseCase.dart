@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
-class Loginusecase {
+class LoginUsecase {
   final AuthRepo repository;
 
-  Loginusecase({required this.repository});
+  LoginUsecase(this.repository);
 
-  Future<User> call(String email, String password) {
+  Future<Users> call(String email, String password) {
     return repository.loginUsingEmailAndPassword(email, password);
   }
 }

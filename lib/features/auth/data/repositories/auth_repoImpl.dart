@@ -12,12 +12,27 @@
 
 */
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
+import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
-class AuthRepoimpl implements AuthRepo{
+class AuthRepoimpl implements AuthRepo {
+  //this is an instance of "FirebaseAuthDataSource" class which makes direct calls to firebase
+  final FirebaseAuthDataSource? dataSource;
+
+  AuthRepoimpl({this.dataSource});
+
+
   @override
-  Future<User> loginUsingEmailAndPassword(String email, String password) {
-    return 
+  Future<Users> loginUsingEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    final response = await dataSource?.loginUsingEmailAndPassword(
+      email,
+      password,
+    );
+
+    return Users(email: email, password: password);
   }
 }

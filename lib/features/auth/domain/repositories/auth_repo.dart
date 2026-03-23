@@ -12,8 +12,9 @@
 */
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travel_india/features/auth/domain/entities/users.dart';
 
 abstract class AuthRepo {
-  Future<User> loginUsingEmailAndPassword(String email, String password);
+  Future<Users> loginUsingEmailAndPassword(String email, String password);
   // Future<User> loginUsingGoogle(String email, String password);
 }
