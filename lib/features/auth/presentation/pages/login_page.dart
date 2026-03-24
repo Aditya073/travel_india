@@ -5,11 +5,14 @@ import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:travel_india/features/auth/presentation/pages/signup_page.dart';
 import 'package:travel_india/features/home_page/home_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
-  
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
 
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
@@ -20,6 +23,7 @@ class LoginPage extends StatelessWidget {
     final _emailFocus = FocusNode();
     final _passwordFocus = FocusNode();
 
+    // Email validator
     String? _validateEmail(String? value) {
       if (value == null || value.isEmpty) {
         return 'Please enter your Email';
@@ -44,7 +48,8 @@ class LoginPage extends StatelessWidget {
 
     @override
     void dispose() {
-      
+      userPassword.dispose();
+      userEmailID.dispose();
       super.dispose();
     }
 
