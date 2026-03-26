@@ -13,48 +13,67 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formkey = GlobalKey<FormState>();
+
+  final TextEditingController userEmailID = TextEditingController();
+  final TextEditingController userPassword = TextEditingController();
+
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
+  // Email validator
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your Email';
+    }
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  // Password validation
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters long';
+    }
+    return null;
+  }
+
+  Future<void> handleSignIn() async {
+    FocusScope.of(context).unfocus();
+    print('In handleSignIn()');
+    if (_formkey.currentState?.validate() ?? false) {
+      context.read<AuthBloc>().add(
+        AuthLoginUsingEmailandPassword(
+          email: userEmailID.text.trim(),
+          password: userPassword.text.trim(),
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    userEmailID.dispose();
+    userPassword.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _formkey = GlobalKey<FormState>();
-
-    TextEditingController userEmailID = TextEditingController();
-    TextEditingController userPassword = TextEditingController();
-
-    final _emailFocus = FocusNode();
-    final _passwordFocus = FocusNode();
-
-    // Email validator
-    String? _validateEmail(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter your Email';
-      }
-      final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-      if (!emailRegex.hasMatch(value)) {
-        return 'Please enter a valid email address';
-      }
-      return null;
-    }
-
-    // Password validation
-    String? _validatePassword(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter a password';
-      }
-      if (value.length < 6) {
-        return 'Password must be at least 6 characters long';
-      }
-      return null;
-    }
-
-    @override
-    void dispose() {
-      userPassword.dispose();
-      userEmailID.dispose();
-      super.dispose();
-    }
-
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
+        if (state is AuthLoading) {
+          Center(child: CircularProgressIndicator(color: Colors.black));
+        }
+
         if (state is AuthSuccess) {
           Navigator.push(
             context,
@@ -62,28 +81,28 @@ class _LoginPageState extends State<LoginPage> {
           );
 
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Center(
                 child: Text(
                   'Login Successful',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(color: Colors.green, fontSize: 18),
                 ),
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white.withOpacity(0.2),
             ),
           );
         }
 
         if (state is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(
+            SnackBar(
+              content: const Center(
                 child: Text(
                   'Wrong Email or Password',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: Colors.red, fontSize: 18),
                 ),
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white.withOpacity(0.2),
             ),
           );
         }
@@ -223,13 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                                         // LOGIN BUTTON
                                         onPressed: () {
                                           // the login event is called
-                                          context.read<AuthBloc>().add(
-                                            AuthLoginUsingEmailandPassword(
-                                              email: userEmailID.text.trim(),
-                                              password: userPassword.text
-                                                  .trim(),
-                                            ),
-                                          );
+                                          handleSignIn();
                                         },
                                         style: TextButton.styleFrom(
                                           minimumSize: const Size(

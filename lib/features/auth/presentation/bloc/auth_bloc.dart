@@ -15,9 +15,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoginUsingEmailandPassword>((event, emit) async {
       // Show loding till the data is fetched
       emit(AuthLoading());
-
+      print('Loading in AuthBloc');
       try {
+      print('calling loginUsecase in AuthBloc');
         final user = await loginUsecase(event.email, event.password);
+        if (user.email.isEmpty) {
+          emit(AuthFailure(message: "Invalid credentials"));
+          return;
+        }
+
         emit(AuthSuccess(email: user.email)); // login Successful
       } catch (e) {
         print(e.toString());

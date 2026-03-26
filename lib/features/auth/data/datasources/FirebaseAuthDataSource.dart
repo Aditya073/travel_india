@@ -2,19 +2,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
 
 // Actual response from firebase
-class FirebaseAuthDataSource  {
+class FirebaseAuthDataSource {
   Future<UserModel> loginUsingEmailAndPassword(
     String email,
     String password,
   ) async {
-    final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      print('In FirebaseAuthDataSource');
+      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final user = response.user;
+      print("Login response - ${response.toString()}");
 
-    final user = response.user;
-    print("Login response - ${response.toString()}");
+      if (user == null || user.email == null) {
+        throw Exception("Invalid user data");
+      }
 
-    return UserModel(email: user?.email ?? "null");
+      return UserModel(email: user.email ?? "null");
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message ?? "Login failed");
+    }
   }
 }

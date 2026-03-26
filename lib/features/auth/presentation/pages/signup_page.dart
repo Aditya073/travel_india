@@ -2,13 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/Config/Widgets/glassDecoTextfield.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
     // guest signIn method
-    // google signIn method
+
+    
+  final _formkey = GlobalKey<FormState>();
+
+  final TextEditingController userEmailID = TextEditingController();
+  final TextEditingController userPassword = TextEditingController();
+
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
+  // Email validator
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your Email';
+    }
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  // Password validation
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters long';
+    }
+    return null;
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

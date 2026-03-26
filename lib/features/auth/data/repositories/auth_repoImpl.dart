@@ -18,9 +18,9 @@ import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
 class AuthRepoimpl implements AuthRepo {
   //this is an instance of "FirebaseAuthDataSource" class which makes direct calls to firebase
-  final FirebaseAuthDataSource? dataSource;
+  final FirebaseAuthDataSource dataSource;
 
-  AuthRepoimpl({this.dataSource});
+  AuthRepoimpl({required this.dataSource});
 
 
   @override
@@ -28,11 +28,11 @@ class AuthRepoimpl implements AuthRepo {
     String email,
     String password,
   ) async {
-    final response = await dataSource?.loginUsingEmailAndPassword(
+    final response = await dataSource.loginUsingEmailAndPassword(
       email,
       password,
     );
 
-    return Users(email: email, password: password);
+    return Users(email: response.email!);
   }
 }
