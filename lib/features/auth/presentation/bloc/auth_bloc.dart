@@ -10,14 +10,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   // this is an instance of 'LoginUsecase' is created
   // this is because the bloc can only talk to the 'LoginUsecase' class
   final LoginUsecase loginUsecase;
+  final SignUpUsercase signUpUsercase;
 
-  AuthBloc(this.loginUsecase) : super(AuthInitial()) {
+  AuthBloc(this.loginUsecase, this.signUpUsercase) : super(AuthInitial()) {
     on<AuthLoginUsingEmailandPassword>((event, emit) async {
       // Show loding till the data is fetched
       emit(AuthLoading());
       print('Loading in AuthBloc');
       try {
-      print('calling loginUsecase in AuthBloc');
+        print('calling loginUsecase in AuthBloc');
         final user = await loginUsecase(event.email, event.password);
         if (user.email.isEmpty) {
           emit(AuthFailure(message: "Invalid credentials"));
@@ -26,6 +27,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(AuthSuccess(email: user.email)); // login Successful
       } catch (e) {
+        print(e.toString());
+        emit(AuthFailure(message: e.toString()));
+      }
+    });
+
+    on<AuthSignUpUsingEmailandPassword>((event, emit) async {
+      emit(AuthLoading());
+
+      try {
+        final user = await signUpUsercase(event.email, event.password);
+         if (user.email!.isEmpty) {
+          emit(AuthFailure(message: "Invalid credentials"));
+          return;
+        }
+
+        emit(AuthSuccess(email: user.email!)); // SignUp Successful
+      } catch (e) {
+        
         print(e.toString());
         emit(AuthFailure(message: e.toString()));
       }

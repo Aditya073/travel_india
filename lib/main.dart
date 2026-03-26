@@ -9,8 +9,7 @@ import 'package:travel_india/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/firebase_options.dart';
 
-
-Future<void> main() async { 
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
@@ -24,17 +23,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
- 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-    create: (context) => AuthBloc(LoginUsecase(AuthRepoimpl(dataSource: FirebaseAuthDataSource()))),
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Travel India',
-      theme: AppTheme.lightTheme,
-      home:  LoginPage(),
-    ));
+      create: (context) => AuthBloc(
+        LoginUsecase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
+        SignUpUsercase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
+      ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Travel India',
+        theme: AppTheme.lightTheme,
+        home: LoginPage(),
+      ),
+    );
   }
 }

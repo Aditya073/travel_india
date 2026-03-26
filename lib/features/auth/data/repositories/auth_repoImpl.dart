@@ -12,6 +12,7 @@
 
 */
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
 import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
@@ -21,7 +22,6 @@ class AuthRepoimpl implements AuthRepo {
   final FirebaseAuthDataSource dataSource;
 
   AuthRepoimpl({required this.dataSource});
-
 
   @override
   Future<Users> loginUsingEmailAndPassword(
@@ -34,5 +34,18 @@ class AuthRepoimpl implements AuthRepo {
     );
 
     return Users(email: response.email!);
+  }
+
+  @override
+  Future<Users> signUpUsingEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    final response = await dataSource.signUpUsingEmailAndPassword(
+      email,
+      password,
+    );
+    
+    return Users(email: response.email);
   }
 }

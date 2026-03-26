@@ -12,3 +12,14 @@ class LoginUsecase {
     return repository.loginUsingEmailAndPassword(email, password);
   }
 }
+
+class SignUpUsercase {
+  final AuthRepo repository;
+
+  SignUpUsercase(this.repository);
+
+  Future<User> call(String email, String password) {
+    print('in LoginUsercase');
+    return repository.signUpUsingEmailAndPassword(email, password);
+  }
+}
