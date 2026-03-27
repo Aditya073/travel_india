@@ -281,6 +281,45 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
                               const SizedBox(height: 30),
+
+                              
+                              const Text(
+                                'Continue with other options',
+                                style: TextStyle(color: Colors.white),
+                              ),
+
+                              const SizedBox(height: 20),
+
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  // Other login options
+                                  TextButton(
+                                    onPressed: () {},
+                                    style: TextButton.styleFrom(
+                                      minimumSize: Size.fromRadius(30),
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.white,
+                                    ),
+                                    child: Image.asset(
+                                      height: 40,
+                                      width: 40,
+                                      'assets/images/Google_logo.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {},
+                                    style: TextButton.styleFrom(
+                                      minimumSize: const Size(150, 40),
+                                      backgroundColor: Colors.grey,
+                                      foregroundColor: Colors.white,
+                                    ),
+                                    child: const Text('Continue as Guest'),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

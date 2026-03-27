@@ -10,13 +10,20 @@ class AuthLoginUsingEmailandPassword extends AuthEvent {
 
   AuthLoginUsingEmailandPassword({required this.email, required this.password});
 }
+
 // An event for signUp using Email and Password
 class AuthSignUpUsingEmailandPassword extends AuthEvent {
   final String name;
   final String email;
   final String password;
-  final String phone;
+  final String phoneNumber;
+  final String lastLocation;
 
-  AuthSignUpUsingEmailandPassword({required this.name, required this.email, required this.password, required this.phone});
-
+  AuthSignUpUsingEmailandPassword({
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.phoneNumber,
+    required this.lastLocation,
+  });
 }

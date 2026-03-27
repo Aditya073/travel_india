@@ -36,15 +36,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
 
       try {
-        final user = await signUpUsercase(event.email, event.password);
-         if (user.email!.isEmpty) {
+        print('In AuthSignUp');
+        final user = await signUpUsercase(
+          event.email,
+          event.password,
+          event.name,
+          event.phoneNumber,
+          event.lastLocation,
+        );
+        if (user.email.isEmpty) {
           emit(AuthFailure(message: "Invalid credentials"));
           return;
         }
 
-        emit(AuthSuccess(email: user.email!)); // SignUp Successful
+        emit(AuthSuccess(email: user.email)); // SignUp Successful
       } catch (e) {
-        
         print(e.toString());
         emit(AuthFailure(message: e.toString()));
       }

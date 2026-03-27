@@ -18,8 +18,20 @@ class SignUpUsercase {
 
   SignUpUsercase(this.repository);
 
-  Future<User> call(String email, String password) {
-    print('in LoginUsercase');
-    return repository.signUpUsingEmailAndPassword(email, password);
+  Future<Users> call(
+    String email,
+    String password,
+    String name,
+    String phoneNumber,
+    String lastLocation,
+  ) {
+    print('in SignUpUsercase');
+    return repository.signUpUsingEmailAndPassword(
+      email,
+      password,
+      name,
+      phoneNumber,
+      lastLocation,
+    );
   }
 }

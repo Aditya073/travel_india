@@ -74,13 +74,16 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> handleSignUp() async {
     FocusScope.of(context).unfocus();
     print('In handleSignUp()');
+
+    // this checks if all the user inputs are valid
     if (_formkey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
         AuthSignUpUsingEmailandPassword(
           name: newUserName.text.trim(),
           email: newUserEmailID.text.trim(),
-          password: newUserPassword.text.trim(), 
-          phone: newUserPhoneNumber.text.trim(),
+          password: newUserPassword.text.trim(),
+          phoneNumber: newUserPhoneNumber.text.trim(),
+          lastLocation: " "   // currently null
         ),
       );
     }
@@ -141,6 +144,7 @@ class _SignupPageState extends State<SignupPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: Form(
+          key: _formkey,
           child: SingleChildScrollView(
             child: Container(
               width: double.infinity,
@@ -307,63 +311,39 @@ class _SignupPageState extends State<SignupPage> {
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 50),
-                                child: TextButton(
-                                  // SUBMIT BUTTON
-                                  onPressed: () {
-                                    handleSignUp();
-                                  },
-                                  style: TextButton.styleFrom(
-                                    minimumSize: const Size(
-                                      double.infinity,
-                                      50,
+
+                              BlocBuilder<AuthBloc, AuthState>(
+                                builder: (context, state) {
+                                  if (state is AuthLoading) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    );
+                                  }
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 50),
+                                    child: TextButton(
+                                      // SUBMIT BUTTON
+                                      onPressed: () {
+                                        handleSignUp();
+                                      },
+                                      style: TextButton.styleFrom(
+                                        minimumSize: const Size(
+                                          double.infinity,
+                                          50,
+                                        ),
+                                        backgroundColor: AppTheme.primaryColor,
+                                        foregroundColor: Colors.white,
+                                      ),
+                                      child: const Text('Submit'),
                                     ),
-                                    backgroundColor: AppTheme.primaryColor,
-                                    foregroundColor: Colors.white,
-                                  ),
-                                  child: const Text('Submit'),
-                                ),
+                                  );
+                                },
                               ),
+
                               const SizedBox(height: 30),
-
-                              const Text(
-                                'Continue with other options',
-                                style: TextStyle(color: Colors.white),
-                              ),
-
-                              const SizedBox(height: 20),
-
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  // Other login options
-                                  TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.fromRadius(30),
-                                      backgroundColor: Colors.white,
-                                      foregroundColor: Colors.white,
-                                    ),
-                                    child: Image.asset(
-                                      height: 40,
-                                      width: 40,
-                                      'assets/images/Google_logo.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                      minimumSize: const Size(150, 40),
-                                      backgroundColor: Colors.grey,
-                                      foregroundColor: Colors.white,
-                                    ),
-                                    child: const Text('Guest account'),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),

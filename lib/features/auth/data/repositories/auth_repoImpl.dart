@@ -12,8 +12,10 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
+import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
@@ -40,12 +42,19 @@ class AuthRepoimpl implements AuthRepo {
   Future<Users> signUpUsingEmailAndPassword(
     String email,
     String password,
+    String name,
+    String phoneNumber,
+    String lastLocation,
   ) async {
+
     final response = await dataSource.signUpUsingEmailAndPassword(
       email,
       password,
+      name, 
+      phoneNumber,
+      lastLocation
     );
-    
-    return Users(email: response.email);
+
+    return Users(email: response.email!);
   }
 }
