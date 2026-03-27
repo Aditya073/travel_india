@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
           Center(child: CircularProgressIndicator(color: Colors.black));
         }
 
-        if (state is AuthSuccess) {
+        if (state is LoginSuccess) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
 
-        if (state is AuthFailure) {
+        if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Center(

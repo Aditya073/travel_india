@@ -7,13 +7,23 @@ sealed class AuthState {}
 
  class AuthLoading extends AuthState {}
 
- class AuthSuccess extends AuthState {
+ class LoginSuccess extends AuthState {
   final String email;
 
-  AuthSuccess({required this.email});
+  LoginSuccess({required this.email});
 }
- class AuthFailure extends AuthState{
+ class SignUpSuccess extends AuthState {
+  final String email;
+
+  SignUpSuccess({required this.email});
+}
+ class LoginFailure extends AuthState{
   final String message;
 
-  AuthFailure({required this.message});
+  LoginFailure({required this.message});
+ }
+ class SignUpFailure extends AuthState{
+  final String message;
+
+  SignUpFailure({required this.message});
  }
