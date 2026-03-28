@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/domain/usecases/loginUseCase.dart';
+import 'package:travel_india/features/home_page/home_page.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -65,7 +66,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final user = await googleSignInUseCase();
 
-        emit(GoogleSignInSuccess(userModel: user)); // treat as login
+        emit(GoogleSignInSuccess(userModel: user));// treat as login
       } catch (e) {
         emit(GoogleSignInFailure(message: e.toString()));
       }
