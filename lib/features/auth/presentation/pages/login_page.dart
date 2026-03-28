@@ -62,6 +62,14 @@ class _LoginPageState extends State<LoginPage> {
     context.read<AuthBloc>().add(GoogleSignIn());
   }
 
+
+  Future<void> handleGuestLogin() async {
+    FocusScope.of(context).unfocus();
+    context.read<AuthBloc>().add(           );
+  }
+
+
+
   @override
   void dispose() {
     userEmailID.dispose();
@@ -99,7 +107,6 @@ class _LoginPageState extends State<LoginPage> {
         }
 
         if (state is LoginFailure || state is GoogleSignInFailure) {
-          
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Center(
@@ -318,7 +325,9 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      handleGuestLogin();
+                                    },
                                     style: TextButton.styleFrom(
                                       minimumSize: const Size(150, 40),
                                       backgroundColor: Colors.grey,
