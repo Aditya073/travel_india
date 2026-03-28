@@ -15,7 +15,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUsercase signUpUsercase;
   final GoogleSignInUseCase googleSignInUseCase;
 
-  AuthBloc(this.loginUsecase, this.signUpUsercase, this.googleSignInUseCase) : super(AuthInitial()) {
+  AuthBloc(this.loginUsecase, this.signUpUsercase, this.googleSignInUseCase)
+    : super(AuthInitial()) {
     on<AuthLoginUsingEmailandPassword>((event, emit) async {
       // Show loding till the data is fetched
       emit(AuthLoading());
@@ -32,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         print(e.toString());
         emit(LoginFailure(message: e.toString()));
+        throw 'e.toString()';
       }
     });
 
@@ -56,19 +58,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         print(e.toString());
         emit(SignUpFailure(message: e.toString()));
+        throw 'e.toString()';
       }
     });
 
-    
     on<GoogleSignIn>((event, emit) async {
       emit(AuthLoading());
 
       try {
         final user = await googleSignInUseCase();
 
-        emit(GoogleSignInSuccess(userModel: user));// treat as login
+        emit(GoogleSignInSuccess(userModel: user)); // treat as login
       } catch (e) {
         emit(GoogleSignInFailure(message: e.toString()));
+        throw 'e.toString()';
       }
     });
   }

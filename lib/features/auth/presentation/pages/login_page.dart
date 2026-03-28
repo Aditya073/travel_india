@@ -59,9 +59,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> handleGoogleSignIn() async {
     FocusScope.of(context).unfocus();
-    context.read<AuthBloc>().add(
-      GoogleSignIn(),
-    );
+    context.read<AuthBloc>().add(GoogleSignIn());
   }
 
   @override
@@ -113,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: Colors.white.withOpacity(0.2),
             ),
           );
+          throw 'Login Faill';
         }
       },
       child: Scaffold(
