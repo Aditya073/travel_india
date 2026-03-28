@@ -1,4 +1,4 @@
-
+import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
@@ -33,5 +33,15 @@ class SignUpUsercase {
       phoneNumber,
       lastLocation,
     );
+  }
+}
+
+class GoogleSignInUseCase {
+  final AuthRepo repository;
+
+  GoogleSignInUseCase(this.repository);
+
+  Future<UserModel> call() {
+    return repository.signInWithGoogle();
   }
 }

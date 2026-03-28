@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
 
 // Actual response from firebase
 class FirebaseAuthDataSource {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // Login with Email and Password function
   Future<UserModel> loginUsingEmailAndPassword(
@@ -15,7 +17,7 @@ class FirebaseAuthDataSource {
   ) async {
     try {
       print('In FirebaseAuthDataSource');
-      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final response = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -48,6 +50,70 @@ class FirebaseAuthDataSource {
       rethrow;
     }
   }
+
+
+
+  Future<UserModel> signInWithGoogle() async {
+  try {
+    // Trigger Google Sign-In
+    final GoogleSignInAccount? googleUser =
+        await GoogleSignIn().signIn();
+
+    if (googleUser == null) {
+      throw Exception("Google Sign-In cancelled");
+    }
+
+    // Get authentication details
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    // Create credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Sign in with Firebase
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final user = userCredential.user;
+
+    if (user == null) {
+      throw Exception("Google Sign-In failed");
+    }
+
+    //  CHECK IF USER EXISTS IN FIRESTORE
+    final doc =
+        await firestore.collection("users").doc(user.uid).get();
+
+    UserModel userModel;
+
+    if (!doc.exists) {
+      // NEW USER → CREATE DOCUMENT
+      userModel = UserModel(
+        uid: user.uid,
+        userName: user.displayName ?? "",
+        email: user.email!,
+        phoneNumber: user.phoneNumber ?? "",
+        lastLocation: "",
+      );
+
+      await firestore
+          .collection("users")
+          .doc(user.uid)
+          .set(userModel.toMap());
+    } else {
+      // EXISTING USER → FETCH DATA
+      userModel = UserModel.fromFirestore(doc.data()! as DocumentSnapshot<Object?>);
+    }
+
+    return userModel;
+
+  } catch (e) {
+    throw Exception("Google Sign-In failed: $e");
+  }
+}
 
   // SignUP with Email and Password function
   Future<UserModel> signUpUsingEmailAndPassword(

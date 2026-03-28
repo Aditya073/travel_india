@@ -57,6 +57,13 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> handleGoogleSignIn() async {
+    FocusScope.of(context).unfocus();
+    context.read<AuthBloc>().add(
+      GoogleSignIn(),
+    );
+  }
+
   @override
   void dispose() {
     userEmailID.dispose();
@@ -282,7 +289,6 @@ class _LoginPageState extends State<LoginPage> {
 
                               const SizedBox(height: 30),
 
-                              
                               const Text(
                                 'Continue with other options',
                                 style: TextStyle(color: Colors.white),
@@ -296,7 +302,9 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   // Other login options
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      handleGoogleSignIn();
+                                    },
                                     style: TextButton.styleFrom(
                                       minimumSize: Size.fromRadius(30),
                                       backgroundColor: Colors.white,

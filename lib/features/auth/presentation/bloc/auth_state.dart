@@ -17,6 +17,16 @@ sealed class AuthState {}
 
   SignUpSuccess({required this.email});
 }
+
+ class GoogleSignInSuccess extends AuthState {
+  final UserModel userModel;
+
+  GoogleSignInSuccess({required this.userModel});
+}
+
+
+
+
  class LoginFailure extends AuthState{
   final String message;
 
@@ -26,4 +36,10 @@ sealed class AuthState {}
   final String message;
 
   SignUpFailure({required this.message});
+ }
+ 
+ class GoogleSignInFailure extends AuthState{
+  final String message;
+
+  GoogleSignInFailure({required this.message});
  }

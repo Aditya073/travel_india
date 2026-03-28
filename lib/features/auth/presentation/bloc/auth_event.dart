@@ -27,3 +27,8 @@ class AuthSignUpUsingEmailandPassword extends AuthEvent {
     required this.lastLocation,
   });
 }
+
+
+class GoogleSignIn extends AuthEvent{
+  
+}

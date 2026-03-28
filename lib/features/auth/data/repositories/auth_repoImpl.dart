@@ -1,9 +1,9 @@
 /* class AuthRepositoryImpl implements AuthRepository
 
 
-1. check with email and password  --> (for login)
+1. check with email and password  --> (for login)   - Done
 
-2. create a user based on the SignUp details
+2. create a user based on the SignUp details   - Done
 
 3. Use guest account
 
@@ -12,6 +12,7 @@
 */
 
 import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
+import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
@@ -53,4 +54,9 @@ class AuthRepoimpl implements AuthRepo {
 
     return Users(email: response.email!);
   }
+
+  @override
+Future<UserModel> signInWithGoogle() {
+  return dataSource.signInWithGoogle();
+}
 }
