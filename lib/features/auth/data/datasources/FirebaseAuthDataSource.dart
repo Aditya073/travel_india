@@ -60,11 +60,7 @@ class FirebaseAuthDataSource {
       }
 
       final user = response.user;
-
-      print('response.user');
-      print(response.user);
-      print(user!.uid);
-
+      
       //  CHECK IF USER EXISTS IN FIRESTORE
       final doc = await firestore
           .collection("users")
@@ -79,7 +75,7 @@ class FirebaseAuthDataSource {
         int randomNum = 10000 + random.nextInt(90000);
 
         newUserModel = UserModel(
-          uid: user.uid,
+          uid: user!.uid,
           email: user.email ?? "",
           password: "",
           lastLocation: "",
@@ -96,7 +92,7 @@ class FirebaseAuthDataSource {
       }
       
       // User already exists, fetch from Firestore
-      return await getUserData(user.uid);
+      return await getUserData(user!.uid);
     } catch (e) {
       throw e.toString();
     }
