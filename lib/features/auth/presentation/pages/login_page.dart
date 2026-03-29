@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> handleGuestLogin() async {
     FocusScope.of(context).unfocus();
-    context.read<AuthBloc>().add(           );
+    context.read<AuthBloc>().add(GuestSignIn());
   }
 
 
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
           Center(child: CircularProgressIndicator(color: Colors.black));
         }
 
-        if (state is LoginSuccess || state is GoogleSignInSuccess) {
+        if (state is LoginSuccess || state is GoogleSignInSuccess || state is GuestSignInSuccess) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
 
-        if (state is LoginFailure || state is GoogleSignInFailure) {
+        if (state is LoginFailure || state is GoogleSignInFailure || state is GuestSignInFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Center(

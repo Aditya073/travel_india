@@ -30,7 +30,8 @@ class _MyAppState extends State<MyApp> {
       create: (context) => AuthBloc(
         LoginUsecase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         SignUpUsercase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
-        GoogleSignInUseCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource()))
+        GoogleSignInUseCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
+        GuestSignInUserCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource()))
       ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

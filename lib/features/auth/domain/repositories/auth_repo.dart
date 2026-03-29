@@ -24,4 +24,5 @@ abstract class AuthRepo {
     String lastLocation,
   );
   Future<UserModel> signInWithGoogle();
+  Future<UserModel> guestSignInUserCase();
 }

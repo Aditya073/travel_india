@@ -17,11 +17,15 @@ sealed class AuthState {}
 
   SignUpSuccess({required this.email});
 }
-
  class GoogleSignInSuccess extends AuthState {
   final UserModel userModel;
 
   GoogleSignInSuccess({required this.userModel});
+}
+ class GuestSignInSuccess extends AuthState {
+  final UserModel userModel;
+
+  GuestSignInSuccess({required this.userModel});
 }
 
 
@@ -42,4 +46,9 @@ sealed class AuthState {}
   final String message;
 
   GoogleSignInFailure({required this.message});
+ }
+ class GuestSignInFailure extends AuthState{
+  final String message;
+
+  GuestSignInFailure({required this.message});
  }

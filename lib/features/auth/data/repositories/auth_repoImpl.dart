@@ -43,20 +43,25 @@ class AuthRepoimpl implements AuthRepo {
     String phoneNumber,
     String lastLocation,
   ) async {
-
     final response = await dataSource.signUpUsingEmailAndPassword(
       email,
       password,
-      name, 
+      name,
       phoneNumber,
-      lastLocation
+      lastLocation,
     );
 
     return Users(email: response.email!);
   }
 
   @override
-Future<UserModel> signInWithGoogle() {
-  return dataSource.signInWithGoogle();
-}
+  Future<UserModel> signInWithGoogle() {
+    return dataSource.signInWithGoogle();
+  }
+
+  @override
+  Future<UserModel> guestSignInUserCase() {
+    // TODO: implement guestSignInUserCase
+    return dataSource.guestSignInUserCase();
+  }
 }

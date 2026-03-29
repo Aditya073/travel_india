@@ -28,7 +28,6 @@ class AuthSignUpUsingEmailandPassword extends AuthEvent {
   });
 }
 
+class GoogleSignIn extends AuthEvent {}
 
-class GoogleSignIn extends AuthEvent{
-  
-}
+class GuestSignIn extends AuthEvent {}

@@ -45,3 +45,13 @@ class GoogleSignInUseCase {
     return repository.signInWithGoogle();
   }
 }
+
+class GuestSignInUserCase {
+  final AuthRepo repository;
+
+  GuestSignInUserCase(this.repository);
+
+  Future<UserModel> call() {
+    return repository.guestSignInUserCase();
+  }
+}
