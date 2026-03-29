@@ -7,7 +7,7 @@ import 'package:travel_india/features/auth/domain/usecases/loginUseCase.dart';
 import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:travel_india/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_india/firebase_options.dart';
+import 'package:travel_india/features/auth/data/datasources/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
