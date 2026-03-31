@@ -62,13 +62,17 @@ class _LoginPageState extends State<LoginPage> {
     context.read<AuthBloc>().add(GoogleSignIn());
   }
 
-
   Future<void> handleGuestLogin() async {
     FocusScope.of(context).unfocus();
     context.read<AuthBloc>().add(GuestSignIn());
   }
 
-
+  
+  Future<void> handleForgotPassword() async {
+    FocusScope.of(context).unfocus();
+    // if(_validateEmail(userEmailID.text.trim()))
+    context.read<AuthBloc>().add(ForgotPassword(email: userEmailID.text.trim()));
+  }
 
   @override
   void dispose() {
@@ -87,7 +91,9 @@ class _LoginPageState extends State<LoginPage> {
           Center(child: CircularProgressIndicator(color: Colors.black));
         }
 
-        if (state is LoginSuccess || state is GoogleSignInSuccess || state is GuestSignInSuccess) {
+        if (state is LoginSuccess ||
+            state is GoogleSignInSuccess ||
+            state is GuestSignInSuccess) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
@@ -106,7 +112,9 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
 
-        if (state is LoginFailure || state is GoogleSignInFailure || state is GuestSignInFailure) {
+        if (state is LoginFailure ||
+            state is GoogleSignInFailure ||
+            state is GuestSignInFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Center(
@@ -232,7 +240,9 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(height: 35),
 
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  handleForgotPassword();
+                                },
                                 child: const Text(
                                   'Forgot password?',
                                   style: TextStyle(color: Colors.white),

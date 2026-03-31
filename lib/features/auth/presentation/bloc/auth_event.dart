@@ -31,3 +31,9 @@ class AuthSignUpUsingEmailandPassword extends AuthEvent {
 class GoogleSignIn extends AuthEvent {}
 
 class GuestSignIn extends AuthEvent {}
+
+class ForgotPassword extends AuthEvent {
+  final String email;
+
+  ForgotPassword({required this.email});
+}

@@ -27,6 +27,11 @@ sealed class AuthState {}
 
   GuestSignInSuccess({required this.userModel});
 }
+ class ForgotPasswordSignInSuccess extends AuthState {
+  final UserModel userModel;
+
+  ForgotPasswordSignInSuccess({required this.userModel});
+}
 
 
 
@@ -51,4 +56,9 @@ sealed class AuthState {}
   final String message;
 
   GuestSignInFailure({required this.message});
+ }
+ class ForgotPasswordSignInFailure extends AuthState{
+  final String message;
+
+  ForgotPasswordSignInFailure({required this.message});
  }

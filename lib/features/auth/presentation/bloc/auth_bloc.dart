@@ -92,5 +92,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         throw e.toString();
       }
     });
+
+    on<ForgotPassword>((event, emit) async {
+      emit(AuthLoading());
+
+      try {
+        final user = await forgotPasswordSignIn();
+
+        emit()
+      } catch (e) {}
+    });
   }
 }
