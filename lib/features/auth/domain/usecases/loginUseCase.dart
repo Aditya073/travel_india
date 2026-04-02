@@ -1,4 +1,5 @@
 import 'package:travel_india/features/auth/data/models/user_model.dart';
+import 'package:travel_india/features/auth/data/repositories/auth_repoImpl.dart';
 import 'package:travel_india/features/auth/domain/entities/users.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
@@ -59,9 +60,9 @@ class GuestSignInUserCase {
 class ForgotPasswordSignIn {
   final AuthRepo repository;
 
-  ForgotPasswordSignIn({required this.repository});
+  ForgotPasswordSignIn(this.repository);
 
-  Future<UserModel> call(String email) {
+  Future<void> call(String email) {
     return repository.forgotPasswordSignIn(email);
   }
 }

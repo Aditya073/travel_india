@@ -101,7 +101,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final user = await forgotPasswordSignIn(event.email);
 
-        emit(ForgotPasswordSignInSuccess(userModel: user));
+        emit(ForgotPasswordSignInSuccess());
       } catch (e) {
         emit(ForgotPasswordSignInFailure(message: e.toString()));
 

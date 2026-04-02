@@ -51,13 +51,16 @@ class FirebaseAuthDataSource {
     }
   }
 
+  Future<void> forgotPasswordSignIn(String email) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      
+// loginUsingEmailAndPassword(email, password)
 
-
-  Future<UserModel> forgotPasswordSignIn(String email) async {
-    try {} catch (e) {}
+    } catch (e) {
+      throw e.toString();
+    }
   }
-
-
 
   Future<UserModel> guestSignInUserCase() async {
     try {

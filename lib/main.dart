@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
         LoginUsecase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         SignUpUsercase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         GoogleSignInUseCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
-        GuestSignInUserCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource()))
+        GuestSignInUserCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
+        ForgotPasswordSignIn(AuthRepoimpl(dataSource: FirebaseAuthDataSource()), )
       ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -28,9 +28,9 @@ sealed class AuthState {}
   GuestSignInSuccess({required this.userModel});
 }
  class ForgotPasswordSignInSuccess extends AuthState {
-  final UserModel userModel;
+  // final UserModel userModel;
 
-  ForgotPasswordSignInSuccess({required this.userModel});
+  ForgotPasswordSignInSuccess();
 }
 
 

@@ -18,17 +18,18 @@ class UserModel {
   final String? phoneNumber;
   final String? lastLocation;
 
+  // bool isGuest;
+
   UserModel({
-   this.uid,
-   this.email,
-   this.password,
-   this.userName,
-   this.phoneNumber,
-   this.lastLocation,
+    this.uid,
+    this.email,
+    this.password,
+    this.userName,
+    this.phoneNumber,
+    this.lastLocation,
   });
 
-
-//It’s a named constructor whose job is to convert Firestore data into a UserModel object safely.
+  //It’s a named constructor whose job is to convert Firestore data into a UserModel object safely.
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
 

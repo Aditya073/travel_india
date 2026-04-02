@@ -66,7 +66,7 @@ class AuthRepoimpl implements AuthRepo {
   }
 
   @override
-  Future<UserModel> forgotPasswordSignIn(String email) {
+  Future<void> forgotPasswordSignIn(String email) {
     // TODO: implement forgotPasswordSignIn
     return dataSource.forgotPasswordSignIn(email);
   }

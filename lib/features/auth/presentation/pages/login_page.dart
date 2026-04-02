@@ -67,11 +67,12 @@ class _LoginPageState extends State<LoginPage> {
     context.read<AuthBloc>().add(GuestSignIn());
   }
 
-  
   Future<void> handleForgotPassword() async {
     FocusScope.of(context).unfocus();
     // if(_validateEmail(userEmailID.text.trim()))
-    context.read<AuthBloc>().add(ForgotPassword(email: userEmailID.text.trim()));
+    context.read<AuthBloc>().add(
+      ForgotPassword(email: userEmailID.text.trim()),
+    );
   }
 
   @override
@@ -241,7 +242,28 @@ class _LoginPageState extends State<LoginPage> {
 
                               GestureDetector(
                                 onTap: () {
-                                  handleForgotPassword();
+                                  if (userEmailID.text.trim() == null ||
+                                      userEmailID.text.isEmpty) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: Text('Enter email'),
+                                        content: Text('Enter your email id'),
+                                      ),
+                                    );
+                                  } else {
+                                    handleForgotPassword();
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: Text('Check your email'),
+                                        content: Text(
+                                          'We sent a password reset link to $userEmailID.text. '
+                                          'After resetting, come back and log in with your new password.',
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 },
                                 child: const Text(
                                   'Forgot password?',
