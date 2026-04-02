@@ -239,26 +239,29 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
                               const SizedBox(height: 35),
-
                               GestureDetector(
                                 onTap: () {
-                                  if (userEmailID.text.trim() == null ||
-                                      userEmailID.text.isEmpty) {
+                                  if (_validateEmail(userEmailID.text) !=
+                                      null) {
+                                    // Validation FAILED — show error
                                     showDialog(
                                       context: context,
                                       builder: (_) => AlertDialog(
                                         title: Text('Enter email'),
-                                        content: Text('Enter your email id'),
+                                        content: Text(
+                                          'Please enter a valid email address',
+                                        ),
                                       ),
                                     );
                                   } else {
+                                    // Validation PASSED — send reset email
                                     handleForgotPassword();
                                     showDialog(
                                       context: context,
                                       builder: (_) => AlertDialog(
                                         title: Text('Check your email'),
                                         content: Text(
-                                          'We sent a password reset link to $userEmailID.text. '
+                                          'We sent a password reset link to ${userEmailID.text}. '
                                           'After resetting, come back and log in with your new password.',
                                         ),
                                       ),

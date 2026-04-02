@@ -99,7 +99,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
 
       try {
-        final user = await forgotPasswordSignIn(event.email);
+        await forgotPasswordSignIn(event.email);
 
         emit(ForgotPasswordSignInSuccess());
       } catch (e) {
