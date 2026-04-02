@@ -14,12 +14,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUsercase signUpUsercase;
   final GoogleSignInUseCase googleSignInUseCase;
   final GuestSignInUserCase guestSignInUserCase;
+  final ForgotPasswordSignIn forgotPasswordSignIn;
 
   AuthBloc(
     this.loginUsecase,
     this.signUpUsercase,
     this.googleSignInUseCase,
     this.guestSignInUserCase,
+    this.forgotPasswordSignIn,
   ) : super(AuthInitial()) {
     on<AuthLoginUsingEmailandPassword>((event, emit) async {
       // Show loding till the data is fetched
@@ -97,10 +99,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
 
       try {
-        final user = await forgotPasswordSignIn();
+        final user = await forgotPasswordSignIn(event.email);
 
-        emit()
-      } catch (e) {}
+        emit(ForgotPasswordSignInSuccess(userModel: user));
+      } catch (e) {
+        emit(ForgotPasswordSignInFailure(message: e.toString()));
+
+        throw e.toString();
+      }
     });
   }
 }

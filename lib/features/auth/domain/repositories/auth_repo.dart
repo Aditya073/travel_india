@@ -25,4 +25,5 @@ abstract class AuthRepo {
   );
   Future<UserModel> signInWithGoogle();
   Future<UserModel> guestSignInUserCase();
+  Future<UserModel> forgotPasswordSignIn(String email);
 }

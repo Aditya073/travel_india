@@ -51,6 +51,14 @@ class FirebaseAuthDataSource {
     }
   }
 
+
+
+  Future<UserModel> forgotPasswordSignIn(String email) async {
+    try {} catch (e) {}
+  }
+
+
+
   Future<UserModel> guestSignInUserCase() async {
     try {
       final response = await firebaseAuth.signInAnonymously();
@@ -60,7 +68,7 @@ class FirebaseAuthDataSource {
       }
 
       final user = response.user;
-      
+
       //  CHECK IF USER EXISTS IN FIRESTORE
       final doc = await firestore
           .collection("users")
@@ -90,7 +98,7 @@ class FirebaseAuthDataSource {
             .set(newUserModel.toMap());
         return newUserModel;
       }
-      
+
       // User already exists, fetch from Firestore
       return await getUserData(user!.uid);
     } catch (e) {

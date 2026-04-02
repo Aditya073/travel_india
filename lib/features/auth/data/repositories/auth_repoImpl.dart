@@ -64,4 +64,10 @@ class AuthRepoimpl implements AuthRepo {
     // TODO: implement guestSignInUserCase
     return dataSource.guestSignInUserCase();
   }
+
+  @override
+  Future<UserModel> forgotPasswordSignIn(String email) {
+    // TODO: implement forgotPasswordSignIn
+    return dataSource.forgotPasswordSignIn(email);
+  }
 }

@@ -55,3 +55,13 @@ class GuestSignInUserCase {
     return repository.guestSignInUserCase();
   }
 }
+
+class ForgotPasswordSignIn {
+  final AuthRepo repository;
+
+  ForgotPasswordSignIn({required this.repository});
+
+  Future<UserModel> call(String email) {
+    return repository.forgotPasswordSignIn(email);
+  }
+}
