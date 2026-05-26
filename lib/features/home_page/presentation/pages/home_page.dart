@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ThemeData _themeMode = AppTheme.lightTheme;
+  // ThemeData _themeMode = AppTheme.lightTheme;
 
   // void toggleTheme() {
   //   setState(() {
@@ -37,7 +37,12 @@ class _HomePageState extends State<HomePage> {
           // ),
         ],
       ),
-      body: SizedBox(height: 120, width: 120, child: Column(children: [])),
+      body: Container(
+        color: Colors.white,
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(children: []),
+      ),
     );
   }
 }
