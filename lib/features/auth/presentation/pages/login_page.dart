@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:travel_india/features/auth/presentation/pages/signup_page.dart';
-import 'package:travel_india/features/home_page/home_page.dart';
+import 'package:travel_india/features/home_page/presentation/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

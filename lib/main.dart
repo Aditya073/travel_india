@@ -8,6 +8,7 @@ import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:travel_india/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/features/auth/data/datasources/firebase_options.dart';
+import 'package:travel_india/features/home_page/presentation/pages/home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,13 +33,14 @@ class _MyAppState extends State<MyApp> {
         SignUpUsercase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         GoogleSignInUseCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         GuestSignInUserCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
-        ForgotPasswordSignIn(AuthRepoimpl(dataSource: FirebaseAuthDataSource()), )
+        ForgotPasswordSignIn(AuthRepoimpl(dataSource: FirebaseAuthDataSource()),)
       ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Travel India',
         theme: AppTheme.lightTheme,
-        home: LoginPage(),
+        // home: LoginPage(),
+        home: HomePage(),
       ),
     );
   }
