@@ -41,7 +41,45 @@ class _HomePageState extends State<HomePage> {
         color: Colors.white,
         height: double.infinity,
         width: double.infinity,
-        child: Column(children: []),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[100],
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                width: double.infinity / 6,
+                height: 50,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search, color: Colors.black),
+                          hintText: 'Search',
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
