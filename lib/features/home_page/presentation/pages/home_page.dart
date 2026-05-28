@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/Config/Widgets/travel_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,31 +24,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-
-        actions: [
-          // IconButton(
-          //   // theme toggle button  (used to select light or dark mode)
-          //   icon: Icon(
-          //     Theme.of(context).brightness == Brightness.dark
-          //         ? Icons.light_mode
-          //         : Icons.dark_mode,
-          //   ),
-          //   onPressed: () => toggleTheme(),
-          // ),
-        ],
       ),
+
       body: Container(
         color: Colors.white,
-        height: double.infinity,
         width: double.infinity,
+        height: double.infinity,
+
         child: Column(
           children: [
+            // SEARCH BAR
             Padding(
               padding: const EdgeInsets.all(15),
+
               child: Container(
+                height: 55,
+                width: double.infinity,
+
                 decoration: BoxDecoration(
                   color: Colors.blueGrey[100],
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(12),
+
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.15),
@@ -57,23 +53,29 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                width: double.infinity / 6,
-                height: 50,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search, color: Colors.black),
-                          hintText: 'Search',
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
+
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.black),
+                      hintText: "Search Destination",
+                      hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
+                      border: InputBorder.none,
                     ),
+                  ),
+                ),
+              ),
+            ),
+
+            // CARD SECTION
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: const [
+                    TravelCard(),
+                    SizedBox(height: 20),
+                    TravelCard(),
                   ],
                 ),
               ),
