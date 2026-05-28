@@ -6,12 +6,12 @@ class TravelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 320,
-      padding: const EdgeInsets.all(16),
+      width: 350,
 
+      // padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.all(Radius.circular(24)),
 
         boxShadow: [
           BoxShadow(
@@ -22,65 +22,94 @@ class TravelCard extends StatelessWidget {
           ),
         ],
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // IMAGE
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-
-            child: Image.network(
-              "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-              height: 180,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          // TITLE
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 12, bottom: 8),
+            child: Text(
+              "Travel Destination",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
-
-          const SizedBox(height: 16),
-
-          // TITLE
-          const Text(
-            "Travel Destination",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-
-          const SizedBox(height: 8),
-
-          // DESCRIPTION
-          Text(
-            "Explore beautiful places around the world with amazing experiences.",
-            style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
-          ),
-
-          const SizedBox(height: 16),
-
-          // BUTTONS
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Stack(
             children: [
-              ElevatedButton(
-                onPressed: () {},
-
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
                 ),
 
-                child: const Text("Explore"),
+                child: Image.network(
+                  "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              // GRADIENT OVERLAY
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(24),
+                      bottomRight: Radius.circular(24),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.2),
+                        Colors.black.withOpacity(0.7),
+                        Colors.black.withOpacity(0.9),
+                      ],
+                    ),
+                  ),
+                ),
               ),
 
-              IconButton(
-                onPressed: () {},
+              // DESCRIPTION
+              Positioned(
+                top: 190,
+                right: 10,
+                left: 8,
+                child: Text(
+                  "Explore beautiful places around the world with amazing experiences.",
+                  style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+                ),
+              ),
 
-                icon: const Icon(Icons.favorite_border, color: Colors.red),
+              // BUTTONS
+              Container(
+                margin: EdgeInsets.only(top: 240, left: 12, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+
+                      child: const Text("Explore"),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

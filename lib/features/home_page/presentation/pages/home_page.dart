@@ -22,9 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: AppBar(backgroundColor: Theme.of(context).primaryColor),
 
       body: Container(
         color: Colors.white,
@@ -74,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: const [
                     TravelCard(),
-                    SizedBox(height: 20),
+                    SizedBox(height: 25),
                     TravelCard(),
                   ],
                 ),
