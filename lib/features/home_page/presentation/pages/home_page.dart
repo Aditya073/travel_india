@@ -70,10 +70,15 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
-                  children: const [
-                    TravelCard(),
-                    SizedBox(height: 25),
-                    TravelCard(),
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => ,));
+                      },
+                      child: const TravelCard(),
+                    ),
+                    const SizedBox(height: 25),
+                    const TravelCard(),
                   ],
                 ),
               ),
