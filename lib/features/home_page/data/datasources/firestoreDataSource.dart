@@ -6,15 +6,15 @@ class Firestoredatasource {
 
   Future<CardModel> getCardData() async {
     try {
-      final doc = await firestore.collection("card").doc().get();
+      final doc = await firestore.collection("card").snapshots();
 
       print("Data From Firestore");
-      print(doc.data.toString());
-      if (!doc.exists) {
+      print(doc..toString());
+      if (await doc.isEmpty) {
         throw Exception("card data not found in Firestore");
       }
 
-      return CardModel.fromFirestore(doc);
+      return CardModel.fromFirestore(doc as DocumentSnapshot<Object?>);
     } catch (e) {
       print("Firestore error: $e");
       rethrow;
