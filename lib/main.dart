@@ -2,6 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
+import 'package:cloudinary_flutter/cloudinary_context.dart';
+import 'package:cloudinary_flutter/image/cld_image.dart';
+import 'package:cloudinary_flutter/image/cld_image.dart';
+import 'package:cloudinary_url_gen/cloudinary.dart';
 import 'package:travel_india/features/auth/data/repositories/auth_repoImpl.dart';
 import 'package:travel_india/features/auth/domain/usecases/loginUseCase.dart';
 import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
@@ -13,6 +17,10 @@ import 'package:travel_india/features/home_page/presentation/pages/home_page.dar
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // ignore: deprecated_member_use
+  CloudinaryContext.cloudinary = Cloudinary.fromCloudName(
+    cloudName: "dhfegi9j2",
+  );
   runApp(MyApp());
 }
 
@@ -33,7 +41,9 @@ class _MyAppState extends State<MyApp> {
         SignUpUsercase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         GoogleSignInUseCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
         GuestSignInUserCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
-        ForgotPasswordSignIn(AuthRepoimpl(dataSource: FirebaseAuthDataSource()),)
+        ForgotPasswordSignIn(
+          AuthRepoimpl(dataSource: FirebaseAuthDataSource()),
+        ),
       ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

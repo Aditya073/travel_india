@@ -1,7 +1,7 @@
 /*
 1. State name
 2. Display image
-3. 
+3. Description
 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,22 +9,26 @@ import 'package:flutter/material.dart';
 
 class CardModel {
   final String? stateName;
-  final Image? displayImage;
+  final Path? imageUrl;
+  final String? description;
 
-  CardModel({required this.stateName, required this.displayImage});
+
+  CardModel({required this.stateName, required this.imageUrl, this.description});
 
   factory CardModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
 
     return CardModel(
       stateName: data['stateName'] ?? '',
-      displayImage: data['displayImage'] ?? '',
+      imageUrl: data['imageUrl'] ?? '',
+      description: data['description'] ?? '',
     );
   }
   Map<String, dynamic> toMap() {
     return {
       "stateName": stateName,
-      "displayImage": displayImage,
+      "imageUrl": imageUrl,
+      "description": description,
     };
   }
 }
