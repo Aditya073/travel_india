@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Widgets/travel_card.dart';
+import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,7 +23,42 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<CardBloc, CardState>(
+      listener: (context, state) {
+        if (state is CardLoading) {
+          Center(child: CircularProgressIndicator(color: Colors.black));
+        }
+
+        if (state is Success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Center(
+                child: Text(
+                  'Login Successful',
+                  style: TextStyle(color: Colors.green, fontSize: 18),
+                ),
+              ),
+              backgroundColor: Colors.white.withOpacity(0.2),
+            ),
+          );
+        }
+
+        if (state is Failure) {
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Center(
+                child: Text(
+                  'Something went wrong',
+                  style: TextStyle(color: Colors.red, fontSize: 18),
+                ),
+              ),
+              backgroundColor: Colors.white.withOpacity(0.2),
+            ),
+          );
+        }
+      },
+      child: Scaffold(
       appBar: AppBar(backgroundColor: Theme.of(context).primaryColor),
 
       body: Container(
@@ -70,13 +107,59 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
+
+
+// 1. try to seee what u get from the database 
+//2. and what u finally get on the home page
+
+
+
+                  // children: [
+                  //   StreamBuilder(
+                  //         stream: context.read<CardBloc>(),
+                    //       builder: (context, snapshot) {
+                    //         if (snapshot.hasError) {
+                    //           print("_____________error ${snapshot.error}");
+                    //           return Center(
+                    //             child: Text('Error: ${snapshot.error}'),
+                    //           );
+                    //         }
+                    //         if (snapshot.connectionState ==
+                    //             ConnectionState.waiting) {
+                    //           return const Center(
+                    //             child: CircularProgressIndicator(),
+                    //           );
+                    //         }
+                    //         final chats = snapshot.data ?? [];
+                    //         if (chats.isEmpty) {
+                    //           return Center(child: Text("No recent chats"));
+                    //         }
+
+                    //         // displaying the number of contacts the user is talking to
+                    //         return ListView.builder(
+                    //           itemCount: chats.length,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //             final chat = chats[index];
+                    //             return ChatRoomDisplay(
+                    //               chat: chat,
+                    //               currentUserId: _currentUserId,
+                    //               onTap: () {
+                    //                 Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    // //                     builder: (context) => {},
+                    //                   ),
+                    //                 );
+                    //               },
+                  //               );
+                  //             },
+                  //           );
+                  //         },
+                  //       ),
+                  // ],
+
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) => ,));
-                      },
-                      child: const TravelCard(),
-                    ),
+                    const TravelCard(),
                     const SizedBox(height: 25),
                     const TravelCard(),
                   ],
@@ -85,7 +168,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }

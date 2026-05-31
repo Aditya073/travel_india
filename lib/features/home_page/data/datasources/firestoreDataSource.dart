@@ -8,7 +8,7 @@ class Firestoredatasource {
     try {
       final doc = await firestore.collection("card").snapshots();
 
-      print("Data From Firestore");
+      print("Data From {Firestore}");
       print(doc..toString());
       if (await doc.isEmpty) {
         throw Exception("card data not found in Firestore");
