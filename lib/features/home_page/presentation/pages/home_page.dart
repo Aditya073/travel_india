@@ -44,7 +44,6 @@ class _HomePageState extends State<HomePage> {
         }
 
         if (state is Failure) {
-
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: const Center(
@@ -59,64 +58,65 @@ class _HomePageState extends State<HomePage> {
         }
       },
       child: Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).primaryColor),
+        appBar: AppBar(backgroundColor: Theme.of(context).primaryColor),
 
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        height: double.infinity,
+        body: Container(
+          color: Colors.white,
+          width: double.infinity,
+          height: double.infinity,
 
-        child: Column(
-          children: [
-            // SEARCH BAR
-            Padding(
-              padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              // SEARCH BAR
+              Padding(
+                padding: const EdgeInsets.all(15),
 
-              child: Container(
-                height: 55,
-                width: double.infinity,
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
 
-                decoration: BoxDecoration(
-                  color: Colors.blueGrey[100],
-                  borderRadius: BorderRadius.circular(12),
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey[100],
+                    borderRadius: BorderRadius.circular(12),
 
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
 
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search, color: Colors.black),
-                      hintText: "Search Destination",
-                      hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
-                      border: InputBorder.none,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search, color: Colors.black),
+                        hintText: "Search Destination",
+                        hintStyle: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 18,
+                        ),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            // CARD SECTION
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+              // CARD SECTION
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
 
+                    
+                    // 1. try to seee what u get from the database
+                    //2. and what u finally get on the home page
 
-// 1. try to seee what u get from the database 
-//2. and what u finally get on the home page
-
-
-
-                  // children: [
-                  //   StreamBuilder(
-                  //         stream: context.read<CardBloc>(),
+                    // children: [
+                    //   StreamBuilder(
+                    //         stream: context.read<CardBloc>(),
                     //       builder: (context, snapshot) {
                     //         if (snapshot.hasError) {
                     //           print("_____________error ${snapshot.error}");
@@ -151,24 +151,24 @@ class _HomePageState extends State<HomePage> {
                     //                   ),
                     //                 );
                     //               },
-                  //               );
-                  //             },
-                  //           );
-                  //         },
-                  //       ),
-                  // ],
-
-                  children: [
-                    const TravelCard(),
-                    const SizedBox(height: 25),
-                    const TravelCard(),
-                  ],
+                    //               );
+                    //             },
+                    //           );
+                    //         },
+                    //       ),
+                    // ],
+                    children: [
+                      const TravelCard(),
+                      const SizedBox(height: 25),
+                      const TravelCard(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

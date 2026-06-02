@@ -12,6 +12,13 @@ class CardBloc extends Bloc<CardEvent, CardState> {
     on<GetCardData>((event, emit) async {
       emit(CardLoading());
 
+
+      // if there is any error while running the app then
+      // 1. try printhig "here in (CardBloc)"
+      // "here in (Firestoredatasource)"
+      // and soo on tho find the breaking point 
+      
+
       try {
         final card = await getCardData();
 
