@@ -5,7 +5,8 @@ class Firestoredatasource {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<List<CardModel>> getCardData() async {
-    try {
+    try {     // here is the error
+             // type 'String' is not a subtype of 'Path?'
       final snapshot = await firestore.collection("card").get();
 
       if (snapshot.docs.isEmpty) {

@@ -135,24 +135,24 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                           if (state is Success) {
-  return ListView.builder(
-    shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
-    itemCount: state.card.length,
-    itemBuilder: (context, index) {
-      final card = state.card[index];
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.card.length,
+                              itemBuilder: (context, index) {
+                                final card = state.card[index];
 
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: TravelCard(
-          stateName: card.stateName, 
-          image: card.imageUrl,
-          description: card.description,
-        ),
-      );
-    },
-  );
-}
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: TravelCard(
+                                    stateName: card.stateName,
+                                    image: card.imageUrl,
+                                    description: card.description,
+                                  ),
+                                );
+                              },
+                            );
+                          }
                           print("Hereeeeee");
                           return const Center(
                             child: Text("Something went wrong"),
