@@ -22,6 +22,13 @@ class _HomePageState extends State<HomePage> {
   // }
 
   @override
+  void initState() {
+    super.initState();
+
+    context.read<CardBloc>().add(GetCardData());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<CardBloc, CardState>(
       listener: (context, state) {
@@ -128,13 +135,25 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                           if (state is Success) {
-                            final cart = state.cardModel;
-                            return TravelCard(
-                              stateName: cart.stateName,
-                              image: cart.imageUrl,
-                              description: cart.description,
-                            );
-                          }
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    itemCount: state.card.length,
+    itemBuilder: (context, index) {
+      final card = state.card[index];
+
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: TravelCard(
+          stateName: card.stateName, 
+          image: card.imageUrl,
+          description: card.description,
+        ),
+      );
+    },
+  );
+}
+                          print("Hereeeeee");
                           return const Center(
                             child: Text("Something went wrong"),
                           );

@@ -6,7 +6,7 @@ class GetcardData {
 
   GetcardData({required this.repository});
 
-  Future<CardModel> call() {
+  Future<List<CardModel>> call() {
     return repository.getCardData();
   }
 }

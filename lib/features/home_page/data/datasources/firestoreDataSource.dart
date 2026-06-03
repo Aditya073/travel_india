@@ -4,17 +4,18 @@ import 'package:travel_india/features/home_page/data/models/card_model.dart';
 class Firestoredatasource {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<CardModel> getCardData() async {
+  Future<List<CardModel>> getCardData() async {
     try {
-      final doc = await firestore.collection("card").snapshots();
+      final snapshot = await firestore.collection("card").get();
 
-      print("Data From {Firestore}");
-      print(doc..toString());
-      if (await doc.isEmpty) {
-        throw Exception("card data not found in Firestore");
+      if (snapshot.docs.isEmpty) {
+        throw Exception("No card data found");
       }
 
-      return CardModel.fromFirestore(doc as DocumentSnapshot<Object?>);
+      print("Data From {Firestore}");
+      print(snapshot..toString());
+
+      return snapshot.docs.map((doc) => CardModel.fromFirestore(doc)).toList();
     } catch (e) {
       print("Firestore error: $e");
       rethrow;

@@ -8,7 +8,7 @@ class CardRepoimpl implements CardRepo {
   CardRepoimpl({required this.datasource});
 
   @override
-  Future<CardModel> getCardData() {
+   Future<List<CardModel>> getCardData() {
     // TODO: implement getCardData
     return datasource.getCardData();
   }
