@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TravelCard extends StatelessWidget {
-  const TravelCard({super.key});
+  final String? stateName;
+  final Path? image;
+  final String? description;
+  const TravelCard({
+    super.key,
+    required this.stateName,
+    required this.image,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,7 @@ class TravelCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 12, bottom: 8),
             child: Text(
-              "Travel Destination",
+              stateName!,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -46,7 +54,7 @@ class TravelCard extends StatelessWidget {
                 ),
 
                 child: Image.network(
-                  "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+                  image as String,
                   height: 300,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -81,7 +89,7 @@ class TravelCard extends StatelessWidget {
                 right: 10,
                 left: 8,
                 child: Text(
-                  "Explore beautiful places around the world with amazing experiences.",
+                  description!,
                   style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
                 ),
               ),

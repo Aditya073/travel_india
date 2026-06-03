@@ -109,58 +109,37 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
-
-                    
                     // 1. try to seee what u get from the database
                     //2. and what u finally get on the home page
-
-                    // children: [
-                    //   StreamBuilder(
-                    //         stream: context.read<CardBloc>(),
-                    //       builder: (context, snapshot) {
-                    //         if (snapshot.hasError) {
-                    //           print("_____________error ${snapshot.error}");
-                    //           return Center(
-                    //             child: Text('Error: ${snapshot.error}'),
-                    //           );
-                    //         }
-                    //         if (snapshot.connectionState ==
-                    //             ConnectionState.waiting) {
-                    //           return const Center(
-                    //             child: CircularProgressIndicator(),
-                    //           );
-                    //         }
-                    //         final chats = snapshot.data ?? [];
-                    //         if (chats.isEmpty) {
-                    //           return Center(child: Text("No recent chats"));
-                    //         }
-
-                    //         // displaying the number of contacts the user is talking to
-                    //         return ListView.builder(
-                    //           itemCount: chats.length,
-                    //           itemBuilder: (BuildContext context, int index) {
-                    //             final chat = chats[index];
-                    //             return ChatRoomDisplay(
-                    //               chat: chat,
-                    //               currentUserId: _currentUserId,
-                    //               onTap: () {
-                    //                 Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    // //                     builder: (context) => {},
-                    //                   ),
-                    //                 );
-                    //               },
-                    //               );
-                    //             },
-                    //           );
-                    //         },
-                    //       ),
-                    // ],
                     children: [
-                      const TravelCard(),
-                      const SizedBox(height: 25),
-                      const TravelCard(),
+                      BlocBuilder<CardBloc, CardState>(
+                        builder: (context, state) {
+                          if (state is CardLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (state is Failure) {
+                            return Center(
+                              child: Text(
+                                state.message,
+                                style: TextStyle(fontSize: 24),
+                              ),
+                            );
+                          }
+                          if (state is Success) {
+                            final cart = state.cardModel;
+                            return TravelCard(
+                              stateName: cart.stateName,
+                              image: cart.imageUrl,
+                              description: cart.description,
+                            );
+                          }
+                          return const Center(
+                            child: Text("Something went wrong"),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

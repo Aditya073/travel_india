@@ -18,7 +18,7 @@ import 'package:travel_india/features/home_page/domain/usecases/getCardData.dart
 import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
 import 'package:travel_india/features/home_page/presentation/pages/home_page.dart';
 
-Future<void> main() async {
+Future<void> main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // ignore: deprecated_member_use
