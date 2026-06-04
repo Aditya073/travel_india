@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class CardModel {
   final String? stateName;
-  final Path? imageUrl;
+  final String? imageUrl;
   final String? description;
 
 

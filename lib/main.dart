@@ -4,7 +4,6 @@ import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
 import 'package:cloudinary_flutter/cloudinary_context.dart';
 // import 'package:cloudinary_flutter/image/cld_image.dart';
-// import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:cloudinary_url_gen/cloudinary.dart';
 import 'package:travel_india/features/auth/data/repositories/auth_repoImpl.dart';
 import 'package:travel_india/features/auth/domain/usecases/loginUseCase.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TravelCard extends StatelessWidget {
   final String? stateName;
-  final Path? image;
+  final String? image;
   final String? description;
   const TravelCard({
     super.key,
@@ -53,8 +53,8 @@ class TravelCard extends StatelessWidget {
                   bottomRight: Radius.circular(24),
                 ),
 
-                child: Image.network(
-                  image as String,
+                child: Image.asset(
+                  'assets/images/Google_logo.png',
                   height: 300,
                   width: double.infinity,
                   fit: BoxFit.cover,
