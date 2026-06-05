@@ -116,8 +116,6 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
-                    // 1. try to seee what u get from the database
-                    //2. and what u finally get on the home page
                     children: [
                       BlocBuilder<CardBloc, CardState>(
                         builder: (context, state) {
@@ -143,7 +141,11 @@ class _HomePageState extends State<HomePage> {
                                 final card = state.card[index];
 
                                 return Padding(
-                                  padding: const EdgeInsets.only(bottom: 20),
+                                  padding: const EdgeInsets.only(
+                                    bottom: 25,
+                                    left: 20,
+                                    right: 20,
+                                  ),
                                   child: TravelCard(
                                     stateName: card.stateName,
                                     image: card.imageUrl,
@@ -153,7 +155,6 @@ class _HomePageState extends State<HomePage> {
                               },
                             );
                           }
-                          print("Hereeeeee");
                           return const Center(
                             child: Text("Something went wrong"),
                           );
