@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/state_page/pages/state_page.dart';
 
 class TravelCard extends StatelessWidget {
   final String? stateName;
@@ -28,13 +29,8 @@ class TravelCard extends StatelessWidget {
         border: Border.all(
           color: AppTheme.powderBlue,
           width: 2,
-          // strokeAlign: context.,
+          style: BorderStyle.solid,
         ),
-
-        // border: Border.all(
-        //   color: colorScheme.outline.withOpacity(0.12),
-        //   width: 0.5,
-        // ),
         boxShadow: [
           BoxShadow(
             color: colorScheme.primary.withOpacity(0.08),
@@ -47,7 +43,6 @@ class TravelCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Header ──────────────────────────────────────────
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
             child: Row(
@@ -70,7 +65,7 @@ class TravelCard extends StatelessWidget {
                         child: Text(
                           stateName!.toUpperCase(),
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 0.08,
                             color: colorScheme.primary,
@@ -79,14 +74,6 @@ class TravelCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                     ],
-                    // Text(
-                    //   stateName,
-                    //   style: const TextStyle(
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.w500,
-                    //     height: 1.2,
-                    //   ),
-                    // ),
                   ],
                 ),
                 if (rating != null)
@@ -112,7 +99,6 @@ class TravelCard extends StatelessWidget {
             ),
           ),
 
-          // ── Image + Overlay ──────────────────────────────────
           ClipRRect(
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
@@ -152,7 +138,7 @@ class TravelCard extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -173,53 +159,48 @@ class TravelCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Quick stats
-                            Row(
-                              children: [
-                                _ChipStat(
-                                  icon: Icons.schedule_rounded,
-                                  label: '7–10 days',
-                                ),
-                                const SizedBox(width: 10),
-                                _ChipStat(
-                                  icon: Icons.currency_rupee_rounded,
-                                  label: 'Mid-range',
-                                ),
-                              ],
-                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  // Bookmark
+                                  _IconBtn(icon: Icons.bookmark_border_rounded),
+                                  Spacer(),
 
-                            // Action buttons
-                            Row(
-                              children: [
-                                // Bookmark
-                                _IconBtn(icon: Icons.bookmark_border_rounded),
-                                const SizedBox(width: 8),
+                                  // Explore
+                                  FilledButton.icon(
+                                    onPressed: () {
+                                      // navigate to that state
 
-                                // Explore
-                                FilledButton.icon(
-                                  onPressed: () {},
-                                  style: FilledButton.styleFrom(
-                                    backgroundColor: colorScheme.primary,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 9,
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => StatePage(stateName: stateName,),
+                                        ),
+                                      );
+                                    },
+                                    style: FilledButton.styleFrom(
+                                      backgroundColor: colorScheme.primary,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 9,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      textStyle: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                    icon: const Icon(
+                                      Icons.arrow_forward_rounded,
+                                      size: 15,
                                     ),
-                                    textStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    iconAlignment: IconAlignment.end,
+                                    label: const Text('Explore'),
                                   ),
-                                  icon: const Icon(
-                                    Icons.arrow_forward_rounded,
-                                    size: 15,
-                                  ),
-                                  iconAlignment: IconAlignment.end,
-                                  label: const Text('Explore'),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),

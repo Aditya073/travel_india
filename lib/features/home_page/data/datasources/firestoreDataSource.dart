@@ -13,8 +13,8 @@ class Firestoredatasource {
         throw Exception("No card data found");
       }
 
-      print("Data From {Firestore}");
-      print(snapshot..toString());
+      // print("Data From {Firestore}");
+      // print(snapshot..toString());
 
       return snapshot.docs.map((doc) => CardModel.fromFirestore(doc)).toList();
     } catch (e) {
