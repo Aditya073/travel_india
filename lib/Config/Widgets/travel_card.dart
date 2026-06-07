@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
-import 'package:travel_india/features/state_page/pages/state_page.dart';
+import 'package:travel_india/features/state_page/presentation/pages/state_page.dart';
 
 class TravelCard extends StatelessWidget {
   final String? stateName;

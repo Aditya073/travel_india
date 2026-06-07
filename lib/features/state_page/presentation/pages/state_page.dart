@@ -31,6 +31,15 @@ class StatePage extends StatelessWidget {
         height: double.infinity,
 
         child: Column(children: [
+          // map card
+          // hotels card  ---> with reviews
+          // places to visit card  ---> with reviews
+          // restaurants card
+          // airports card
+         
+
+
+
 
           ],
         ),

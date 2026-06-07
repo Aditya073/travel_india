@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/Config/Widgets/travel_card.dart';
 import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
 
@@ -65,7 +66,32 @@ class _HomePageState extends State<HomePage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(backgroundColor: Theme.of(context).primaryColor),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          leading: IconButton(
+            onPressed: () {
+              // sliding profile window
+              // 1. display username
+              // 2. shows the states that have been book marked / saved 
+              // 3. add logout feature here ---> and a checkbox to conform it
+            },
+            icon: Icon(Icons.person, size: 35, color: AppTheme.iceBlue),
+          ),
+
+          actions: [
+            IconButton(
+              onPressed: () {
+                 // sliding settings window
+                 // 1. change to a dark/light theme
+              },
+              icon: Icon(
+                Icons.more_vert_outlined,
+                size: 30,
+                color: AppTheme.iceBlue,
+              ),
+            ),
+          ],
+        ),
 
         body: Container(
           color: Colors.white,
@@ -74,6 +100,7 @@ class _HomePageState extends State<HomePage> {
 
           child: Column(
             children: [
+
               // SEARCH BAR
               Padding(
                 padding: const EdgeInsets.all(15),
@@ -97,7 +124,7 @@ class _HomePageState extends State<HomePage> {
 
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5),
-                    child: const TextField(
+                    child: const TextField( // this should show the only results that is being typed
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.search, color: Colors.black),
                         hintText: "Search Destination",
