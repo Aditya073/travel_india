@@ -217,26 +217,26 @@ class TravelCard extends StatelessWidget {
   }
 }
 
-class _ChipStat extends StatelessWidget {
-  final IconData icon;
-  final String label;
+// class _ChipStat extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
 
-  const _ChipStat({required this.icon, required this.label});
+//   const _ChipStat({required this.icon, required this.label});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 13, color: Colors.white60),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, color: Colors.white60),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Icon(icon, size: 13, color: Colors.white60),
+//         const SizedBox(width: 4),
+//         Text(
+//           label,
+//           style: const TextStyle(fontSize: 12, color: Colors.white60),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class _IconBtn extends StatelessWidget {
   final IconData icon;
