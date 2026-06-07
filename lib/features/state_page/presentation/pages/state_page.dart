@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/Config/Widgets/state_builder/map_card.dart';
 
 /*
 State name
@@ -25,24 +26,36 @@ class StatePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        height: double.infinity,
+      // body: Container(
+      //   color: Colors.white,
+      //   width: double.infinity,
+      //   height: double.infinity,
 
-        child: Column(children: [
-          // map card
-          // hotels card  ---> with reviews
-          // places to visit card  ---> with reviews
-          // restaurants card
-          // airports card
-         
+      //   child: Column(
+      //     children: [
+      //       // map card
+      //       MapCard(),
 
-
-
-
-          ],
+      //       // hotels card  ---> with reviews
+      //       // places to visit card  ---> with reviews
+      //       // restaurants card
+      //       // airports card
+      //     ],
+      //   ),
+      // ),
+      body: GridView.builder(
+        // Grid layout (2 items per row)
+        padding: const EdgeInsets.all(12),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 12,
         ),
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return Container(child: Column(children: [MapCard()]));
+        },
       ),
     );
   }
