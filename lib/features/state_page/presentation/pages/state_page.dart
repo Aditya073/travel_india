@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/Config/Widgets/state_builder/airports_card.dart';
+import 'package:travel_india/Config/Widgets/state_builder/hotels_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/map_card.dart';
+import 'package:travel_india/Config/Widgets/state_builder/places_card.dart';
+import 'package:travel_india/Config/Widgets/state_builder/restaurants_card.dart';
 
 /*
 State name
@@ -12,6 +16,13 @@ class StatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> cards = [
+      MapCard(),
+      PlacesCard(),
+      HotelsCard(),
+      RestaurantsCard(),
+      AirportsCard(),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -48,13 +59,13 @@ class StatePage extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.75,
-          mainAxisSpacing: 0,
+          childAspectRatio: 0.95,
+          mainAxisSpacing: 12,
           crossAxisSpacing: 12,
         ),
-        itemCount: 5,
+        itemCount: cards.length,
         itemBuilder: (context, index) {
-          return Container(child: Column(children: [MapCard()]));
+          return cards[index];
         },
       ),
     );

@@ -14,7 +14,7 @@ class MapCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surface,
 
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
         border: Border.all(
           color: AppTheme.powderBlue,
           width: 2,
@@ -29,45 +29,53 @@ class MapCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
-        children: [
-          Image.asset(
-            'assets/images/Google_logo.png',
-            height: 210,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0.2, 0.55, 0.8, 1.0],
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.15),
-                    Colors.black.withOpacity(0.72),
-                    Colors.black.withOpacity(0.92),
-                  ],
+      child: ClipRRect(
+        borderRadius: BorderRadiusGeometry.all(Radius.circular(30)),
+        child: Stack(
+          children: [
+            Center(
+              child: Text(
+                'Map',
+                style: TextStyle(
+                  color: AppTheme.powderBlue,
+                  fontSize: 32,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text('View', style: TextStyle(fontSize: 18)),
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.2, 0.55, 0.8, 1.0],
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.15),
+                      Colors.black.withOpacity(0.72),
+                      Colors.black.withOpacity(0.92),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('View', style: TextStyle(fontSize: 18)),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
