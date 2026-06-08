@@ -37,23 +37,12 @@ class StatePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      // body: Container(
-      //   color: Colors.white,
-      //   width: double.infinity,
-      //   height: double.infinity,
-
-      //   child: Column(
-      //     children: [
-      //       // map card
-      //       MapCard(),
-
+      
       //       // hotels card  ---> with reviews
       //       // places to visit card  ---> with reviews
       //       // restaurants card
       //       // airports card
-      //     ],
-      //   ),
-      // ),
+
       body: GridView.builder(
         // Grid layout (2 items per row)
         padding: const EdgeInsets.all(12),

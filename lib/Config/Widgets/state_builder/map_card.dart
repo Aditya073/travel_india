@@ -68,8 +68,15 @@ class MapCard extends StatelessWidget {
 
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-                child: ElevatedButton(
+                child: TextButton(
                   onPressed: () {},
+
+                  style: TextButton.styleFrom(
+                    minimumSize: (Size(double.infinity, 50)),
+                    backgroundColor: AppTheme.iceBlue,
+                    textStyle: TextStyle(fontSize: 15),
+                  ),
+
                   child: Text('View', style: TextStyle(fontSize: 18)),
                 ),
               ),
