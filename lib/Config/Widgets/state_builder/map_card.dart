@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/state_page/presentation/pages/map_page.dart';
 
 class MapCard extends StatelessWidget {
   const MapCard({super.key});
@@ -69,7 +70,12 @@ class MapCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MapPage()),
+                    );
+                  },
 
                   style: TextButton.styleFrom(
                     minimumSize: (Size(double.infinity, 50)),

@@ -3,6 +3,8 @@
         android:label="travel_india"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+            <meta-data android:name="com.google.android.geo.API_KEY"
+              android:value="AIzaSyD7rseKaAYDSM7gm_a0Yk6Nz-JttfZRlRw"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
