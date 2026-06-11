@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-class HotelsPage extends StatefulWidget {
-  const HotelsPage({super.key});
+class HotelsPage extends StatelessWidget {
+  final String stateName;
+  const HotelsPage({super.key, required this.stateName});
 
-  @override
-  State<HotelsPage> createState() => _HotelsPageState();
-}
-
-class _HotelsPageState extends State<HotelsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +26,7 @@ class _HotelsPageState extends State<HotelsPage> {
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
-                ],
+                ],~
               ),
 
               child: Padding(
@@ -48,11 +44,68 @@ class _HotelsPageState extends State<HotelsPage> {
             ),
           ),
 
-
           // hotels cards
-
+          
+          
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     child: Column(
+              //       children: [
+              //         BlocBuilder<hotelsBloc, hotelsState>(
+              //           builder: (context, state) {
+              //             if (state is CardLoading) {
+              //               return const Center(
+              //                 child: CircularProgressIndicator(),
+              //               );
+              //             }
+              //             if (state is Failure) {
+              //               return Center(
+              //                 child: Text(
+              //                   state.message,
+              //                   style: TextStyle(fontSize: 24),
+              //                 ),
+              //               );
+              //             }
+              //             if (state is Success) {
+              //               return ListView.builder(
+              //                 shrinkWrap: true,
+              //                 physics: NeverScrollableScrollPhysics(),
+              //                 itemCount: state.card.length,
+              //                 itemBuilder: (context, index) {
+              //                   final card = state.card[index];
+
+              //                   return Padding(
+              //                     padding: const EdgeInsets.only(
+              //                       bottom: 25,
+              //                       left: 20,
+              //                       right: 20,
+              //                     ),
+              //                     child: TravelCard(
+              //                       stateName: card.stateName,
+              //                       image: card.imageUrl,
+              //                       description: card.description,
+              //                     ),
+              //                   );
+              //                 },
+              //               );
+              //             }
+              //             return const Center(
+              //               child: Text("Something went wrong"),
+              //             );
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
