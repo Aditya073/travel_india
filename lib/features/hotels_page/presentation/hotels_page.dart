@@ -26,7 +26,7 @@ class HotelsPage extends StatelessWidget {
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
-                ],~
+                ],
               ),
 
               child: Padding(
@@ -45,8 +45,12 @@ class HotelsPage extends StatelessWidget {
           ),
 
           // hotels cards
-          
-          
+          Expanded(
+            child: SingleChildScrollView(child: Column(children: [
+
+              ],
+            )),
+          ),
         ],
       ),
     );

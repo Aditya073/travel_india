@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class DataFromApi {
+  
+  
 Future<List<dynamic>> getHotels(String state) async {
   // HIDE THE KEY BEFORE MAKING TS PUBLIC
   const apiKey = "AIzaSyD7rseKaAYDSM7gm_a0Yk6Nz-JttfZRlRw";
@@ -20,3 +23,5 @@ Future<List<dynamic>> getHotels(String state) async {
 
   return [];
 }
+}
+
