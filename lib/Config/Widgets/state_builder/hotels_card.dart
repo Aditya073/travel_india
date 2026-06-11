@@ -70,7 +70,9 @@ class HotelsCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
 
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    
+                  },
 
                   style: TextButton.styleFrom(
                     minimumSize: (Size(double.infinity, 50)),

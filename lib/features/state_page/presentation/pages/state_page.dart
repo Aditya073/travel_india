@@ -18,7 +18,7 @@ class StatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> cards = [
-      MapCard(),
+      MapCard(stateName: stateName!,),
       PlacesCard(),
       HotelsCard(),
       RestaurantsCard(),

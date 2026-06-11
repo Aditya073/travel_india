@@ -3,7 +3,9 @@ import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/state_page/presentation/pages/map_page.dart';
 
 class MapCard extends StatelessWidget {
-  const MapCard({super.key});
+    final String? stateName;
+
+  const MapCard({super.key, this.stateName});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class MapCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MapPage()),
+                      MaterialPageRoute(builder: (context) => MapPage(stateName: stateName!,)),
                     );
                   },
 
