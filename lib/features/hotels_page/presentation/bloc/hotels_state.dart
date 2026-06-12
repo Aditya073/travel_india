@@ -18,7 +18,6 @@ class Success extends HotelsState {
   4. contact info
   5. reviews
   6.  
-
   */
 
   Success();

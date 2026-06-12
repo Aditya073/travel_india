@@ -17,7 +17,7 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
       
         final hotels = await getHotelsData();
       
-        emit(Success(card: []));
+        emit(Success());
       
       
       } catch (e) {
