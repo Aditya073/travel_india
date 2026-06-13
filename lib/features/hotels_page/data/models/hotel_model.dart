@@ -17,21 +17,40 @@ class HotelModel {
     required this.latitude,
     required this.longitude,
   });
+/*  Map card
+┌─────────────────────┐
+│       MAP           │
+│   📍 📍 📍 📍     │
+└─────────────────────┘
 
-  factory HotelModel.fromJson(Map<String, dynamic> json) {
-    return HotelModel(
+
+Hotels Nearby
+┌─────────────────────┐
+│ 🏨 Taj Hotel        │
+│ ⭐ 4.5              │
+└─────────────────────┘
+
+┌─────────────────────┐
+│ 🏨 Imperial Palace  │
+│ ⭐ 4.2              │
+└─────────────────────┘
+*/
+
+
+  // factory HotelModel.fromJson(Map<String, dynamic> json) {
+  //   return HotelModel(
       // name: json['name'] ?? '',
       // placeId: json['place_id'] ?? '',
       // formattedAddress: json['formatted_address'] ?? '',
       // rating: (json['rating'] ?? 0).toDouble(),
       // latitude: json['geometry']['location']['lat'].toDouble(),
       // longitude: json['geometry']['location']['lng'].toDouble(),
-    );
-  }
+  //   );
+  // }
 }
 
 /*
-
+                                    API RESPONSE ---> Openpass API
   "type": "node",
   "id": 1655879936,
   "lat": 15.5440140,
