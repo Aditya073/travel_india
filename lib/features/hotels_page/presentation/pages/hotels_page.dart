@@ -22,10 +22,41 @@ class HotelsPage extends StatelessWidget {
     //   ),
     // };
 
-    const CameraPosition initialPosition = CameraPosition(
-      target: LatLng(27.1751, 78.0421), // India Center
-      zoom: 9,
-    );
+    final Map<String, LatLng> stateCenters = {
+      'Andhra Pradesh': const LatLng(15.9129, 79.7400),
+      'Arunachal Pradesh': const LatLng(28.2180, 94.7278),
+      'Assam': const LatLng(26.2006, 92.9376),
+      'Bihar': const LatLng(25.0961, 85.3131),
+      'Chhattisgarh': const LatLng(21.2787, 81.8661),
+      'Goa': const LatLng(15.2993, 74.1240),
+      'Gujarat': const LatLng(22.2587, 71.1924),
+      'Haryana': const LatLng(29.0588, 76.0856),
+      'Himachal Pradesh': const LatLng(31.1048, 77.1734),
+      'Jharkhand': const LatLng(23.6102, 85.2799),
+      'Karnataka': const LatLng(15.3173, 75.7139),
+      'Kerala': const LatLng(10.8505, 76.2711),
+      'Madhya Pradesh': const LatLng(22.9734, 78.6569),
+      'Maharashtra': const LatLng(19.7515, 75.7139),
+      'Manipur': const LatLng(24.6637, 93.9063),
+      'Meghalaya': const LatLng(25.4670, 91.3662),
+      'Mizoram': const LatLng(23.1645, 92.9376),
+      'Nagaland': const LatLng(26.1584, 94.5624),
+      'Odisha': const LatLng(20.9517, 85.0985),
+      'Punjab': const LatLng(31.1471, 75.3412),
+      'Rajasthan': const LatLng(27.0238, 74.2179),
+      'Sikkim': const LatLng(27.5330, 88.5122),
+      'Tamil Nadu': const LatLng(11.1271, 78.6569),
+      'Telangana': const LatLng(18.1124, 79.0193),
+      'Tripura': const LatLng(23.9408, 91.9882),
+      'Uttar Pradesh': const LatLng(26.8467, 80.9462),
+      'Uttarakhand': const LatLng(30.0668, 79.0193),
+      'West Bengal': const LatLng(22.9868, 87.8550),
+    };
+
+    CameraPosition getCameraPosition(String state) {
+      return CameraPosition(target: stateCenters[state]!, zoom: 7);
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -78,14 +109,14 @@ class HotelsPage extends StatelessWidget {
         */
                     Container(
                       height: MediaQuery.sizeOf(context).height / 2,
-                      padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
                       decoration: BoxDecoration(
                         color: AppTheme.iceBlue,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: GoogleMap(
-                        initialCameraPosition: initialPosition,
+                        initialCameraPosition: getCameraPosition(stateName),
                         // markers: markers,
                         // mapType: MapType.hybrid,
                         myLocationEnabled: true,
@@ -117,60 +148,3 @@ class HotelsPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-              // Expanded(
-              //   child: SingleChildScrollView(
-              //     child: Column(
-              //       children: [
-              //         BlocBuilder<hotelsBloc, hotelsState>(
-              //           builder: (context, state) {
-              //             if (state is CardLoading) {
-              //               return const Center(
-              //                 child: CircularProgressIndicator(),
-              //               );
-              //             }
-              //             if (state is Failure) {
-              //               return Center(
-              //                 child: Text(
-              //                   state.message,
-              //                   style: TextStyle(fontSize: 24),
-              //                 ),
-              //               );
-              //             }
-              //             if (state is Success) {
-              //               return ListView.builder(
-              //                 shrinkWrap: true,
-              //                 physics: NeverScrollableScrollPhysics(),
-              //                 itemCount: state.card.length,
-              //                 itemBuilder: (context, index) {
-              //                   final card = state.card[index];
-
-              //                   return Padding(
-              //                     padding: const EdgeInsets.only(
-              //                       bottom: 25,
-              //                       left: 20,
-              //                       right: 20,
-              //                     ),
-              //                     child: TravelCard(
-              //                       stateName: card.stateName,
-              //                       image: card.imageUrl,
-              //                       description: card.description,
-              //                     ),
-              //                   );
-              //                 },
-              //               );
-              //             }
-              //             return const Center(
-              //               child: Text("Something went wrong"),
-              //             );
-              //           },
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
