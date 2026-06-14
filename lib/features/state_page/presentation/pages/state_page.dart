@@ -20,7 +20,7 @@ class StatePage extends StatelessWidget {
     final List<Widget> cards = [
       MapCard(stateName: stateName!,),
       PlacesCard(),
-      HotelsCard(),
+      HotelsCard(stateName: stateName!,),
       RestaurantsCard(),
       AirportsCard(),
     ];

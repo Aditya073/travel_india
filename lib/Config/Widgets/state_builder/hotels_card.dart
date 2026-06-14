@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/hotels_page/presentation/pages/hotels_page.dart';
 
 class HotelsCard extends StatelessWidget {
-  const HotelsCard({super.key});
+  final String stateName;
+  const HotelsCard({super.key, required this.stateName});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,12 @@ class HotelsCard extends StatelessWidget {
 
                 child: TextButton(
                   onPressed: () {
-                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HotelsPage(stateName: stateName),
+                      ),
+                    );
                   },
 
                   style: TextButton.styleFrom(
@@ -82,7 +89,6 @@ class HotelsCard extends StatelessWidget {
 
                   child: Text('View', style: TextStyle(fontSize: 18)),
                 ),
-
               ),
             ),
           ],

@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 
 class HotelModel {
   final String name;
-  final String formattedAddress;
   final String placeId;
   final double rating;
   final double latitude;
@@ -11,42 +10,21 @@ class HotelModel {
 
   HotelModel({
     required this.name,
-    required this.formattedAddress,
     required this.placeId,
     required this.rating,
     required this.latitude,
     required this.longitude,
   });
-/*  Map card
-┌─────────────────────┐
-│       MAP           │
-│   📍 📍 📍 📍     │
-└─────────────────────┘
 
-
-Hotels Nearby
-┌─────────────────────┐
-│ 🏨 Taj Hotel        │
-│ ⭐ 4.5              │
-└─────────────────────┘
-
-┌─────────────────────┐
-│ 🏨 Imperial Palace  │
-│ ⭐ 4.2              │
-└─────────────────────┘
-*/
-
-
-  // factory HotelModel.fromJson(Map<String, dynamic> json) {
-  //   return HotelModel(
-      // name: json['name'] ?? '',
-      // placeId: json['place_id'] ?? '',
-      // formattedAddress: json['formatted_address'] ?? '',
-      // rating: (json['rating'] ?? 0).toDouble(),
-      // latitude: json['geometry']['location']['lat'].toDouble(),
-      // longitude: json['geometry']['location']['lng'].toDouble(),
-  //   );
-  // }
+  factory HotelModel.fromJson(Map<String, dynamic> json) {
+    return HotelModel(
+      name: json['name'] ?? '',
+      placeId: json['place_id'] ?? '',
+      rating: (json['rating'] ?? 0).toDouble(),
+      latitude: json['geometry']['location']['lat'].toDouble(),
+      longitude: json['geometry']['location']['lng'].toDouble(),
+    );
+  }
 }
 
 /*
