@@ -34,7 +34,7 @@ class _MapPageState extends State<MapPage> {
   // };
 
   static const CameraPosition initialPosition = CameraPosition(
-    target: LatLng(27.1751, 78.0421), // India Center
+    target: LatLng(27.1751, 78.0421), // this is WRONG coordinates!!!!!!!!!
     zoom: 9,
   );
 

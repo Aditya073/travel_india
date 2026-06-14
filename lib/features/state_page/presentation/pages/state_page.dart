@@ -6,9 +6,6 @@ import 'package:travel_india/Config/Widgets/state_builder/map_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/places_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/restaurants_card.dart';
 
-/*
-State name
-*/
 
 class StatePage extends StatelessWidget {
   final String? stateName;

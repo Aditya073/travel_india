@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:travel_india/features/hotels_page/data/models/hotel_model.dart';
 
 class DataFromApi {
-  Future<List<dynamic>> getHotels(String state) async {
-    // HIDE THE KEY BEFORE MAKING TS PUBLIC
-    // const apiKey = "AIzaSyD7rseKaAYDSM7gm_a0Yk6Nz-JttfZRlRw";
+  Future<List<HotelModel>> getHotels(String state) async {
 
     final query =
         '''

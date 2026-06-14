@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/hotels_page/presentation/bloc/hotels_bloc.dart';
 
-class HotelsPage extends StatelessWidget {
+class HotelsPage extends StatefulWidget {
   final String stateName;
   const HotelsPage({super.key, required this.stateName});
+
+  @override
+  State<HotelsPage> createState() => _HotelsPageState();
+}
+
+class _HotelsPageState extends State<HotelsPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HotelsBloc>().add(GetHotelsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +129,9 @@ class HotelsPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: GoogleMap(
-                        initialCameraPosition: getCameraPosition(stateName),
+                        initialCameraPosition: getCameraPosition(
+                          widget.stateName,
+                        ),
                         // markers: markers,
                         // mapType: MapType.hybrid,
                         myLocationEnabled: true,
@@ -124,8 +139,43 @@ class HotelsPage extends StatelessWidget {
                       ),
                     ),
 
-                    /*
-        
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppTheme.iceBlue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: BlocBuilder<HotelsBloc, HotelsState>(
+                        builder: (context, state) {
+                          if (state is HotelsLoading) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            );
+                          }
+                          if (state is Failure) {
+                            return Center(
+                              child: Text(
+                                state.message,
+                                style: TextStyle(fontSize: 24),
+                              ),
+                            );
+                          }
+                          if (state is Success) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.card.length,
+                              itemBuilder: (context, index) {
+                                final card = state.card[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 25,
+                                    left: 20,
+                                    right: 20,
+                                  ),
+
+                                  /*     create this design  
         
         Hotels Nearby
         ┌─────────────────────┐
@@ -138,6 +188,63 @@ class HotelsPage extends StatelessWidget {
         │ ⭐ 4.2              │
         └─────────────────────┘
         */
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.iceBlue,
+                                      borderRadius: BorderRadius.circular(16),
+                                      border: Border.all(
+                                        color: AppTheme.powderBlue,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Text(
+                                          '🏨',
+                                          style: TextStyle(fontSize: 28),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            card.name,
+                                            style: const TextStyle(
+                                              color: AppTheme.darkColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                        const Icon(
+                                          Icons.star_rounded,
+                                          color: AppTheme.primaryColor,
+                                          size: 18,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          card.rating.toStringAsFixed(1),
+                                          style: const TextStyle(
+                                            color: AppTheme.primaryColor,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+
+                          return const Center(
+                            child: Text("Something went wrong"),
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),

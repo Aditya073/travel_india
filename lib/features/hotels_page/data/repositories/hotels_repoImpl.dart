@@ -1,10 +1,13 @@
 import 'package:travel_india/features/hotels_page/data/datasources/data_from_api.dart';
+import 'package:travel_india/features/hotels_page/data/models/hotel_model.dart';
 import 'package:travel_india/features/hotels_page/domain/repositories/hotels_repo.dart';
 
 class HotelsRepoimpl implements HotelsRepo {
-  late final DataFromApi dataSource;
+  final DataFromApi dataSource;
+
+  HotelsRepoimpl({required this.dataSource});
   @override
-  Future<List<dynamic>> getHotels(String stateName) {
+  Future<List<HotelModel>> getHotels(String stateName) {
     return dataSource.getHotels(stateName);
   }
 }

@@ -14,6 +14,10 @@ import 'package:travel_india/features/home_page/data/repositories/card_repoImpl.
 import 'package:travel_india/features/home_page/domain/usecases/getCardData.dart';
 import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
 import 'package:travel_india/features/home_page/presentation/pages/home_page.dart';
+import 'package:travel_india/features/hotels_page/data/datasources/data_from_api.dart';
+import 'package:travel_india/features/hotels_page/data/repositories/hotels_repoImpl.dart';
+import 'package:travel_india/features/hotels_page/domain/usecases/get_data.dart';
+import 'package:travel_india/features/hotels_page/presentation/bloc/hotels_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +61,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => CardBloc(
             GetcardData(
               repository: CardRepoimpl(datasource: Firestoredatasource()),
+            ),
+          ),
+        ),
+        BlocProvider<HotelsBloc>(
+          create: (context) => HotelsBloc(
+            GetHotelsData(
+              repository: HotelsRepoimpl(dataSource: DataFromApi()),
             ),
           ),
         ),
