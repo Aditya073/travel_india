@@ -3,11 +3,10 @@ import 'package:travel_india/features/hotels_page/domain/repositories/hotels_rep
 
 class GetHotelsData {
   final HotelsRepo repository;
-  final String? stateName;
 
-  GetHotelsData({required this.repository, this.stateName});
+  GetHotelsData({required this.repository});
 
-  Future<List<HotelModel>> call() {
-    return repository.getHotels(stateName!);
+  Future<List<HotelModel>> call(String stateName) {
+    return repository.getHotels(stateName);
   }
 }

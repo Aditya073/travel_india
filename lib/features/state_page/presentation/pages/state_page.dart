@@ -6,18 +6,16 @@ import 'package:travel_india/Config/Widgets/state_builder/map_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/places_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/restaurants_card.dart';
 
-
 class StatePage extends StatelessWidget {
-  final String? stateName;
+  final String stateName;
   const StatePage({super.key, required this.stateName});
-  
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> cards = [
-      MapCard(stateName: stateName!,),
+      MapCard(stateName: stateName),
       PlacesCard(),
-      HotelsCard(stateName: stateName!,),
+      HotelsCard(stateName: stateName),
       RestaurantsCard(),
       AirportsCard(),
     ];
@@ -25,7 +23,7 @@ class StatePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          '$stateName',
+          stateName,
           style: TextStyle(
             color: AppTheme.powderBlue,
             fontStyle: FontStyle.italic,
@@ -35,12 +33,11 @@ class StatePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      
+
       //       // hotels card  ---> with reviews
       //       // places to visit card  ---> with reviews
       //       // restaurants card
       //       // airports card
-
       body: GridView.builder(
         // Grid layout (2 items per row)
         padding: const EdgeInsets.all(12),

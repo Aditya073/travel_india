@@ -174,7 +174,7 @@ class TravelCard extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => StatePage(stateName: stateName,),
+                                          builder: (context) => StatePage(stateName: stateName!,),
                                         ),
                                       );
                                     },

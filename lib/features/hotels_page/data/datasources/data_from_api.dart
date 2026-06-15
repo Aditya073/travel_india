@@ -14,7 +14,7 @@ area["name"="$state"]->.searchArea;
   node["tourism"="hotel"](area.searchArea);
   way["tourism"="hotel"](area.searchArea);
   relation["tourism"="hotel"](area.searchArea);
-);
+); 
 
 out center;
 ''';
@@ -25,6 +25,7 @@ out center;
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      print("In DataFromApi class!!!!!!!!!!!!");
       print(data.toString());
       return data;
     }

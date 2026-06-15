@@ -14,13 +14,25 @@ class HotelsPage extends StatefulWidget {
 
 class _HotelsPageState extends State<HotelsPage> {
   @override
-  void initState() {
-    super.initState();
-    context.read<HotelsBloc>().add(GetHotelsEvent());
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<HotelsBloc>().add(GetHotelsEvent(widget.stateName));
   }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   context.read<HotelsBloc>().add(GetHotelsEvent());
+  // }
 
   @override
   Widget build(BuildContext context) {
+    try {
+      final bloc = context.read<HotelsBloc>();
+      print("HotelsBloc found!!!!!!!!!!!!: $bloc");
+    } catch (e) {
+      print("HotelsBloc NOT found!!!!!!!!!!!!!!: $e");
+    }
     //   final Set<Marker> markers = {
     //   Marker(
     //     markerId: MarkerId('taj'),
@@ -67,7 +79,12 @@ class _HotelsPageState extends State<HotelsPage> {
     };
 
     CameraPosition getCameraPosition(String state) {
-      return CameraPosition(target: stateCenters[state]!, zoom: 7);
+      return CameraPosition(
+        target:
+            stateCenters[state] ??
+            const LatLng(20.5937, 78.9629), // India center
+        zoom: 7,
+      );
     }
 
     return Scaffold(
@@ -140,6 +157,7 @@ class _HotelsPageState extends State<HotelsPage> {
                     ),
 
                     Container(
+                      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
                       decoration: BoxDecoration(
                         color: AppTheme.iceBlue,
                         borderRadius: BorderRadius.circular(20),
@@ -154,6 +172,7 @@ class _HotelsPageState extends State<HotelsPage> {
                             );
                           }
                           if (state is Failure) {
+                            throw (state.message);
                             return Center(
                               child: Text(
                                 state.message,
@@ -162,12 +181,23 @@ class _HotelsPageState extends State<HotelsPage> {
                             );
                           }
                           if (state is Success) {
+                            print("Hotels count !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            print("Hotels count = ${state.card.length}");
+
+                            for (final hotel in state.card) {
+                              print("Hotel name: ${hotel.name}");
+                              print("Hotel rating: ${hotel.rating}");
+                            }
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: state.card.length,
                               itemBuilder: (context, index) {
                                 final card = state.card[index];
+                                print(
+                                  "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
+                                );
+                                print(card.toString());
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                     bottom: 25,
@@ -176,7 +206,7 @@ class _HotelsPageState extends State<HotelsPage> {
                                   ),
 
                                   /*     create this design  
-        
+      
         Hotels Nearby
         ┌─────────────────────┐
         │ 🏨 Taj Hotel        │
