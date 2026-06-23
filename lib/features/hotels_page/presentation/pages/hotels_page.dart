@@ -173,12 +173,12 @@ class _HotelsPageState extends State<HotelsPage> {
                           }
                           if (state is Failure) {
                             throw (state.message);
-                            return Center(
-                              child: Text(
-                                state.message,
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            );
+                            // return Center(
+                            //   child: Text(
+                            //     state.message,
+                            //     style: TextStyle(fontSize: 24),
+                            //   ),
+                            // );
                           }
                           if (state is Success) {
                             print("Hotels count !!!!!!!!!!!!!!!!!!!!!!!!!!!!");

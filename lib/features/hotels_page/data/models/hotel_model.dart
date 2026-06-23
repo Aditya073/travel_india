@@ -16,15 +16,27 @@ class HotelModel {
     required this.longitude,
   });
 
+  // factory HotelModel.fromJson(Map<String, dynamic> json) {
+  //   return HotelModel(
+  //     name: json['name'] ?? '',
+  //     placeId: json['place_id'] ?? '',
+  //     rating: (json['rating'] ?? 0).toDouble(),
+  //     latitude: json['geometry']['location']['lat'].toDouble(),
+  //     longitude: json['geometry']['location']['lng'].toDouble(),
+  //   );
+  // }
+
   factory HotelModel.fromJson(Map<String, dynamic> json) {
-    return HotelModel(
-      name: json['name'] ?? '',
-      placeId: json['place_id'] ?? '',
-      rating: (json['rating'] ?? 0).toDouble(),
-      latitude: json['geometry']['location']['lat'].toDouble(),
-      longitude: json['geometry']['location']['lng'].toDouble(),
-    );
-  }
+  final tags = json['tags'] ?? {};
+
+  return HotelModel(
+    name: tags['name'] ?? 'Unknown Hotel',
+    placeId: json['place_id'] ?? '',
+     rating: (json['rating'] ?? 0).toDouble(),
+    latitude: json['lat'] ?? json['center']?['lat'],
+    longitude: json['lon'] ?? json['center']?['lon'],
+  );
+}
 }
 
 /*
