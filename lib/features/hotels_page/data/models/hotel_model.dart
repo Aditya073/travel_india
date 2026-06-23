@@ -1,36 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-
-class HotelModel {
-  final String name;
-  final String placeId;
-  final double rating;
-  final double latitude;
-  final double longitude;
-
-  HotelModel({
-    required this.name,
-    required this.placeId,
-    required this.rating,
-    required this.latitude,
-    required this.longitude,
-  });
-
-  factory HotelModel.fromJson(Map<String, dynamic> json) {
-  final tags = json['tags'] ?? {};
-
-  return HotelModel(
-    name: tags['name'] ?? 'Unknown Hotel',
-    placeId: json['place_id'] ?? '',
-
-    //Since this is not avaliable in the api response thus i have manually given all of them a "3.0 stars"
-     rating: (tags['stars'] ?? 3.0).toDouble(),
-    latitude: json['lat'] ?? json['center']?['lat'],
-    longitude: json['lon'] ?? json['center']?['lon'],
-  );
-}
-}
-
 /*
                                     API RESPONSE ---> Openpass API
   "type": "node",
@@ -69,3 +36,32 @@ class HotelModel {
   "id": 1715059932,
   "lat
 */
+class HotelModel {
+  final String name;
+  final String placeId;
+  final double rating;
+  final double latitude;
+  final double longitude;
+
+  HotelModel({
+    required this.name,
+    required this.placeId,
+    required this.rating,
+    required this.latitude,
+    required this.longitude,
+  });
+
+  factory HotelModel.fromJson(Map<String, dynamic> json) {
+  final tags = json['tags'] ?? {};
+
+  return HotelModel(
+    name: tags['name'] ?? 'Unknown Hotel',
+    placeId: json['place_id'] ?? '',
+
+    //Since this is not avaliable in the api response thus i have manually given all of them a "3.0 stars"
+     rating: (tags['stars'] ?? 3.0).toDouble(),
+    latitude: json['lat'] ?? json['center']?['lat'],
+    longitude: json['lon'] ?? json['center']?['lon'],
+  );
+}
+}

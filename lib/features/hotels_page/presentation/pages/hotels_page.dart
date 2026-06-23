@@ -150,7 +150,8 @@ class _HotelsPageState extends State<HotelsPage> {
                           widget.stateName,
                         ),
                         // markers: markers,
-                        // mapType: MapType.hybrid,
+                        // mapType: MapType.hybrid,              
+                        //     *********************** now locate each sport on the map*******************
                         myLocationEnabled: true,
                         myLocationButtonEnabled: true,
                       ),
