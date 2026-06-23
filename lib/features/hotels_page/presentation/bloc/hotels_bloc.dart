@@ -14,6 +14,8 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
 
       try {
     print("Fetching hotels...");
+    print("!!!!!!!!!!!!!!!!event.stateName!!!!!!!!!!!!!!!");
+    print(event.stateName);
     
     final hotels = await getHotelsData(event.stateName);
 

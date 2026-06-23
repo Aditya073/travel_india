@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_india/features/hotels_page/data/models/hotel_model.dart';
 
@@ -45,8 +44,8 @@ if (coords == null) {
 final lat = coords['lat'];
 final lon = coords['lon'];
 
-print("Lat: $lat, Lon: $lon");
-    // 1. Defined Overpass QL Query
+print("!!!!!!!!!!!!!!!Lat: $lat, Lon: $lon !!!!!!!!!!!!!!!!!!!!!!");
+
     final query = '''
 [out:json][timeout:25];
 (
@@ -58,11 +57,10 @@ out center;
 ''';
 
     try {
-      // 2. Execute POST Request with mandatory headers
       final response = await http.post(
         Uri.parse('https://overpass-api.de/api/interpreter'),
         headers: {
-          // MANDATORY: Identifies your app to prevent 406/403 blocks
+          // *** MANDATORY -> Identifies your app to prevent 406/403 blocks
           'User-Agent': 'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
           'Accept': 'application/json',
         },
@@ -83,11 +81,11 @@ out center;
         );
       }
 
-      // 5. Decode Response
+
       final data = jsonDecode(response.body);
       final List elements = data['elements'] ?? [];
 
-      // 6. Map JSON array elements safely to your HotelModel list
+      // Map JSON array elements safely to your HotelModel list
       final List<HotelModel> hotels = elements.map((element) {
         // Ensure your HotelModel has a robust fromJson/fromMap constructor
         return HotelModel.fromJson(element); 

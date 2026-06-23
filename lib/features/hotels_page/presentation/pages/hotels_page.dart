@@ -173,12 +173,6 @@ class _HotelsPageState extends State<HotelsPage> {
                           }
                           if (state is Failure) {
                             throw (state.message);
-                            // return Center(
-                            //   child: Text(
-                            //     state.message,
-                            //     style: TextStyle(fontSize: 24),
-                            //   ),
-                            // );
                           }
                           if (state is Success) {
                             print("Hotels count !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -198,26 +192,28 @@ class _HotelsPageState extends State<HotelsPage> {
                                   "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
                                 );
                                 print(card.toString());
+
+                                /*     create this design  
+      
+                                    Hotels Nearby
+                                    ┌─────────────────────┐
+                                    │ 🏨 Taj Hotel        │
+                                    │ ⭐ 4.5              │
+                                    └─────────────────────┘
+                                     
+                                     ┌─────────────────────┐
+                                     │ 🏨 Imperial Palace  │
+                                     │ ⭐ 4.2              │
+                                     └─────────────────────┘
+                                     */
+
                                 return Padding(
                                   padding: const EdgeInsets.only(
-                                    bottom: 25,
-                                    left: 20,
-                                    right: 20,
+                                    left: 15,
+                                    right: 15,
+                                    top: 15,
                                   ),
 
-                                  /*     create this design  
-      
-        Hotels Nearby
-        ┌─────────────────────┐
-        │ 🏨 Taj Hotel        │
-        │ ⭐ 4.5              │
-        └─────────────────────┘
-        
-        ┌─────────────────────┐
-        │ 🏨 Imperial Palace  │
-        │ ⭐ 4.2              │
-        └─────────────────────┘
-        */
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                       horizontal: 16,
@@ -225,7 +221,7 @@ class _HotelsPageState extends State<HotelsPage> {
                                     ),
                                     padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: AppTheme.iceBlue,
+                                      color: AppTheme.primaryColor,
                                       borderRadius: BorderRadius.circular(16),
                                       border: Border.all(
                                         color: AppTheme.powderBlue,
@@ -242,7 +238,7 @@ class _HotelsPageState extends State<HotelsPage> {
                                           child: Text(
                                             card.name,
                                             style: const TextStyle(
-                                              color: AppTheme.darkColor,
+                                              color: AppTheme.iceBlue,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -250,14 +246,14 @@ class _HotelsPageState extends State<HotelsPage> {
                                         ),
                                         const Icon(
                                           Icons.star_rounded,
-                                          color: AppTheme.primaryColor,
+                                          color: AppTheme.iceBlue,
                                           size: 18,
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
                                           card.rating.toStringAsFixed(1),
                                           style: const TextStyle(
-                                            color: AppTheme.primaryColor,
+                                            color: AppTheme.iceBlue,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
