@@ -8,26 +8,25 @@ part 'hotels_state.dart';
 class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
   final GetHotelsData getHotelsData;
 
-  HotelsBloc(this.getHotelsData,)
-    : super(HotelsInitial()) {
+  HotelsBloc(this.getHotelsData) : super(HotelsInitial()) {
     on<GetHotelsEvent>((event, emit) async {
-
+      emit(HotelsLoading());
       try {
-    print("Fetching hotels...");
-    print("!!!!!!!!!!!!!!!!event.stateName!!!!!!!!!!!!!!!");
-    print(event.stateName);
-    
-    final hotels = await getHotelsData(event.stateName);
+        print("Fetching hotels...");
+        print("!!!!!!!!!!!!!!!!event.stateName!!!!!!!!!!!!!!!");
+        print(event.stateName);
 
-    print("Hotels fetched: ${hotels.length}");
+        final hotels = await getHotelsData(event.stateName);
 
-    emit(Success(card: hotels));
-  } catch (e, stackTrace) {
-    print("ERROR: $e");
-    print(stackTrace);
+        print("Hotels fetched: ${hotels.length}");
 
-    emit(Failure(message: e.toString()));
-  }
+        emit(Success(card: hotels));
+      } catch (e, stackTrace) {
+        print("ERROR: $e");
+        print(stackTrace);
+
+        emit(Failure(message: e.toString()));
+      }
     });
   }
 }

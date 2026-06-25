@@ -252,7 +252,7 @@ class _HotelsPageState extends State<HotelsPage> {
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
-                                          card.rating.toStringAsFixed(1),
+                                          card.rating,
                                           style: const TextStyle(
                                             color: AppTheme.iceBlue,
                                             fontWeight: FontWeight.w700,

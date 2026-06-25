@@ -39,7 +39,7 @@
 class HotelModel {
   final String name;
   final String placeId;
-  final double rating;
+  final String rating;
   final double latitude;
   final double longitude;
 
@@ -59,7 +59,7 @@ class HotelModel {
     placeId: json['place_id'] ?? '',
 
     //Since this is not avaliable in the api response thus i have manually given all of them a "3.0 stars"
-     rating: (tags['stars'] ?? 3.0).toDouble(),
+    rating: tags['stars'] ?? '3.0',
     latitude: json['lat'] ?? json['center']?['lat'],
     longitude: json['lon'] ?? json['center']?['lon'],
   );
