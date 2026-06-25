@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/hotels_page/data/models/hotel_model.dart';
 import 'package:travel_india/features/hotels_page/presentation/bloc/hotels_bloc.dart';
 
 class HotelsPage extends StatefulWidget {
@@ -13,40 +14,54 @@ class HotelsPage extends StatefulWidget {
 }
 
 class _HotelsPageState extends State<HotelsPage> {
+  Set<Marker> markers = {};
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     context.read<HotelsBloc>().add(GetHotelsEvent(widget.stateName));
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   context.read<HotelsBloc>().add(GetHotelsEvent());
+  // Set<Marker> gethotelMarker(List<HotelModel> hotels) {
+  //   final List<Map<String, dynamic>> hotelMarker = [];
+  //   for (var hotel in hotels) {
+  //     hotelMarker.add({
+  //       "name": hotel.name,
+  //       "lat": hotel.latitude,
+  //       "lng": hotel.longitude,
+  //     });
+  //   }
+  //   print(
+  //     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!! hotelMarker.asMap() **********************",
+  //   );
+  //   print(hotelMarker.asMap());
+
+  //   final Set<Marker> markers = {};
+  //   for (var element in hotelMarker) {
+  //     markers.add(
+  //       Marker(
+  //         markerId: MarkerId(element['name']),
+  //         position: LatLng(element['lat'], element['lng']),
+  //         infoWindow: InfoWindow(title: element['name']),
+  //       ),
+  //     );
+  //   }
+
+  //   print(markers);
+  //   return markers;
   // }
+
+  Set<Marker> gethotelMarker(List<HotelModel> hotels) {
+    return hotels.map((hotel) {
+      return Marker(
+        markerId: MarkerId(hotel.placeId),
+        position: LatLng(hotel.latitude, hotel.longitude),
+        infoWindow: InfoWindow(title: hotel.name, snippet: '${hotel.rating} ⭐'),
+      );
+    }).toSet();
+  }
 
   @override
   Widget build(BuildContext context) {
-    try {
-      final bloc = context.read<HotelsBloc>();
-      print("HotelsBloc found!!!!!!!!!!!!: $bloc");
-    } catch (e) {
-      print("HotelsBloc NOT found!!!!!!!!!!!!!!: $e");
-    }
-    //   final Set<Marker> markers = {
-    //   Marker(
-    //     markerId: MarkerId('taj'),
-    //     position: LatLng(27.1751, 78.0421),
-    //     infoWindow: InfoWindow(title: 'Taj Mahal'),
-    //   ),
-
-    //   Marker(
-    //     markerId: MarkerId('gateway'),
-    //     position: LatLng(18.9220, 72.8347),
-    //     infoWindow: InfoWindow(title: 'Gateway of India'),
-    //   ),
-    // };
-
     final Map<String, LatLng> stateCenters = {
       'Andhra Pradesh': const LatLng(15.9129, 79.7400),
       'Arunachal Pradesh': const LatLng(28.2180, 94.7278),
@@ -88,6 +103,29 @@ class _HotelsPageState extends State<HotelsPage> {
     }
 
     return Scaffold(
+      floatingActionButton: IconButton(
+        /*
+        Hotels API → state.card
+                ↓
+       gethotelMarker(state.card)
+                ↓
+          Set<Marker>
+                ↓
+      markers state variable
+                ↓
+     GoogleMap(markers: markers)
+        */
+        onPressed: () {
+          // this will call the function to mark the location of the hotels on the map
+          setState(() {
+            markers = gethotelMarker(
+              (context.read<HotelsBloc>().state as Success).card,
+            );
+          });
+        },
+        icon: Icon(Icons.location_on_outlined, color: AppTheme.iceBlue),
+        color: AppTheme.darkColor,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -130,13 +168,6 @@ class _HotelsPageState extends State<HotelsPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    /*  Map card
-        ┌─────────────────────┐
-        │       MAP           │
-        │   📍 📍 📍 📍     │
-        └─────────────────────┘
-
-        */
                     Container(
                       height: MediaQuery.sizeOf(context).height / 2,
                       padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -149,8 +180,8 @@ class _HotelsPageState extends State<HotelsPage> {
                         initialCameraPosition: getCameraPosition(
                           widget.stateName,
                         ),
-                        // markers: markers,
-                        // mapType: MapType.hybrid,              
+                        markers: markers,
+                        // mapType: MapType.hybrid,
                         //     *********************** now locate each sport on the map*******************
                         myLocationEnabled: true,
                         myLocationButtonEnabled: true,
@@ -176,13 +207,16 @@ class _HotelsPageState extends State<HotelsPage> {
                             throw (state.message);
                           }
                           if (state is Success) {
-                            print("Hotels count !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                            print("Hotels count = ${state.card.length}");
+                            // print("Hotels count !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            // print("Hotels count = ${state.card.length}");
 
-                            for (final hotel in state.card) {
-                              print("Hotel name: ${hotel.name}");
-                              print("Hotel rating: ${hotel.rating}");
-                            }
+                            // for (final hotel in state.card) {
+                            //   print("Hotel name: ${hotel.name}");
+                            //   print("Hotel rating: ${hotel.rating}");
+                            // }
+
+                            // final hotelsMarker = gethotelMarker(state.card);
+
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
@@ -193,21 +227,6 @@ class _HotelsPageState extends State<HotelsPage> {
                                   "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
                                 );
                                 print(card.toString());
-
-                                /*     create this design  
-      
-                                    Hotels Nearby
-                                    ┌─────────────────────┐
-                                    │ 🏨 Taj Hotel        │
-                                    │ ⭐ 4.5              │
-                                    └─────────────────────┘
-                                     
-                                     ┌─────────────────────┐
-                                     │ 🏨 Imperial Palace  │
-                                     │ ⭐ 4.2              │
-                                     └─────────────────────┘
-                                     */
-
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                     left: 15,
