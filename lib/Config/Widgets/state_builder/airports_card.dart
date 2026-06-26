@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/airports_page/presentation/pages/airport_pages.dart';
 
 class AirportsCard extends StatelessWidget {
-  const AirportsCard({super.key});
+  final String stateName;
+  const AirportsCard({super.key, required this.stateName});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,14 @@ class AirportsCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
 
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navigate to diff page
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AirportPages()),
+                    );
+                  },
 
                   style: TextButton.styleFrom(
                     minimumSize: (Size(double.infinity, 50)),

@@ -17,7 +17,7 @@ class StatePage extends StatelessWidget {
       PlacesCard(),
       HotelsCard(stateName: stateName),
       RestaurantsCard(),
-      AirportsCard(),
+      AirportsCard(stateName: stateName,),
     ];
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +34,6 @@ class StatePage extends StatelessWidget {
         centerTitle: true,
       ),
 
-      //       // hotels card  ---> with reviews
       //       // places to visit card  ---> with reviews
       //       // restaurants card
       //       // airports card

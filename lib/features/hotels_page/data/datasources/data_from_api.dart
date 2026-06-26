@@ -30,7 +30,7 @@ class DataFromApi {
       'Tamil Nadu': {'lat': 11.1271, 'lon': 78.6569},
       'Telangana': {'lat': 18.1124, 'lon': 79.0193},
       'Tripura': {'lat': 23.9408, 'lon': 91.9882},
-      'Uttar Pradesh': {'lat': 26.8467, 'lon': 80.9462}, // Lucknow 
+      'Uttar Pradesh': {'lat': 26.8467, 'lon': 80.9462}, // Lucknow
       'Uttarakhand': {'lat': 30.0668, 'lon': 79.0193},
       'West Bengal': {'lat': 22.9868, 'lon': 87.8550},
     };
@@ -45,7 +45,8 @@ class DataFromApi {
 
     print("!!!!!!!!!!!!!!!Lat: $lat, Lon: $lon !!!!!!!!!!!!!!!!!!!!!!");
 
-        final query = '''
+    final query =
+        '''
     [out:json][timeout:30];
     (
       node["tourism"="hotel"](around:50000,$lat,$lon);
@@ -56,23 +57,22 @@ class DataFromApi {
     ''';
 
     try {
-      final response = await http.post(
-        Uri.parse('https://overpass-api.de/api/interpreter'),
-        headers: {
-          // *** MANDATORY -> Identifies your app to prevent 406/403 blocks
-          'User-Agent': 'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-          'Accept': 'application/json',
-        },
-        body: {'data': query},
-      )
-    .timeout(const Duration(seconds: 40));
+      final response = await http
+          .post(
+            Uri.parse('https://overpass-api.de/api/interpreter'),
+            headers: {
+              // *** MANDATORY -> Identifies your app to prevent 406/403 blocks
+              'User-Agent':
+                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
+              'Accept': 'application/json',
+            },
+            body: {'data': query},
+          )
+          .timeout(const Duration(seconds: 40));
 
       if (response.statusCode != 200) {
-        // throw Exception(
-        //   'Overpass Error: ${response.statusCode}\n${response.body}',
-        // );
-         print(response.body);
-  return [];
+        print(response.body);
+        return [];
       }
 
       if (!response.body.trim().startsWith('{')) {
