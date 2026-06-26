@@ -21,43 +21,33 @@ class _HotelsPageState extends State<HotelsPage> {
     context.read<HotelsBloc>().add(GetHotelsEvent(widget.stateName));
   }
 
-  // Set<Marker> gethotelMarker(List<HotelModel> hotels) {
-  //   final List<Map<String, dynamic>> hotelMarker = [];
-  //   for (var hotel in hotels) {
-  //     hotelMarker.add({
-  //       "name": hotel.name,
-  //       "lat": hotel.latitude,
-  //       "lng": hotel.longitude,
-  //     });
-  //   }
-  //   print(
-  //     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!! hotelMarker.asMap() **********************",
-  //   );
-  //   print(hotelMarker.asMap());
-
-  //   final Set<Marker> markers = {};
-  //   for (var element in hotelMarker) {
-  //     markers.add(
-  //       Marker(
-  //         markerId: MarkerId(element['name']),
-  //         position: LatLng(element['lat'], element['lng']),
-  //         infoWindow: InfoWindow(title: element['name']),
-  //       ),
-  //     );
-  //   }
-
-  //   print(markers);
-  //   return markers;
-  // }
-
   Set<Marker> gethotelMarker(List<HotelModel> hotels) {
-    return hotels.map((hotel) {
-      return Marker(
-        markerId: MarkerId(hotel.placeId),
-        position: LatLng(hotel.latitude, hotel.longitude),
-        infoWindow: InfoWindow(title: hotel.name, snippet: '${hotel.rating} ⭐'),
+    final List<Map<String, dynamic>> hotelMarker = [];
+    for (var hotel in hotels) {
+      hotelMarker.add({
+        "name": hotel.name,
+        "lat": hotel.latitude,
+        "lng": hotel.longitude,
+      });
+    }
+    print(
+      "!!!!!!!!!!!!!!!!!!!!!!!!!!!!! hotelMarker.asMap() **********************",
+    );
+    print(hotelMarker.asMap());
+
+    final Set<Marker> markers = {};
+    for (var element in hotelMarker) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(element['name']),
+          position: LatLng(element['lat'], element['lng']),
+          infoWindow: InfoWindow(title: element['name']),
+        ),
       );
-    }).toSet();
+    }
+
+    print(markers);
+    return markers;
   }
 
   @override
@@ -76,7 +66,7 @@ class _HotelsPageState extends State<HotelsPage> {
       'Karnataka': const LatLng(15.3173, 75.7139),
       'Kerala': const LatLng(10.8505, 76.2711),
       'Madhya Pradesh': const LatLng(22.9734, 78.6569),
-      'Maharashtra': const LatLng(19.7515, 75.7139),
+      'Maharashtra': const LatLng(19.0760, 72.8777), // Mumbai --> 'lat': 19.0760, 'lon': 72.8777
       'Manipur': const LatLng(24.6637, 93.9063),
       'Meghalaya': const LatLng(25.4670, 91.3662),
       'Mizoram': const LatLng(23.1645, 92.9376),
@@ -103,29 +93,6 @@ class _HotelsPageState extends State<HotelsPage> {
     }
 
     return Scaffold(
-      floatingActionButton: IconButton(
-        /*
-        Hotels API → state.card
-                ↓
-       gethotelMarker(state.card)
-                ↓
-          Set<Marker>
-                ↓
-      markers state variable
-                ↓
-     GoogleMap(markers: markers)
-        */
-        onPressed: () {
-          // this will call the function to mark the location of the hotels on the map
-          setState(() {
-            markers = gethotelMarker(
-              (context.read<HotelsBloc>().state as Success).card,
-            );
-          });
-        },
-        icon: Icon(Icons.location_on_outlined, color: AppTheme.iceBlue),
-        color: AppTheme.darkColor,
-      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -217,6 +184,18 @@ class _HotelsPageState extends State<HotelsPage> {
 
                             // final hotelsMarker = gethotelMarker(state.card);
 
+                            if (state.card.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  "No Hotels Found!!",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppTheme.darkColor,
+                                  ),
+                                ),
+                              );
+                            }
+
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
@@ -297,6 +276,29 @@ class _HotelsPageState extends State<HotelsPage> {
             ),
           ],
         ),
+      ),
+      /*
+          Hotels API → state.card
+                  ↓
+         gethotelMarker(state.card)
+                  ↓
+            Set<Marker>
+                  ↓
+        markers state variable
+                  ↓
+       GoogleMap(markers: markers)
+          */
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // this will call the function to mark the location of the hotels on the map
+          setState(() {
+            markers = gethotelMarker(
+              (context.read<HotelsBloc>().state as Success).card,
+            );
+          });
+        },
+        backgroundColor: AppTheme.darkColor,
+        child: Icon(Icons.location_on_outlined, color: AppTheme.iceBlue),
       ),
     );
   }

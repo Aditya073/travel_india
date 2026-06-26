@@ -1,5 +1,4 @@
 import 'dart:convert';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_india/features/hotels_page/data/models/hotel_model.dart';
 
@@ -19,7 +18,7 @@ class DataFromApi {
       'Karnataka': {'lat': 15.3173, 'lon': 75.7139},
       'Kerala': {'lat': 10.8505, 'lon': 76.2711},
       'Madhya Pradesh': {'lat': 22.9734, 'lon': 78.6569},
-      'Maharashtra': {'lat': 19.7515, 'lon': 75.7139},
+      'Maharashtra': {'lat': 19.0760, 'lon': 72.8777}, // Mumbai
       'Manipur': {'lat': 24.6637, 'lon': 93.9063},
       'Meghalaya': {'lat': 25.4670, 'lon': 91.3662},
       'Mizoram': {'lat': 23.1645, 'lon': 92.9376},
@@ -31,7 +30,7 @@ class DataFromApi {
       'Tamil Nadu': {'lat': 11.1271, 'lon': 78.6569},
       'Telangana': {'lat': 18.1124, 'lon': 79.0193},
       'Tripura': {'lat': 23.9408, 'lon': 91.9882},
-      'Uttar Pradesh': {'lat': 26.8467, 'lon': 80.9462},
+      'Uttar Pradesh': {'lat': 26.8467, 'lon': 80.9462}, // Lucknow 
       'Uttarakhand': {'lat': 30.0668, 'lon': 79.0193},
       'West Bengal': {'lat': 22.9868, 'lon': 87.8550},
     };
@@ -47,7 +46,7 @@ class DataFromApi {
     print("!!!!!!!!!!!!!!!Lat: $lat, Lon: $lon !!!!!!!!!!!!!!!!!!!!!!");
 
         final query = '''
-    [out:json][timeout:20][maxsize:1073741824];
+    [out:json][timeout:30];
     (
       node["tourism"="hotel"](around:50000,$lat,$lon);
       way["tourism"="hotel"](around:50000,$lat,$lon);
@@ -55,8 +54,6 @@ class DataFromApi {
     );
     out center;
     ''';
-
-
 
     try {
       final response = await http.post(
@@ -67,12 +64,15 @@ class DataFromApi {
           'Accept': 'application/json',
         },
         body: {'data': query},
-      );
+      )
+    .timeout(const Duration(seconds: 40));
 
       if (response.statusCode != 200) {
-        throw Exception(
-          'Overpass Error: ${response.statusCode}\n${response.body}',
-        );
+        // throw Exception(
+        //   'Overpass Error: ${response.statusCode}\n${response.body}',
+        // );
+         print(response.body);
+  return [];
       }
 
       if (!response.body.trim().startsWith('{')) {
