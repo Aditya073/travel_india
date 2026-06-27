@@ -5,7 +5,7 @@ import 'package:travel_india/features/airports_page/data/model/airport_model.dar
 
 class DataApi {
   Future<List<AirportModel>> getAirportDetails(String state) async {
-    try {
+    try {      // change the query ************************
       final query =
           '''
 [out:json][timeout:25];

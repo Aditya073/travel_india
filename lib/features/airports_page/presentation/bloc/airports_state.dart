@@ -9,6 +9,9 @@ class AirportsLoading extends AirportsState {}
 
 class Success extends AirportsState {
   // model
+  final List<AirportModel> airports;
+
+  Success({required this.airports}); 
 }
 
 class Failure extends AirportsState {

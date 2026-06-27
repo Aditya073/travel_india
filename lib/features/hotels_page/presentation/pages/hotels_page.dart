@@ -46,7 +46,6 @@ class _HotelsPageState extends State<HotelsPage> {
       );
     }
 
-    print(markers);
     return markers;
   }
 

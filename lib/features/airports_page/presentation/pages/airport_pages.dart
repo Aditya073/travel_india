@@ -13,6 +13,14 @@ class AirportPages extends StatefulWidget {
 }
 
 class _AirportPagesState extends State<AirportPages> {
+
+ @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<AirportsBloc>().add(GetAirportEvent(widget.stateName));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final Map<String, LatLng> stateCenters = {
@@ -134,54 +142,60 @@ class _AirportPagesState extends State<AirportPages> {
                   ),
 
                   // list of Airports present in the state
-                  
-                    Container(
-                      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                      decoration: BoxDecoration(
-                        color: AppTheme.iceBlue,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: BlocBuilder<AirportsBloc, AirportsState>(
-                        builder: (context, state) {
-                          if (state is AirportsLoading) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                    decoration: BoxDecoration(
+                      color: AppTheme.iceBlue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: BlocBuilder<AirportsBloc, AirportsState>(
+                      builder: (context, state) {
+                        if (state is AirportsLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                            ),
+                          );
+                        }
+                        if (state is Failure) {
+                          throw (state.message);
+                        }
+                        if (state is Success) {
+                          if (state.airports.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                "No Airports Found!!",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: AppTheme.darkColor,
+                                ),
                               ),
                             );
                           }
-                          if (state is Failure) {
-                            throw (state.message);
-                          }
-                          if (state is Success) {
-                            if (state.card.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                  "No Airports Found!!",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppTheme.darkColor,
-                                  ),
-                                ),
-                              );
-                            }
 
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: state.card.length,
-                              itemBuilder: (context, index) {
-                                final card = state.card[index];
-                                print(
-                                  "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
-                                );
-                                print(card.toString());
-                                return Container();});}
-                                
-                                 return const Center(
-                            child: Text("Something went wrong"),
-                          ); }))
-                                
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: state.airports.length,
+                            itemBuilder: (context, index) {
+                              final card = state.airports[index];
+                              print(
+                                "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
+                              );
+                              print(card.toString());
+                              return Container(
+
+                              );
+                            },
+                          );
+                        }
+
+                        return const Center(
+                          child: Text("Something went wrong"),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),

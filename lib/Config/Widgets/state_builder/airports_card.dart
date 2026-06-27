@@ -77,7 +77,7 @@ class AirportsCard extends StatelessWidget {
 
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AirportPages()),
+                      MaterialPageRoute(builder: (context) => AirportPages(stateName: stateName,)),
                     );
                   },
 

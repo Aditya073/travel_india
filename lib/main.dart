@@ -1,6 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/airports_page/data/datasource/data_api.dart';
+import 'package:travel_india/features/airports_page/data/repositories/airport_repoimpl.dart';
+import 'package:travel_india/features/airports_page/domain/usecase/get_data.dart';
+import 'package:travel_india/features/airports_page/presentation/bloc/airports_bloc.dart';
 import 'package:travel_india/features/auth/data/datasources/FirebaseAuthDataSource.dart';
 import 'package:cloudinary_flutter/cloudinary_context.dart';
 import 'package:cloudinary_url_gen/cloudinary.dart';
@@ -69,6 +73,11 @@ class _MyAppState extends State<MyApp> {
             GetHotelsData(
               repository: HotelsRepoimpl(dataSource: DataFromApi()),
             ),
+          ),
+        ),
+        BlocProvider<AirportsBloc>(
+          create: (context) => AirportsBloc(
+            GetAirportData(repository: AirportRepoimpl(dataSource: DataApi())),
           ),
         ),
       ],

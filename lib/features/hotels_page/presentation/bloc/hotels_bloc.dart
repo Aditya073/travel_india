@@ -10,7 +10,7 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
 
   HotelsBloc(this.getHotelsData) : super(HotelsInitial()) {
     on<GetHotelsEvent>((event, emit) async {
-      emit(HotelsLoading());
+      emit(HotelsLoading()); 
       try {
         print("Fetching hotels...");
         print("!!!!!!!!!!!!!!!!event.stateName!!!!!!!!!!!!!!!");
