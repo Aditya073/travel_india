@@ -149,7 +149,6 @@ class _HotelsPageState extends State<HotelsPage> {
                         ),
                         markers: markers,
                         // mapType: MapType.hybrid,
-                        //     *********************** now locate each sport on the map*******************
                         myLocationEnabled: true,
                         myLocationButtonEnabled: true,
                       ),
