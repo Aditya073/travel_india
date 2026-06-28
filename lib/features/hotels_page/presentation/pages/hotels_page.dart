@@ -65,7 +65,10 @@ class _HotelsPageState extends State<HotelsPage> {
       'Karnataka': const LatLng(15.3173, 75.7139),
       'Kerala': const LatLng(10.8505, 76.2711),
       'Madhya Pradesh': const LatLng(22.9734, 78.6569),
-      'Maharashtra': const LatLng(19.0760, 72.8777), // Mumbai --> 'lat': 19.0760, 'lon': 72.8777
+      'Maharashtra': const LatLng(
+        19.0760,
+        72.8777,
+      ), // Mumbai --> 'lat': 19.0760, 'lon': 72.8777
       'Manipur': const LatLng(24.6637, 93.9063),
       'Meghalaya': const LatLng(25.4670, 91.3662),
       'Mizoram': const LatLng(23.1645, 92.9376),
@@ -204,61 +207,195 @@ class _HotelsPageState extends State<HotelsPage> {
                                   "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
                                 );
                                 print(card.toString());
+
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                     left: 15,
                                     right: 15,
                                     top: 15,
                                   ),
-
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 8,
-                                    ),
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.primaryColor,
-                                      borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(
-                                        color: AppTheme.powderBlue,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Text(
-                                          '🏨',
-                                          style: TextStyle(fontSize: 28),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: Text(
-                                            card.name,
-                                            style: const TextStyle(
-                                              color: AppTheme.iceBlue,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700,
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        // Navigate to detail screen
+                                      },
+                                      borderRadius: BorderRadius.circular(18),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(
+                                            18,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: AppTheme.primaryColor
+                                                  .withOpacity(0.07),
+                                              blurRadius: 14,
+                                              offset: const Offset(0, 4),
                                             ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: 14,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              // Icon
+                                              Container(
+                                                padding: EdgeInsets.all(8),
+                                                // width: 46,
+                                                // height: 46,
+                                                decoration: BoxDecoration(
+                                                  gradient:
+                                                      const LinearGradient(
+                                                        colors: [
+                                                          AppTheme.primaryColor,
+                                                          Color(0xFF1A6DE0),
+                                                        ],
+                                                        begin:
+                                                            Alignment.topLeft,
+                                                        end: Alignment
+                                                            .bottomRight,
+                                                      ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(13),
+                                                ),
+                                                child: const Text(
+                                                  "🏨",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 22,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 14),
+
+                                              // Name + coordinates
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      card.name,
+                                                      style: const TextStyle(
+                                                        color:
+                                                            AppTheme.darkColor,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        height: 1.3,
+                                                      ),
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.star_rounded,
+                                                        color:
+                                                            AppTheme.darkColor,
+                                                        size: 18,
+                                                      ),
+                                                      const SizedBox(width: 4),
+                                                      Text(
+                                                        card.rating,
+                                                        style: const TextStyle(
+                                                          color: AppTheme
+                                                              .darkColor,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 6),
+                                                  const Icon(
+                                                    Icons.chevron_right_rounded,
+                                                    color: AppTheme.powderBlue,
+                                                    size: 20,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        const Icon(
-                                          Icons.star_rounded,
-                                          color: AppTheme.iceBlue,
-                                          size: 18,
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          card.rating,
-                                          style: const TextStyle(
-                                            color: AppTheme.iceBlue,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 );
                               },
+
+                              //       return Padding(
+                              //         padding: const EdgeInsets.only(
+                              //           left: 15,
+                              //           right: 15,
+                              //           top: 15,
+                              //         ),
+
+                              //         child: Container(
+                              //           margin: const EdgeInsets.symmetric(
+                              //             horizontal: 16,
+                              //             vertical: 8,
+                              //           ),
+                              //           padding: const EdgeInsets.all(16),
+                              //           decoration: BoxDecoration(
+                              //             color: AppTheme.primaryColor,
+                              //             borderRadius: BorderRadius.circular(16),
+                              //             border: Border.all(
+                              //               color: AppTheme.powderBlue,
+                              //             ),
+                              //           ),
+                              //           child: Row(
+                              //             children: [
+                              //               const Text(
+                              //                 '🏨',
+                              //                 style: TextStyle(fontSize: 28),
+                              //               ),
+                              //               const SizedBox(width: 12),
+                              //               Expanded(
+                              //                 child: Text(
+                              //                   card.name,
+                              //                   style: const TextStyle(
+                              //                     color: AppTheme.iceBlue,
+                              //                     fontSize: 16,
+                              //                     fontWeight: FontWeight.w700,
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //               const Icon(
+                              //                 Icons.star_rounded,
+                              //                 color: AppTheme.iceBlue,
+                              //                 size: 18,
+                              //               ),
+                              //               const SizedBox(width: 4),
+                              //               Text(
+                              //                 card.rating,
+                              //                 style: const TextStyle(
+                              //                   color: AppTheme.iceBlue,
+                              //                   fontWeight: FontWeight.w700,
+                              //                 ),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //       );
+                              //     },
+                              //   );
+                              // }
                             );
                           }
 

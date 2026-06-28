@@ -5,7 +5,9 @@ import 'package:travel_india/features/airports_page/data/model/airport_model.dar
 
 class DataApi {
   Future<List<AirportModel>> getAirportDetails(String state) async {
-    try {      // change the query ************************
+
+
+    try { //************** ask claud to design the card for it************************
       final query =
           '''
 [out:json][timeout:25];

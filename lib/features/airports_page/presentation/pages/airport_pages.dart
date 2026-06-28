@@ -13,13 +13,11 @@ class AirportPages extends StatefulWidget {
 }
 
 class _AirportPagesState extends State<AirportPages> {
-
- @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     context.read<AirportsBloc>().add(GetAirportEvent(widget.stateName));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -183,8 +181,168 @@ class _AirportPagesState extends State<AirportPages> {
                                 "card.toString() in HotelPage Class!!!!!!!!!!!!!!!!!!",
                               );
                               print(card.toString());
-                              return Container(
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                  top: 15,
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      // Navigate to detail screen
+                                    },
+                                    borderRadius: BorderRadius.circular(18),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(18),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: AppTheme.primaryColor
+                                                .withOpacity(0.07),
+                                            blurRadius: 14,
+                                            offset: const Offset(0, 4),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: 14,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            // Icon
+                                            Container(
+                                              width: 46,
+                                              height: 46,
+                                              decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  colors: [
+                                                    AppTheme.primaryColor,
+                                                    Color(0xFF1A6DE0),
+                                                  ],
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(13),
+                                              ),
+                                              child: const Icon(
+                                                Icons.flight_takeoff_rounded,
+                                                color: Colors.white,
+                                                size: 22,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 14),
 
+                                            // Name + coordinates
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    card.name,
+                                                    style: const TextStyle(
+                                                      color: AppTheme.darkColor,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      height: 1.3,
+                                                    ),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+
+                                            // IATA badge + chevron
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                card.iata.isNotEmpty
+                                                    ? Container(
+                                                        padding:
+                                                            const EdgeInsets.symmetric(
+                                                              horizontal: 10,
+                                                              vertical: 4,
+                                                            ),
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              AppTheme.iceBlue,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                8,
+                                                              ),
+                                                          border: Border.all(
+                                                            color: AppTheme
+                                                                .powderBlue
+                                                                .withOpacity(
+                                                                  0.5,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        child: Text(
+                                                          card.iata,
+                                                          style: const TextStyle(
+                                                            color: AppTheme
+                                                                .primaryColor,
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            letterSpacing: 1.2,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Container(
+                                                        padding:
+                                                            const EdgeInsets.symmetric(
+                                                              horizontal: 8,
+                                                              vertical: 4,
+                                                            ),
+                                                        decoration: BoxDecoration(
+                                                          color: AppTheme
+                                                              .powderBlue
+                                                              .withOpacity(0.2),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                8,
+                                                              ),
+                                                        ),
+                                                        child: const Text(
+                                                          'HELIPORT',
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                              0xFF5A7A99,
+                                                            ),
+                                                            fontSize: 9,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            letterSpacing: 0.8,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                const SizedBox(height: 6),
+                                                const Icon(
+                                                  Icons.chevron_right_rounded,
+                                                  color: AppTheme.powderBlue,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               );
                             },
                           );
