@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/airports_page/data/model/airport_model.dart';
 import 'package:travel_india/features/airports_page/presentation/bloc/airports_bloc.dart';
 
 class AirportPages extends StatefulWidget {
@@ -13,14 +14,42 @@ class AirportPages extends StatefulWidget {
 }
 
 class _AirportPagesState extends State<AirportPages> {
+    Set<Marker> markers = {};
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     context.read<AirportsBloc>().add(GetAirportEvent(widget.stateName));
   }
 
+  Set<Marker> gethotelMarker(List<AirportModel> airports) {
+    final List<Map<String, dynamic>> airportMarker = [];
+    for (var airport in airports) {
+      airportMarker.add({
+        "name": airport.name,
+        "lat": airport.lat,
+        "lng": airport.lng,
+      });
+    }
+
+    final Set<Marker> markers = {};
+    for (var element in airportMarker) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(element['name']),
+          position: LatLng(element['lat'], element['lng']),
+          infoWindow: InfoWindow(title: element['name']),
+        ),
+      );
+    }
+
+    return markers;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     final Map<String, LatLng> stateCenters = {
       'Andhra Pradesh': const LatLng(15.9129, 79.7400),
       'Arunachal Pradesh': const LatLng(28.2180, 94.7278),
@@ -132,7 +161,7 @@ class _AirportPagesState extends State<AirportPages> {
                       initialCameraPosition: getCameraPosition(
                         widget.stateName,
                       ),
-                      // markers: markers,
+                      markers: markers,
                       // mapType: MapType.hybrid,
                       myLocationEnabled: true,
                       myLocationButtonEnabled: true,
@@ -359,6 +388,18 @@ class _AirportPagesState extends State<AirportPages> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // this will call the function to mark the location of the hotels on the map
+          setState(() {
+            markers = gethotelMarker(
+              (context.read<AirportsBloc>().state as Success).airports,
+            );
+          });
+        },
+        backgroundColor: AppTheme.darkColor,
+        child: Icon(Icons.location_on_outlined, color: AppTheme.iceBlue),
       ),
     );
   }

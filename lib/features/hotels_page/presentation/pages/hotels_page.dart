@@ -338,64 +338,6 @@ class _HotelsPageState extends State<HotelsPage> {
                                   ),
                                 );
                               },
-
-                              //       return Padding(
-                              //         padding: const EdgeInsets.only(
-                              //           left: 15,
-                              //           right: 15,
-                              //           top: 15,
-                              //         ),
-
-                              //         child: Container(
-                              //           margin: const EdgeInsets.symmetric(
-                              //             horizontal: 16,
-                              //             vertical: 8,
-                              //           ),
-                              //           padding: const EdgeInsets.all(16),
-                              //           decoration: BoxDecoration(
-                              //             color: AppTheme.primaryColor,
-                              //             borderRadius: BorderRadius.circular(16),
-                              //             border: Border.all(
-                              //               color: AppTheme.powderBlue,
-                              //             ),
-                              //           ),
-                              //           child: Row(
-                              //             children: [
-                              //               const Text(
-                              //                 '🏨',
-                              //                 style: TextStyle(fontSize: 28),
-                              //               ),
-                              //               const SizedBox(width: 12),
-                              //               Expanded(
-                              //                 child: Text(
-                              //                   card.name,
-                              //                   style: const TextStyle(
-                              //                     color: AppTheme.iceBlue,
-                              //                     fontSize: 16,
-                              //                     fontWeight: FontWeight.w700,
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               const Icon(
-                              //                 Icons.star_rounded,
-                              //                 color: AppTheme.iceBlue,
-                              //                 size: 18,
-                              //               ),
-                              //               const SizedBox(width: 4),
-                              //               Text(
-                              //                 card.rating,
-                              //                 style: const TextStyle(
-                              //                   color: AppTheme.iceBlue,
-                              //                   fontWeight: FontWeight.w700,
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       );
-                              //     },
-                              //   );
-                              // }
                             );
                           }
 
