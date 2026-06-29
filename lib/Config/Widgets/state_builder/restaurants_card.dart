@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/restaurants_page/presentation/pages/restaurants_page.dart';
 
 class RestaurantsCard extends StatelessWidget {
-  const RestaurantsCard({super.key});
+  final String stateName;
+  const RestaurantsCard({super.key, required this.stateName});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,15 @@ class RestaurantsCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
 
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // navigate
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RestaurantsPage(stateName: stateName,),
+                      ),
+                    );
+                  },
 
                   style: TextButton.styleFrom(
                     minimumSize: (Size(double.infinity, 50)),
@@ -80,7 +90,6 @@ class RestaurantsCard extends StatelessWidget {
 
                   child: Text('View', style: TextStyle(fontSize: 18)),
                 ),
-
               ),
             ),
           ],

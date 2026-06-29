@@ -16,7 +16,7 @@ class StatePage extends StatelessWidget {
       MapCard(stateName: stateName),
       PlacesCard(),
       HotelsCard(stateName: stateName),
-      RestaurantsCard(),
+      RestaurantsCard(stateName: stateName,),
       AirportsCard(stateName: stateName,),
     ];
     return Scaffold(
@@ -36,7 +36,6 @@ class StatePage extends StatelessWidget {
 
       //       // places to visit card  ---> with reviews
       //       // restaurants card
-      //       // airports card
       body: GridView.builder(
         // Grid layout (2 items per row)
         padding: const EdgeInsets.all(12),
