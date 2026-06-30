@@ -135,7 +135,7 @@ class _AirportPagesState extends State<AirportPages> {
                   // this should show the only results that is being typed
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search, color: Colors.black),
-                    hintText: "Search Hotels...",
+                    hintText: "Search Airports...",
                     hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
                     border: InputBorder.none,
                   ),
