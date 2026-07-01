@@ -13,7 +13,7 @@ class RestaurantModel {
     required this.bar,
   });
 
-  factory RestaurantModel.fromjson(Map<String, dynamic> json) {
+  factory RestaurantModel.fromJson(Map<String, dynamic> json) {
     final tags = json['tags'] ?? {};
 
     return RestaurantModel(

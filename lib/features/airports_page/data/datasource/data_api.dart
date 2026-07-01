@@ -7,7 +7,7 @@ class DataApi {
   Future<List<AirportModel>> getAirportDetails(String state) async {
 
 
-    try { //************** ask claud to design the card for it************************
+    try {
       final query =
           '''
 [out:json][timeout:25];
