@@ -107,7 +107,7 @@ class _HotelsPageState extends State<HotelsPage> {
 
                 decoration: BoxDecoration(
                   color: Colors.blueGrey[100],
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(16),
 
                   boxShadow: [
                     BoxShadow(

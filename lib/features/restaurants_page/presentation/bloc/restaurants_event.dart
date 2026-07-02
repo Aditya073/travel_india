@@ -3,7 +3,6 @@ part of 'restaurants_bloc.dart';
 @immutable
 sealed class RestaurantsEvent {}
 
-
 class GetRestaurantsEvent extends RestaurantsEvent {
   final String stateName;
 

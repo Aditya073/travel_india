@@ -9,7 +9,7 @@ class AirportPages extends StatefulWidget {
   final String stateName;
   const AirportPages({super.key, required this.stateName});
 
-  @override
+  @override 
   State<AirportPages> createState() => _AirportPagesState();
 }
 
@@ -118,7 +118,7 @@ class _AirportPagesState extends State<AirportPages> {
 
               decoration: BoxDecoration(
                 color: Colors.blueGrey[100],
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(16),
 
                 boxShadow: [
                   BoxShadow(

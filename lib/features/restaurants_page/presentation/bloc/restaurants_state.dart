@@ -5,13 +5,13 @@ sealed class RestaurantsState {}
 
 final class RestaurantsInitial extends RestaurantsState {}
 
-class RestaurantsLoading extends RestaurantsState {}
+class Loading extends RestaurantsState {}
 
 class Success extends RestaurantsState {
   // model
-  final List<RestaurantModel> airports;
+  final List<RestaurantModel> restaurant;
 
-  Success({required this.airports}); 
+  Success({required this.restaurant}); 
 }
 
 class Failure extends RestaurantsState {
