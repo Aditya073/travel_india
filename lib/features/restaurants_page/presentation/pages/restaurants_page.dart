@@ -11,7 +11,12 @@ class RestaurantsPage extends StatefulWidget {
 }
 
 class _RestaurantsPageState extends State<RestaurantsPage> {
-  Set<String> categories = {'Restaurants', 'Cafas', 'Fast Food', 'Food Court'};
+  Set<String> categoriesOfRestaurant = {
+    'Restaurants',
+    'Cafas',
+    'Fast Food',
+    'Food Court',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,10 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
         children: [
           // uppre container
           Container(
-            decoration: BoxDecoration(color: AppTheme.primaryColor),
+            decoration: BoxDecoration(
+              color: AppTheme.primaryColor,
+              // borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
             child: SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,35 +91,54 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
           ),
 
           // Lower Containrt
-          Container(
-            decoration: BoxDecoration(color: AppTheme.powderBlue),
-            height: 100,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      ListView.builder(
-                        itemCount: categories.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                            child: ClipOval(
-                              child: Card(
-                                color: AppTheme.iceBlue,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Text("$index"),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(color: AppTheme.powderBlue),
+              child: Column(
+                children: [
+                  // Categories
+                  SizedBox(
+                    height: 70,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categoriesOfRestaurant.length,
+                      itemBuilder: (context, index) {
+                        final category = categoriesOfRestaurant.elementAt(
+                          index,
+                        );
+
+                        return GestureDetector(
+                          onTap: () {
+                            // Event
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  category,
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
