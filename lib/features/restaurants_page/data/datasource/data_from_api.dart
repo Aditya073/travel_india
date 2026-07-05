@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:travel_india/features/restaurants_page/data/model/restaurant_model.dart';
 
-class DataFromApi {
+class DataFromApiForResraurent {
   Future<List<RestaurantModel>> getRestaurantDetail(String stateName) async {
     try {
       final restaurantQuery =
@@ -35,7 +35,7 @@ out body center tags;
           .timeout(const Duration(seconds: 40));
 
       if (response.statusCode != 200) {
-        print(response.body);
+        print(response.body);     // *************** print the OutPut ******
         return [];
       }
 

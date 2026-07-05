@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
 
 class RestaurantsPage extends StatefulWidget {
   final String stateName;
@@ -110,6 +112,30 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                         return GestureDetector(
                           onTap: () {
                             // Event
+                            switch (category) {
+                              case "Restaurants":
+                                context.read<RestaurantsBloc>().add(
+                                  GetRestaurantsEvent(widget.stateName),
+                                );
+                                break;
+                              case 'Cafas':
+                                context.read<RestaurantsBloc>().add(
+                                  GetCafeEvent(widget.stateName),
+                                );
+                                break;
+
+                              case 'Fast Food':
+                                context.read<RestaurantsBloc>().add(
+                                  GetFastFoodEvent(widget.stateName),
+                                );
+                                break;
+
+                              case 'Food Court':
+                                context.read<RestaurantsBloc>().add(
+                                  GetFoodCourtEvent(widget.stateName),
+                                );
+                                break;
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(15),
@@ -135,6 +161,105 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                           ),
                         );
                       },
+                    ),
+                  ),
+
+                  // ****** main desplay *******
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      decoration: BoxDecoration(
+                        color: AppTheme.iceBlue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: BlocBuilder<RestaurantsBloc, RestaurantsState>(
+                        builder: (context, state) {
+                          if (state is Loading) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            );
+                          }
+                          if (state is Failure) {
+                            // throw (state.message);
+                            Center(child: Text(state.message));
+                          }
+                          if (state is Success) {
+                            if (state.restaurant.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  "No Restaurants Found!!",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppTheme.darkColor,
+                                  ),
+                                ),
+                              );
+                            }
+
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.restaurant.length,
+                              itemBuilder: (context, index) {
+                                final card = state.restaurant[index];
+
+                                // *** on click open the map
+
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // blue container
+                                      Container(
+                                        margin: EdgeInsets.all(15),
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          color: AppTheme.primaryColor,
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Icon(
+                                            Icons.restaurant,
+                                            color: Colors.white,
+                                            size: 32,
+                                          ),
+                                        ),
+                                      ),
+
+                                      Text(
+                                        card.name,
+                                        style: TextStyle(
+                                          fontSize: 26,
+                                          color: AppTheme.darkColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+
+                          return const Center(
+                            child: Text(
+                              "Select From the above categorys",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppTheme.darkColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

@@ -2,7 +2,7 @@ import 'package:travel_india/features/restaurants_page/data/datasource/data_from
 import 'package:travel_india/features/restaurants_page/data/model/restaurant_model.dart';
 
 class RestaurantReopimpl {
-  final DataFromApi datasource;
+  final DataFromApiForResraurent datasource;
   RestaurantReopimpl({required this.datasource});
 
   Future<List<RestaurantModel>> getRestaurantDetail(String stateName) {

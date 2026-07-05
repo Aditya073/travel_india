@@ -18,10 +18,15 @@ class RestaurantModel {
 
     return RestaurantModel(
       name: tags['name'] ?? 'Unknown',
-      lat: json['lat'],
-      lng: json['lon'],
-      amenity: tags['cafe'] ?? tags['fast_food'] ?? tags['restaurant'] ?? tags['food_court'],
-      bar: tags['bar'] ?? false,
+      lat: (json['lat'] as num).toDouble(),
+      lng: (json['lon'] as num).toDouble(),
+      amenity:
+          tags['cafe'] ??
+          tags['fast_food'] ??
+          tags['restaurant'] ??
+          tags['food_court'] ??
+          'Unknown',
+      bar: tags['bar'] == 'yes',
     );
   }
 }

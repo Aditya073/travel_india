@@ -22,6 +22,10 @@ import 'package:travel_india/features/hotels_page/data/datasources/data_from_api
 import 'package:travel_india/features/hotels_page/data/repositories/hotels_repoImpl.dart';
 import 'package:travel_india/features/hotels_page/domain/usecases/get_data.dart';
 import 'package:travel_india/features/hotels_page/presentation/bloc/hotels_bloc.dart';
+import 'package:travel_india/features/restaurants_page/data/datasource/data_from_api.dart';
+import 'package:travel_india/features/restaurants_page/data/repositories/restaurant_reopimpl.dart';
+import 'package:travel_india/features/restaurants_page/domain/usecase/get_data.dart';
+import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,6 +82,15 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AirportsBloc>(
           create: (context) => AirportsBloc(
             GetAirportData(repository: AirportRepoimpl(dataSource: DataApi())),
+          ),
+        ),
+        BlocProvider<RestaurantsBloc>(
+          create: (context) => RestaurantsBloc(
+            GetData(
+              repository: RestaurantReopimpl(
+                datasource: DataFromApiForResraurent(),
+              ),
+            ),
           ),
         ),
       ],
