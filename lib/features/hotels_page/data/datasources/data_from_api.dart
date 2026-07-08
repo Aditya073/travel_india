@@ -43,8 +43,6 @@ class DataFromApi {
     final lat = coords['lat'];
     final lon = coords['lon'];
 
-    print("!!!!!!!!!!!!!!!Lat: $lat, Lon: $lon !!!!!!!!!!!!!!!!!!!!!!");
-
     final query =
         '''
     [out:json][timeout:30];
@@ -71,6 +69,8 @@ class DataFromApi {
           .timeout(const Duration(seconds: 40));
 
       if (response.statusCode != 200) {
+        print("Status Code: ${response.statusCode}");
+
         print(response.body);
         return [];
       }

@@ -164,10 +164,10 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                     ),
                   ),
 
-                  // ****** main desplay *******
+                  // ****** main display *******
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      margin: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: AppTheme.iceBlue,
                         borderRadius: BorderRadius.circular(20),
@@ -182,7 +182,6 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                             );
                           }
                           if (state is Failure) {
-                            // throw (state.message);
                             Center(child: Text(state.message));
                           }
                           if (state is Success) {
@@ -199,15 +198,18 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                             }
 
                             return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              // shrinkWrap: true,
+                              padding: EdgeInsets.only(top: 5),
+                              scrollDirection: Axis.vertical,
                               itemCount: state.restaurant.length,
                               itemBuilder: (context, index) {
                                 final card = state.restaurant[index];
 
-                                // *** on click open the map
-
                                 return Container(
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 8,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
@@ -227,6 +229,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: Icon(
+                                            // change the icon if it is cafe
                                             Icons.restaurant,
                                             color: Colors.white,
                                             size: 32,
@@ -234,11 +237,37 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                         ),
                                       ),
 
-                                      Text(
-                                        card.name,
-                                        style: TextStyle(
-                                          fontSize: 26,
-                                          color: AppTheme.darkColor,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            card.name,
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              color: AppTheme.darkColor,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            "Address",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      Spacer(),
+                                      IconButton(
+                                        onPressed: () {
+                                          // *** on click open the map
+                                        },
+                                        icon: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: AppTheme.powderBlue,
+                                          size: 18,
                                         ),
                                       ),
                                     ],
