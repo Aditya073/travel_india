@@ -150,7 +150,7 @@ class _HotelsPageState extends State<HotelsPage> {
                           widget.stateName,
                         ),
                         markers: markers,
-                        // mapType: MapType.hybrid,
+                        // mapType: MapType.hybrid, 
                         myLocationEnabled: true,
                         myLocationButtonEnabled: true,
                       ),

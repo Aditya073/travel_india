@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
-import 'package:travel_india/features/state_page/presentation/pages/map_page.dart';
+import 'package:travel_india/Config/Widgets/map_page.dart';
 
 class MapCard extends StatelessWidget {
     final String? stateName;
+
+
+
+//   DELETE THE WHOLE CLASS
+
+
+
 
   const MapCard({super.key, this.stateName});
 
@@ -73,10 +80,10 @@ class MapCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MapPage(stateName: stateName!,)),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => MapPage(stateName: stateName!,)),
+                    // );
                   },
 
                   style: TextButton.styleFrom(

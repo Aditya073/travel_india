@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
+import 'package:travel_india/Config/Widgets/map_page.dart';
 
 class RestaurantsPage extends StatefulWidget {
   final String stateName;
@@ -276,6 +277,19 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                       IconButton(
                                         onPressed: () {
                                           // *** on click open the map
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => MapPage(
+                                                stateName: widget.stateName,
+                                                // Location of the restaurant and name
+                                                name: card.name,
+                                                lat: card.lat,
+                                                lng: card.lng,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         icon: Icon(
                                           Icons.arrow_forward_ios,
