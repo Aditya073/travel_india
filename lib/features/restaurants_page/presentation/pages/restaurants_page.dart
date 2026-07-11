@@ -22,6 +22,15 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
   @override
   Widget build(BuildContext context) {
+    String truncateWords(String text, int maxWords) {
+      final words = text.split(' ');
+
+      if (words.length <= maxWords) {
+        return text;
+      }
+      return '${words.take(maxWords).join(' ')}...';
+    }
+
     return Scaffold(
       body: Column(
         children: [
@@ -242,7 +251,11 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            card.name,
+                                            // this makes it appear .... after 4 words
+                                            truncateWords(card.name, 4),
+                                            // card.name,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontSize: 22,
                                               color: AppTheme.darkColor,
@@ -250,7 +263,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                           ),
                                           SizedBox(height: 5),
                                           Text(
-                                            "Address",
+                                            widget.stateName,
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.grey,

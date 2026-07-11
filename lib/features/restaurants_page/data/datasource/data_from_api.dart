@@ -5,8 +5,9 @@ import 'package:travel_india/features/restaurants_page/data/model/restaurant_mod
 
 class DataFromApiForResraurent {
   static const String _baseUrl =
-      'https://overpass.kumi.systems/api/interpreter';
+      'https://overpass-api.de/api/interpreter';
 
+// https://overpass.kumi.systems/api/interpreter
   // https://overpass-api.de/api/interpreter
 
   Future<List<RestaurantModel>> getRestaurantDetail(String stateName) {
@@ -70,11 +71,10 @@ class DataFromApiForResraurent {
     final lon = coords['lon'];
 
       final query = '''
-[out:json][timeout:25];
+[out:json][timeout:120];
 
 (
-  node["amenity"="$amenity"](around:5000,$lat,$lon);
-  way["amenity"="$amenity"](around:5000,$lat,$lon);
+  node["amenity"="$amenity"](around:1500,$lat,$lon);
 );
 
 out center;
@@ -94,7 +94,7 @@ out center;
             },
             body: {'data': query},
           )
-          .timeout(const Duration(seconds: 60));
+          .timeout(const Duration(seconds: 1000));
 
       if (response.statusCode != 200) {
         print("Status Code: ${response.statusCode}");

@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
+          // **************** App name ****************************************888888
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             onPressed: () {
