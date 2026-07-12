@@ -121,7 +121,12 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
                         return GestureDetector(
                           onTap: () {
-                            // Event
+                            if (context.read<RestaurantsBloc>().state
+                                is Loading) {
+                              return;
+                            }
+
+                           // Event
                             switch (category) {
                               case "Restaurants":
                                 context.read<RestaurantsBloc>().add(
@@ -146,6 +151,11 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                 );
                                 break;
                             }
+
+                            //   context.read<RestaurantsBloc>().add(
+                            //     GetRestaurantsEvent(widget.stateName),
+                            //   );
+                            // }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(15),
@@ -192,7 +202,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                             );
                           }
                           if (state is Failure) {
-                            Center(child: Text(state.message));
+                            return Center(child: Text(state.message));
                           }
                           if (state is Success) {
                             if (state.restaurant.isEmpty) {
@@ -253,7 +263,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                         children: [
                                           Text(
                                             // this makes it appear .... after 4 words
-                                            truncateWords(card.name, 4),
+                                            truncateWords(card.name, 3),
                                             // card.name,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,

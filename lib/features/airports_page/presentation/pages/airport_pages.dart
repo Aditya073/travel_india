@@ -96,6 +96,12 @@ class _AirportPagesState extends State<AirportPages> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.primaryColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: AppTheme.powderBlue),
+        ),
         title: Text(
           "Airports",
           style: TextStyle(

@@ -98,9 +98,28 @@ class _MapPageState extends State<MapPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppTheme.primaryColor, actions: [
-
-        ],
+      appBar: AppBar(
+        title: Title(
+          color: AppTheme.iceBlue,
+          child: Text(
+            widget.name,
+            
+          style: TextStyle(
+            color: AppTheme.powderBlue,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: AppTheme.powderBlue),
+        ),
+        backgroundColor: AppTheme.primaryColor,
       ),
       body: GoogleMap(
         initialCameraPosition: getCameraPosition(widget.stateName),

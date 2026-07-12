@@ -95,6 +95,26 @@ class _HotelsPageState extends State<HotelsPage> {
     }
 
     return Scaffold(
+      
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: AppTheme.powderBlue),
+        ),
+        title: Text(
+          "Hotels",
+          style: TextStyle(
+            color: AppTheme.powderBlue,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/Config/Widgets/state_builder/airports_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/hotels_card.dart';
-import 'package:travel_india/Config/Widgets/state_builder/map_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/places_card.dart';
 import 'package:travel_india/Config/Widgets/state_builder/restaurants_card.dart';
 
@@ -22,6 +21,12 @@ class StatePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: AppTheme.powderBlue),
+        ),
         title: Text(
           stateName,
           style: TextStyle(
