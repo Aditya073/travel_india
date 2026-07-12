@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/places_page/presentation/pages/places_page.dart';
 
 class PlacesCard extends StatelessWidget {
-  const PlacesCard({super.key});
+  final String stateName;
+  const PlacesCard({super.key, required this.stateName});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,14 @@ class PlacesCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
 
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PlacesPage(stateName: stateName),
+                      ),
+                    );
+                  },
 
                   style: TextButton.styleFrom(
                     minimumSize: (Size(double.infinity, 50)),
