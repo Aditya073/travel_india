@@ -14,7 +14,7 @@ class DataFromApiForResraurent {
   }
 
   Future<List<RestaurantModel>> getCafeDetail(String stateName) {
-    return _getData(stateName, "cafe");
+    return _getData(stateName, "cafe"); 
   }
 
   Future<List<RestaurantModel>> getFastFoodDetail(String stateName) {
