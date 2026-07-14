@@ -10,7 +10,7 @@ class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
   final GetData getData;
   RestaurantsBloc(this.getData) : super(RestaurantsInitial()) {
     on<GetRestaurantsEvent>((event, emit) async {
-      // TODO: implement event handler
+      // TODO: implement event handler 
       emit(Loading());
       try {
         final restaurent = await getData.getRestaurantDetail(event.stateName);
