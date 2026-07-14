@@ -193,15 +193,16 @@ out center tags;
       return [];
     }
   }
-}
 
-/*
+  // 4.        ***********************************************************************************************
 
+  Future<List<PlacesModel>> historic(String stateName) async {
+    try {
+      final String query =
+          '''
+[out:json][timeout:120];
 
-4.         ***********************************************************************************************
-  [out:json][timeout:120];
-
-area["name"="Maharashtra"]->.searchArea;
+area["name"="$stateName"]->.searchArea;
 
 (
   node["historic"](area.searchArea);
@@ -209,25 +210,104 @@ area["name"="Maharashtra"]->.searchArea;
 
 out center tags;
 
+''';
+
+      final response = await http
+          .post(
+            Uri.parse(_baseUrl),
+            headers: {
+              'User-Agent':
+                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
+              'Accept': 'application/json',
+            },
+            body: {'data': query},
+          )
+          .timeout(const Duration(seconds: 1000));
+
+      if (response.statusCode != 200) {
+        print("Status Code: ${response.statusCode}");
+        print(response.body);
+        return [];
+      }
+
+      if (!response.body.trim().startsWith('{')) {
+        print(response.body);
+        throw Exception("Overpass returned HTML instead of JSON.");
+      }
+
+      final json = jsonDecode(response.body);
+      final List elements = json["elements"] ?? [];
+
+      return elements.map((e) => PlacesModel.fromJson(e)).toList();
+    } catch (e) {
+      print("API Error: $e");
+      return [];
+    }
+  }
 
 
-5.         ***********************************************************************************************
-  [out:json][timeout:120];
+  // 5.        ***********************************************************************************************
 
-area["name"="Maharashtra"]->.searchArea;
+  Future<List<PlacesModel>> leisure(String stateName) async {
+    try {
+      final String query =
+          '''
+[out:json][timeout:120];
+
+area["name"="$stateName"]->.searchArea;
 
 (
-  node["leisure"](area.searchArea);    ---> parks
+  node["leisure"](area.searchArea);
 );
 
 out center tags;
 
+''';
 
+      final response = await http
+          .post(
+            Uri.parse(_baseUrl),
+            headers: {
+              'User-Agent':
+                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
+              'Accept': 'application/json',
+            },
+            body: {'data': query},
+          )
+          .timeout(const Duration(seconds: 1000));
 
-6.         ***********************************************************************************************
+      if (response.statusCode != 200) {
+        print("Status Code: ${response.statusCode}");
+        print(response.body);
+        return [];
+      }
+
+      if (!response.body.trim().startsWith('{')) {
+        print(response.body);
+        throw Exception("Overpass returned HTML instead of JSON.");
+      }
+
+      final json = jsonDecode(response.body);
+      final List elements = json["elements"] ?? [];
+
+      return elements.map((e) => PlacesModel.fromJson(e)).toList();
+    } catch (e) {
+      print("API Error: $e");
+      return [];
+    }
+  }
+
+  
+  
+  // 6.        ***********************************************************************************************
+
+  Future<List<PlacesModel>> museum(String stateName) async {
+    try {
+      final String query =
+          '''
 [out:json][timeout:120];
 
-area["name"="Maharashtra"]["boundary"="administrative"]->.searchArea;
+area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 
 (
   node["tourism"="museum"](area.searchArea);
@@ -236,4 +316,39 @@ area["name"="Maharashtra"]["boundary"="administrative"]->.searchArea;
 );
 
 out center tags;
-*/
+
+''';
+
+      final response = await http
+          .post(
+            Uri.parse(_baseUrl),
+            headers: {
+              'User-Agent':
+                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
+              'Accept': 'application/json',
+            },
+            body: {'data': query},
+          )
+          .timeout(const Duration(seconds: 1000));
+
+      if (response.statusCode != 200) {
+        print("Status Code: ${response.statusCode}");
+        print(response.body);
+        return [];
+      }
+
+      if (!response.body.trim().startsWith('{')) {
+        print(response.body);
+        throw Exception("Overpass returned HTML instead of JSON.");
+      }
+
+      final json = jsonDecode(response.body);
+      final List elements = json["elements"] ?? [];
+
+      return elements.map((e) => PlacesModel.fromJson(e)).toList();
+    } catch (e) {
+      print("API Error: $e");
+      return [];
+    }
+  }
+}
