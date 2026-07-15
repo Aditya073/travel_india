@@ -32,7 +32,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
       return '${words.take(maxWords).join(' ')}...';
     }
 
-    return Scaffold(
+    return Scaffold( 
       body: Column(
         children: [
           // uppre container
@@ -46,7 +46,6 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-                  // SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 8, 10),
                     child: Text(
@@ -83,7 +82,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: const TextField(
-                          // this should show the only results that is being typed
+                          // ************ this should show the only results that is being typed ***************************************
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.search, color: Colors.black),
                             hintText: "Search restaurants, cafas...",
