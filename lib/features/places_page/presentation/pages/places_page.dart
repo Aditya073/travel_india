@@ -109,14 +109,16 @@ class _PlacesPageState extends State<PlacesPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 5,
+                    ),
                     child: SizedBox(
-                      height: 70,
+                      height: 90,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: categoriesOfPlaces.length,
                         itemBuilder: (context, index) {
-
                           final category = categoriesOfPlaces.elementAt(index);
                           final Map<String, IconData> iconMap = {
                             'Waterfall': Icons.water_drop_outlined,
@@ -126,13 +128,13 @@ class _PlacesPageState extends State<PlacesPage> {
                             'Museum': Icons.museum,
                             'Leisure': Icons.sports_soccer,
                           };
-                          
+
                           return Column(
                             children: [
                               Container(
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.symmetric(
-                                  horizontal: 18,
+                                  horizontal: 15,
                                   vertical: 5,
                                 ),
                                 decoration: BoxDecoration(
@@ -153,23 +155,28 @@ class _PlacesPageState extends State<PlacesPage> {
                                 ),
                               ),
 
-                              // Padding(
-                              //   padding: const EdgeInsets.fromLTRB(2, 8, 2, 3),
-                              // child:
-                              // Text(
-                              //   category,
-                              //   style: TextStyle(
-                              //     color: Colors.grey,
-                              //     fontSize: 5,
-                              //   ),
-                              // ),
-                              // ),
+                              SizedBox(
+                                width: 70,
+                                child: Text(
+                                  category,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                             ],
                           );
                         },
                       ),
                     ),
                   ),
+
+
+                  // *************** here  
                 ],
               ),
             ),
