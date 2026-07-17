@@ -22,6 +22,10 @@ import 'package:travel_india/features/hotels_page/data/datasources/data_from_api
 import 'package:travel_india/features/hotels_page/data/repositories/hotels_repoImpl.dart';
 import 'package:travel_india/features/hotels_page/domain/usecases/get_data.dart';
 import 'package:travel_india/features/hotels_page/presentation/bloc/hotels_bloc.dart';
+import 'package:travel_india/features/places_page/data/datasource/data_from_places_api.dart';
+import 'package:travel_india/features/places_page/data/repositories/places_reopimpl.dart';
+import 'package:travel_india/features/places_page/domain/usecase/get_places_data.dart';
+import 'package:travel_india/features/places_page/presentation/bloc/places_bloc.dart';
 import 'package:travel_india/features/restaurants_page/data/datasource/data_from_api.dart';
 import 'package:travel_india/features/restaurants_page/data/repositories/restaurant_reopimpl.dart';
 import 'package:travel_india/features/restaurants_page/domain/usecase/get_data.dart';
@@ -90,6 +94,13 @@ class _MyAppState extends State<MyApp> {
               repository: RestaurantReopimpl(
                 datasource: DataFromApiForResraurent(),
               ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => PlacesBloc(
+            GetPlacesData(
+              repository: PlacesReopimpl(datasource: DataFromPlacesApi()),
             ),
           ),
         ),

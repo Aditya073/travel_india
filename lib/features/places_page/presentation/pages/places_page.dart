@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 
@@ -20,6 +19,15 @@ class _PlacesPageState extends State<PlacesPage> {
       'Zoo',
       'Museum',
       'Leisure',
+    };
+
+    final Map<String, IconData> iconMap = {
+      'Waterfall': Icons.water_drop_outlined,
+      'Historic': Icons.fort_outlined,
+      'Beach': Icons.beach_access,
+      'Zoo': Icons.pets,
+      'Museum': Icons.museum,
+      'Leisure': Icons.sports_soccer,
     };
     return Scaffold(
       body: Column(
@@ -111,7 +119,7 @@ class _PlacesPageState extends State<PlacesPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10,
-                      horizontal: 5,
+                      horizontal: 8,
                     ),
                     child: SizedBox(
                       height: 90,
@@ -120,37 +128,36 @@ class _PlacesPageState extends State<PlacesPage> {
                         itemCount: categoriesOfPlaces.length,
                         itemBuilder: (context, index) {
                           final category = categoriesOfPlaces.elementAt(index);
-                          final Map<String, IconData> iconMap = {
-                            'Waterfall': Icons.water_drop_outlined,
-                            'Historic': Icons.fort_outlined,
-                            'Beach': Icons.beach_access,
-                            'Zoo': Icons.pets,
-                            'Museum': Icons.museum,
-                            'Leisure': Icons.sports_soccer,
-                          };
 
                           return Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.symmetric(
-                                  horizontal: 15,
-                                  vertical: 5,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  // border: Border.all(
-                                  //   style: BorderStyle.solid,
-                                  //   width: 1,
-                                  // ),
-                                ),
+                              GestureDetector(
+                              //   onTap: () {
+                              //       if (context.read<PlacesBloc>().state
+                              //   is Loading) {
+                              // return;
+                            // }
 
-                                child: Center(
-                                  child: Icon(
-                                    iconMap[category] ?? Icons.help_outline,
-                                    size: 35,
-                                    color: AppTheme.primaryColor,
+
+
+                                // },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+
+                                  child: Center(
+                                    child: Icon(
+                                      iconMap[category] ?? Icons.help_outline,
+                                      size: 35,
+                                      color: AppTheme.primaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -175,8 +182,10 @@ class _PlacesPageState extends State<PlacesPage> {
                     ),
                   ),
 
+                  // *************** here
 
-                  // *************** here  
+
+
                 ],
               ),
             ),
