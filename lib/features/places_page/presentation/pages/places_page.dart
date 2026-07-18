@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/places_page/presentation/bloc/places_bloc.dart';
 
 class PlacesPage extends StatefulWidget {
   final String stateName;
@@ -10,10 +12,17 @@ class PlacesPage extends StatefulWidget {
 }
 
 class _PlacesPageState extends State<PlacesPage> {
+
+    @override
+  void initState() {
+    super.initState();
+    context.read<PlacesBloc>().add(GetWaterFallEvent(stateName: widget.stateName));
+  }
+
   @override
   Widget build(BuildContext context) {
     Set<String> categoriesOfPlaces = {
-      'Waterfall',
+      // 'Waterfall',
       'Historic',
       'Beach',
       'Zoo',
@@ -22,7 +31,7 @@ class _PlacesPageState extends State<PlacesPage> {
     };
 
     final Map<String, IconData> iconMap = {
-      'Waterfall': Icons.water_drop_outlined,
+      // 'Waterfall': Icons.water_drop_outlined, // remove this
       'Historic': Icons.fort_outlined,
       'Beach': Icons.beach_access,
       'Zoo': Icons.pets,
@@ -132,13 +141,11 @@ class _PlacesPageState extends State<PlacesPage> {
                           return Column(
                             children: [
                               GestureDetector(
-                              //   onTap: () {
-                              //       if (context.read<PlacesBloc>().state
-                              //   is Loading) {
-                              // return;
-                            // }
-
-
+                                //   onTap: () {
+                                //       if (context.read<PlacesBloc>().state
+                                //   is Loading) {
+                                // return;
+                                // }
 
                                 // },
                                 child: Container(
@@ -183,9 +190,148 @@ class _PlacesPageState extends State<PlacesPage> {
                   ),
 
                   // *************** here
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Features',
+                          style: TextStyle(
+                            color: AppTheme.darkColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
 
+                  Expanded(
+                    child: Container(
+                      child: BlocBuilder<PlacesBloc, PlacesState>(
+                        builder: (context, state) {
+                          if (state is Loading) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            );
+                          }
+                          if (state is Failure) {
+                            return Center(child: Text(state.message));
+                          }
+                          if (state is Success) {
+                            if (state.palceModels.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  "No Places Found!!",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppTheme.darkColor,
+                                  ),
+                                ),
+                              );
+                            }
 
+                            return ListView.builder(
+                              padding: EdgeInsets.only(top: 5),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.palceModels.length,
+                              itemBuilder: (context, index) {
+                                final card = state.palceModels[index];
 
+                                return SizedBox(
+                                  width: 160,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(14),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.primaryColor,
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                    child: Stack(
+                                      clipBehavior: Clip.hardEdge,
+                                      children: [
+                                        // Decorative circle — top right
+                                        Positioned(
+                                          top: -12,
+                                          right: -12,
+                                          child: Container(
+                                            width: 70,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.darkColor.withOpacity(0.25),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            // Icon box
+                                            Container(
+                                              width: 38,
+                                              height: 38,
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.darkColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: const Icon(
+                                                Icons.water_drop_outlined,
+                                                color: Color(0xFFA6C5D8),
+                                                size: 20,
+                                              ),
+                                            ),
+
+                                            const SizedBox(height: 28),
+
+                                            // Place name
+                                            Text(
+                                              card.name,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                                height: 1.3,
+                                              ),
+                                            ),
+
+                                            const SizedBox(height: 4),
+
+                                            // Place type
+                                            Text(
+                                              card.placeType,
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                color: const Color(0xFFA6C5D8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+
+                          return const Center(
+                            child: Text(
+                              "Data Not found",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppTheme.darkColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
