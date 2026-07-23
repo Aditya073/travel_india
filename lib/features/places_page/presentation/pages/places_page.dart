@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/places_page/presentation/bloc/places_bloc.dart';
+import 'package:geocoding/geocoding.dart';
 
 class PlacesPage extends StatefulWidget {
   final String stateName;
@@ -23,7 +24,6 @@ class _PlacesPageState extends State<PlacesPage> {
   @override
   Widget build(BuildContext context) {
     Set<String> categoriesOfPlaces = {
-      // 'Waterfall',
       'Historic',
       'Beach',
       'Zoo',
@@ -32,13 +32,40 @@ class _PlacesPageState extends State<PlacesPage> {
     };
 
     final Map<String, IconData> iconMap = {
-      // 'Waterfall': Icons.water_drop_outlined, // remove this
       'Historic': Icons.fort_outlined,
       'Beach': Icons.beach_access,
       'Zoo': Icons.pets,
       'Museum': Icons.museum,
       'Leisure': Icons.sports_soccer,
     };
+
+    String truncateWords(String text, int maxWords) {
+      final words = text.split(' ');
+
+      if (words.length <= maxWords) {
+        return text;
+      }
+      return '${words.take(maxWords).join(' ')}...';
+    }
+
+    Future<String> getCityName(double lat, double lng) async {
+      try {
+        List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+
+        if (placemarks.isNotEmpty) {
+          return placemarks.first.locality ??
+              placemarks.first.subAdministrativeArea ??
+              placemarks.first.administrativeArea ??
+              "Unknown";
+        }
+
+        return "Unknown";
+      } catch (e) {
+        print(e);
+        return "Unknown";
+      }
+    }
+
     return Scaffold(
       body: Column(
         children: [
@@ -293,7 +320,8 @@ class _PlacesPageState extends State<PlacesPage> {
 
                                             // Place name
                                             Text(
-                                              card.name,
+                                              // card.name,
+                                              truncateWords(card.name, 4),
                                               style: const TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w600,
@@ -305,12 +333,35 @@ class _PlacesPageState extends State<PlacesPage> {
                                             const SizedBox(height: 4),
 
                                             // Place type
-                                            Text(
-                                              card.placeType,
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: const Color(0xFFA6C5D8),
+                                            FutureBuilder<String>(
+                                              future: getCityName(
+                                                card.lat,
+                                                card.lng,
                                               ),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Text(
+                                                    "Loading...",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Color(0xFFA6C5D8),
+                                                    ),
+                                                  );
+                                                }
+
+                                                if (snapshot.hasError) {
+                                                  return const Text("Unknown");
+                                                }
+
+                                                return Text(
+                                                  "City:- ${snapshot.data ?? "Unknown"}",
+                                                  style: const TextStyle(
+                                                    fontSize: 11,
+                                                    color: AppTheme.powderBlue,
+                                                  ),
+                                                );
+                                              },
                                             ),
                                           ],
                                         ),
