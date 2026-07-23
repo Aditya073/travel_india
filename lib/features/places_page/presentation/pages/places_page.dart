@@ -12,11 +12,12 @@ class PlacesPage extends StatefulWidget {
 }
 
 class _PlacesPageState extends State<PlacesPage> {
-
-    @override
+  @override
   void initState() {
     super.initState();
-    context.read<PlacesBloc>().add(GetWaterFallEvent(stateName: widget.stateName));
+    context.read<PlacesBloc>().add(
+      GetWaterFallEvent(stateName: widget.stateName),
+    );
   }
 
   @override
@@ -189,13 +190,12 @@ class _PlacesPageState extends State<PlacesPage> {
                     ),
                   ),
 
-                  // *************** here
                   Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          'Features',
+                          'Waterfalls',
                           style: TextStyle(
                             color: AppTheme.darkColor,
                             fontSize: 18,
@@ -205,34 +205,34 @@ class _PlacesPageState extends State<PlacesPage> {
                     ],
                   ),
 
-                  Expanded(
-                    child: Container(
-                      child: BlocBuilder<PlacesBloc, PlacesState>(
-                        builder: (context, state) {
-                          if (state is Loading) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
+                  BlocBuilder<PlacesBloc, PlacesState>(
+                    builder: (context, state) {
+                      if (state is Loading) {
+                        return Center(
+                          child: CircularProgressIndicator(color: Colors.black),
+                        );
+                      }
+                      if (state is Failure) {
+                        return Center(child: Text(state.message));
+                      }
+                      if (state is Success) {
+                        if (state.palceModels.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              "No Places Found!!",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppTheme.darkColor,
                               ),
-                            );
-                          }
-                          if (state is Failure) {
-                            return Center(child: Text(state.message));
-                          }
-                          if (state is Success) {
-                            if (state.palceModels.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                  "No Places Found!!",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppTheme.darkColor,
-                                  ),
-                                ),
-                              );
-                            }
+                            ),
+                          );
+                        }
 
-                            return ListView.builder(
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          child: SizedBox(
+                            height: 160,
+                            child: ListView.builder(
                               padding: EdgeInsets.only(top: 5),
                               scrollDirection: Axis.horizontal,
                               itemCount: state.palceModels.length,
@@ -240,8 +240,11 @@ class _PlacesPageState extends State<PlacesPage> {
                                 final card = state.palceModels[index];
 
                                 return SizedBox(
-                                  width: 160,
+                                  width: 180,
                                   child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
                                     padding: const EdgeInsets.all(14),
                                     decoration: BoxDecoration(
                                       color: AppTheme.primaryColor,
@@ -258,7 +261,8 @@ class _PlacesPageState extends State<PlacesPage> {
                                             width: 70,
                                             height: 70,
                                             decoration: BoxDecoration(
-                                              color: AppTheme.darkColor.withOpacity(0.25),
+                                              color: AppTheme.darkColor
+                                                  .withOpacity(0.25),
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -315,22 +319,22 @@ class _PlacesPageState extends State<PlacesPage> {
                                   ),
                                 );
                               },
-                            );
-                          }
-
-                          return const Center(
-                            child: Text(
-                              "Data Not found",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: AppTheme.darkColor,
-                                fontWeight: FontWeight.w500,
-                              ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                          ),
+                        );
+                      }
+
+                      return const Center(
+                        child: Text(
+                          "Data Not found",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: AppTheme.darkColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
