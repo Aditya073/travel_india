@@ -145,16 +145,25 @@ out center tags;
 
   Future<List<PlacesModel>> waterFall(String stateName) async {
     try {
+
+      
+      final coords = stateCoordinates[stateName];
+
+      if (coords == null) {
+        throw Exception("Coordinates not found for $stateName");
+      }
+
+      final lat = coords['lat'];
+      final lon = coords['lon'];
+
       final String query =
           '''
 [out:json][timeout:120];
 
-area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
-
 (
-  node["waterway"="waterfall"](area.searchArea);
-  way["waterway"="waterfall"](area.searchArea);
-  relation["waterway"="waterfall"](area.searchArea);
+  node["waterway"="waterfall"](around:1500,$lat,$lon);
+  way["waterway"="waterfall"](around:1500,$lat,$lon);
+  relation["waterway"="waterfall"](around:1500,$lat,$lon);
 );
 
 out center tags;

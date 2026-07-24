@@ -51,7 +51,7 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
       }
     });
 
-    on<GetZooEvent>((event, emit) async {
+    on<GetWaterFallEvent>((event, emit) async {
       emit(Loading());
       try {
         final waterFallDetails = await getPlacesData.getWaterFallDetails(
@@ -65,12 +65,24 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
       }
     });
 
-    on<GetWaterFallEvent>((event, emit) async {
+    on<GetZooEvent>((event, emit) async {
       emit(Loading());
       try {
         final zooDetails = await getPlacesData.getZooDetails(event.stateName);
 
         emit(Success(palceModels: zooDetails));
+      } catch (e) {
+        emit(Failure(message: e.toString()));
+        rethrow;
+      }
+    });
+
+    on<GetleisureEvent>((event, emit) async {
+      emit(Loading());
+      try {
+        final leisureDetails = await getPlacesData.getZooDetails(event.stateName);
+
+        emit(Success(palceModels: leisureDetails));
       } catch (e) {
         emit(Failure(message: e.toString()));
         rethrow;

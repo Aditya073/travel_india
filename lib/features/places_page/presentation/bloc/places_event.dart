@@ -32,3 +32,9 @@ class GetMuseumEvent extends PlacesEvent {
 
   GetMuseumEvent({required this.stateName});
 }
+
+class GetleisureEvent extends PlacesEvent {
+  final String stateName;
+
+  GetleisureEvent({required this.stateName});
+}

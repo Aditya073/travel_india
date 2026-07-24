@@ -169,13 +169,47 @@ class _PlacesPageState extends State<PlacesPage> {
                           return Column(
                             children: [
                               GestureDetector(
-                                //   onTap: () {
-                                //       if (context.read<PlacesBloc>().state
-                                //   is Loading) {
-                                // return;
-                                // }
+                                  onTap: () {
 
-                                // },
+                                    
+                            if (context.read<PlacesBloc>().state
+                                is Loading) {
+                              return;
+                            }
+
+                           // Event
+                            switch (category) {
+                              case "Historic":
+                                context.read<PlacesBloc>().add(
+                                  GetHistoricEvent(stateName: widget.stateName),
+                                );
+                                break;
+                              case 'Beach':
+                                context.read<PlacesBloc>().add(
+                                  GetBeachEvent(stateName: widget.stateName),
+                                );
+                                break;
+
+                              case 'Zoo':
+                                context.read<PlacesBloc>().add(
+                                  GetZooEvent(stateName: widget.stateName),
+                                );
+                                break;
+
+                              case 'Museum':
+                                context.read<PlacesBloc>().add(
+                                  GetMuseumEvent(stateName: widget.stateName),
+                                );
+                                break;
+
+                              case 'Leisure':
+                                context.read<PlacesBloc>().add(
+                                  GetleisureEvent(stateName: widget.stateName),
+                                );
+                                break;
+                            }
+
+                                },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
                                   margin: EdgeInsets.symmetric(
@@ -387,6 +421,25 @@ class _PlacesPageState extends State<PlacesPage> {
                       );
                     },
                   ),
+
+                  
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Nearby Places',
+                          style: TextStyle(
+                            color: AppTheme.darkColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // ****** main display *******
+
                 ],
               ),
             ),
