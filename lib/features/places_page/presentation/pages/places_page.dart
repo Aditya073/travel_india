@@ -13,6 +13,8 @@ class PlacesPage extends StatefulWidget {
 }
 
 class _PlacesPageState extends State<PlacesPage> {
+
+
   @override
   void initState() {
     super.initState();
@@ -169,46 +171,52 @@ class _PlacesPageState extends State<PlacesPage> {
                           return Column(
                             children: [
                               GestureDetector(
-                                  onTap: () {
+                                onTap: () {
+                                  if (context.read<PlacesBloc>().state
+                                      is Loading) {
+                                    return;
+                                  }
+                                  // Event
+                                  switch (category) {
+                                    case "Historic":
+                                      context.read<PlacesBloc>().add(
+                                        GetHistoricEvent(
+                                          stateName: widget.stateName,
+                                        ),
+                                      );
+                                      break;
+                                    case 'Beach':
+                                      context.read<PlacesBloc>().add(
+                                        GetBeachEvent(
+                                          stateName: widget.stateName,
+                                        ),
+                                      );
+                                      break;
 
-                                    
-                            if (context.read<PlacesBloc>().state
-                                is Loading) {
-                              return;
-                            }
+                                    case 'Zoo':
+                                      context.read<PlacesBloc>().add(
+                                        GetZooEvent(
+                                          stateName: widget.stateName,
+                                        ),
+                                      );
+                                      break;
 
-                           // Event
-                            switch (category) {
-                              case "Historic":
-                                context.read<PlacesBloc>().add(
-                                  GetHistoricEvent(stateName: widget.stateName),
-                                );
-                                break;
-                              case 'Beach':
-                                context.read<PlacesBloc>().add(
-                                  GetBeachEvent(stateName: widget.stateName),
-                                );
-                                break;
+                                    case 'Museum':
+                                      context.read<PlacesBloc>().add(
+                                        GetMuseumEvent(
+                                          stateName: widget.stateName,
+                                        ),
+                                      );
+                                      break;
 
-                              case 'Zoo':
-                                context.read<PlacesBloc>().add(
-                                  GetZooEvent(stateName: widget.stateName),
-                                );
-                                break;
-
-                              case 'Museum':
-                                context.read<PlacesBloc>().add(
-                                  GetMuseumEvent(stateName: widget.stateName),
-                                );
-                                break;
-
-                              case 'Leisure':
-                                context.read<PlacesBloc>().add(
-                                  GetleisureEvent(stateName: widget.stateName),
-                                );
-                                break;
-                            }
-
+                                    case 'Leisure':
+                                      context.read<PlacesBloc>().add(
+                                        GetleisureEvent(
+                                          stateName: widget.stateName,
+                                        ),
+                                      );
+                                      break;
+                                  }
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
@@ -422,11 +430,10 @@ class _PlacesPageState extends State<PlacesPage> {
                     },
                   ),
 
-                  
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10, top: 8, bottom: 5),
                         child: Text(
                           'Nearby Places',
                           style: TextStyle(
@@ -439,7 +446,148 @@ class _PlacesPageState extends State<PlacesPage> {
                   ),
 
                   // ****** main display *******
-
+                  Expanded(
+                    child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: AppTheme.iceBlue,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      child: BlocBuilder<PlacesBloc, PlacesState>(
+                        builder: (context, state) {
+                          if (state is Loading) {
+                            return Center(
+                              child: CircularProgressIndicator(color: Colors.black),
+                            );
+                          }
+                          if (state is Failure) {
+                            return Center(child: Text(state.message));
+                          }
+                          if (state is Success) {
+                            if (state.palceModels.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  "No Places Found!!",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppTheme.darkColor,
+                                  ),
+                                ),
+                              );
+                            }
+                      
+                            return ListView.builder(
+                              padding: EdgeInsets.only(top: 5),
+                              scrollDirection: Axis.vertical,
+                              itemCount: state.palceModels.length,
+                              itemBuilder: (context, index) {
+                                final card = state.palceModels[index];
+                      
+                                return Container(
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 8,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // blue container
+                                      Container(
+                                        margin: EdgeInsets.all(15),
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          color: AppTheme.primaryColor,
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Icon(
+                                            // change the icon if it is cafe
+                                            iconMap[card.placeType],
+                      
+                                            color: Colors.white,
+                                            size: 32,
+                                          ),
+                                        ),
+                                      ),
+                      
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            // this makes it appear .... after 4 words
+                                            truncateWords(card.name, 3),
+                                            // card.name,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              color: AppTheme.darkColor,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            widget.stateName,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                      
+                                      Spacer(),
+                                      IconButton(
+                                        onPressed: () {
+                                          // *** on click open the map
+                      
+                                          //   Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //       builder: (context) => MapPage(
+                                          //         stateName: widget.stateName,
+                                          //         // Location of the restaurant and name
+                                          //         name: card.name,
+                                          //         lat: card.lat,
+                                          //         lng: card.lng,
+                                          //       ),
+                                          //     ),
+                                          //   );
+                                        },
+                                        icon: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: AppTheme.powderBlue,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                      
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: const Center(
+                              child: Text(
+                                "Select From the above categorys",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: AppTheme.darkColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
