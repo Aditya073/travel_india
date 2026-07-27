@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:travel_india/features/places_page/data/model/places_model.dart';
 
 class DataFromPlacesApi {
-  static const String _baseUrl = 'https://overpass-api.de/api/interpreter';
-
+  static const String _baseUrl =
+    'https://overpass.kumi.systems/api/interpreter';
+  
+  
   static const stateCoordinates = {
     'Andhra Pradesh': {'lat': 15.9129, 'lon': 79.7400},
     'Arunachal Pradesh': {'lat': 28.2180, 'lon': 94.7278},
@@ -56,6 +58,8 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 out center tags;
 ''';
 
+print(query);
+
       final response = await http
           .post(
             Uri.parse(_baseUrl),
@@ -66,7 +70,7 @@ out center tags;
             },
             body: {'data': query},
           )
-          .timeout(const Duration(seconds: 1000));
+          .timeout(const Duration(seconds: 30));
 
       if (response.statusCode != 200) {
         print("Status Code: ${response.statusCode}");
@@ -108,6 +112,8 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 out center tags;
 ''';
 
+print(query);
+
       final response = await http
           .post(
             Uri.parse(_baseUrl),
@@ -118,7 +124,7 @@ out center tags;
             },
             body: {'data': query},
           )
-          .timeout(const Duration(seconds: 1000));
+          .timeout(const Duration(seconds: 30));
 
       if (response.statusCode != 200) {
         print("Status Code: ${response.statusCode}");
@@ -161,14 +167,16 @@ out center tags;
 [out:json][timeout:120];
 
 (
-  node["waterway"="waterfall"](around:1500,$lat,$lon);
-  way["waterway"="waterfall"](around:1500,$lat,$lon);
-  relation["waterway"="waterfall"](around:1500,$lat,$lon);
+  node["waterway"="waterfall"](around:150000,$lat,$lon);
+  way["waterway"="waterfall"](around:150000,$lat,$lon);
+  relation["waterway"="waterfall"](around:150000,$lat,$lon);
 );
 
 out center tags;
 
 ''';
+
+print(query);
 
       final response = await http
           .post(
@@ -221,6 +229,8 @@ out center tags;
 
 ''';
 
+print(query);
+
       final response = await http
           .post(
             Uri.parse(_baseUrl),
@@ -231,7 +241,7 @@ out center tags;
             },
             body: {'data': query},
           )
-          .timeout(const Duration(seconds: 1000));
+          .timeout(const Duration(seconds: 30));
 
       if (response.statusCode != 200) {
         print("Status Code: ${response.statusCode}");
@@ -273,6 +283,9 @@ out center tags;
 
 ''';
 
+
+print(query);
+
       final response = await http
           .post(
             Uri.parse(_baseUrl),
@@ -283,7 +296,7 @@ out center tags;
             },
             body: {'data': query},
           )
-          .timeout(const Duration(seconds: 1000));
+          .timeout(const Duration(seconds: 30));
 
       if (response.statusCode != 200) {
         print("Status Code: ${response.statusCode}");
@@ -328,6 +341,8 @@ out center tags;
 
 ''';
 
+print(query);
+
       final response = await http
           .post(
             Uri.parse(_baseUrl),
@@ -338,7 +353,7 @@ out center tags;
             },
             body: {'data': query},
           )
-          .timeout(const Duration(seconds: 1000));
+          .timeout(const Duration(seconds: 30));
 
       if (response.statusCode != 200) {
         print("Status Code: ${response.statusCode}");

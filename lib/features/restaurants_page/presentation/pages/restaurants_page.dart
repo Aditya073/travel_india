@@ -150,11 +150,6 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                                 );
                                 break;
                             }
-
-                            //   context.read<RestaurantsBloc>().add(
-                            //     GetRestaurantsEvent(widget.stateName),
-                            //   );
-                            // }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(15),

@@ -52,7 +52,7 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
     });
 
     on<GetWaterFallEvent>((event, emit) async {
-      emit(Loading());
+      emit(WaterfallLoading());
       try {
         final waterFallDetails = await getPlacesData.getWaterFallDetails(
           event.stateName,

@@ -7,6 +7,9 @@ final class PlacesInitial extends PlacesState {}
 
 class Loading extends PlacesState {}
 
+
+class WaterfallLoading extends PlacesState {}
+
 class Success extends PlacesState {
   final List<PlacesModel> palceModels;
 

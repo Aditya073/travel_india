@@ -276,7 +276,7 @@ class _PlacesPageState extends State<PlacesPage> {
 
                   BlocBuilder<PlacesBloc, PlacesState>(
                     builder: (context, state) {
-                      if (state is Loading) {
+                      if (state is WaterfallLoading) {
                         return Center(
                           child: CircularProgressIndicator(color: Colors.black),
                         );
@@ -455,6 +455,7 @@ class _PlacesPageState extends State<PlacesPage> {
                         ),
                       child: BlocBuilder<PlacesBloc, PlacesState>(
                         builder: (context, state) {
+
                           if (state is Loading) {
                             return Center(
                               child: CircularProgressIndicator(color: Colors.black),
