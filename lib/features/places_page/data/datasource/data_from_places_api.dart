@@ -53,6 +53,9 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
   node["natural"="beach"](area.searchArea);
   way["natural"="beach"](area.searchArea);
   relation["natural"="beach"](area.searchArea);
+
+  node["tourism"="beach"](area.searchArea);
+  way["tourism"="beach"](area.searchArea);
 );
 
 out center tags;
@@ -107,6 +110,9 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
   node["tourism"="zoo"](area.searchArea);
   way["tourism"="zoo"](area.searchArea);
   relation["tourism"="zoo"](area.searchArea);
+
+  node["zoo"](area.searchArea);
+  way["zoo"](area.searchArea);
 );
 
 out center tags;
@@ -167,9 +173,12 @@ print(query);
 [out:json][timeout:120];
 
 (
-  node["waterway"="waterfall"](around:150000,$lat,$lon);
-  way["waterway"="waterfall"](around:150000,$lat,$lon);
-  relation["waterway"="waterfall"](around:150000,$lat,$lon);
+  node["waterway"="waterfall"](around:250000,$lat,$lon);
+  way["waterway"="waterfall"](around:250000,$lat,$lon);
+  relation["waterway"="waterfall"](around:250000,$lat,$lon);
+
+  node["natural"="waterfall"](around:250000,$lat,$lon);
+  way["natural"="waterfall"](around:250000,$lat,$lon);
 );
 
 out center tags;
@@ -219,10 +228,12 @@ print(query);
           '''
 [out:json][timeout:120];
 
-area["name"="$stateName"]->.searchArea;
+area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 
 (
   node["historic"](area.searchArea);
+  way["historic"](area.searchArea);
+  relation["historic"](area.searchArea);
 );
 
 out center tags;
@@ -273,10 +284,12 @@ print(query);
           '''
 [out:json][timeout:120];
 
-area["name"="$stateName"]->.searchArea;
+area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 
 (
   node["leisure"](area.searchArea);
+  way["leisure"](area.searchArea);
+  relation["leisure"](area.searchArea);
 );
 
 out center tags;
@@ -335,6 +348,9 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
   node["tourism"="museum"](area.searchArea);
   way["tourism"="museum"](area.searchArea);
   relation["tourism"="museum"](area.searchArea);
+
+  node["museum"](area.searchArea);
+  way["museum"](area.searchArea);
 );
 
 out center tags;
