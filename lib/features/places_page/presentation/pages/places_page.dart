@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/Config/Widgets/map_page.dart';
 import 'package:travel_india/features/places_page/presentation/bloc/places_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -13,8 +14,6 @@ class PlacesPage extends StatefulWidget {
 }
 
 class _PlacesPageState extends State<PlacesPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -278,7 +277,9 @@ class _PlacesPageState extends State<PlacesPage> {
                     builder: (context, state) {
                       if (state is WaterfallLoading) {
                         return Center(
-                          child: CircularProgressIndicator(color: Colors.black),
+                          child: CircularProgressIndicator(
+                            color: AppTheme.darkColor,
+                          ),
                         );
                       }
                       if (state is Failure) {
@@ -308,106 +309,130 @@ class _PlacesPageState extends State<PlacesPage> {
                               itemBuilder: (context, index) {
                                 final card = state.palceModels[index];
 
-                                return SizedBox(
-                                  width: 180,
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    padding: const EdgeInsets.all(14),
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.primaryColor,
-                                      borderRadius: BorderRadius.circular(18),
-                                    ),
-                                    child: Stack(
-                                      clipBehavior: Clip.hardEdge,
-                                      children: [
-                                        // Decorative circle — top right
-                                        Positioned(
-                                          top: -12,
-                                          right: -12,
-                                          child: Container(
-                                            width: 70,
-                                            height: 70,
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.darkColor
-                                                  .withOpacity(0.25),
-                                              shape: BoxShape.circle,
+                                return GestureDetector(
+                                  onTap: () {
+                                    // *** on click open the map
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MapPage(
+                                          stateName: widget.stateName,
+                                          // Location of the restaurant and name
+                                          name: card.name,
+                                          lat: card.lat,
+                                          lng: card.lng,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    width: 180,
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                      ),
+                                      padding: const EdgeInsets.all(14),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor,
+                                        borderRadius: BorderRadius.circular(18),
+                                      ),
+                                      child: Stack(
+                                        clipBehavior: Clip.hardEdge,
+                                        children: [
+                                          // Decorative circle — top right
+                                          Positioned(
+                                            top: -12,
+                                            right: -12,
+                                            child: Container(
+                                              width: 70,
+                                              height: 70,
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.darkColor
+                                                    .withOpacity(0.25),
+                                                shape: BoxShape.circle,
+                                              ),
                                             ),
                                           ),
-                                        ),
 
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            // Icon box
-                                            Container(
-                                              width: 38,
-                                              height: 38,
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.darkColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              // Icon box
+                                              Container(
+                                                width: 38,
+                                                height: 38,
+                                                decoration: BoxDecoration(
+                                                  color: AppTheme.darkColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.water_drop_outlined,
+                                                  color: Color(0xFFA6C5D8),
+                                                  size: 20,
+                                                ),
                                               ),
-                                              child: const Icon(
-                                                Icons.water_drop_outlined,
-                                                color: Color(0xFFA6C5D8),
-                                                size: 20,
+
+                                              const SizedBox(height: 28),
+
+                                              // Place name
+                                              Text(
+                                                // card.name,
+                                                truncateWords(card.name, 4),
+                                                style: const TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
+                                                  height: 1.3,
+                                                ),
                                               ),
-                                            ),
 
-                                            const SizedBox(height: 28),
+                                              const SizedBox(height: 4),
 
-                                            // Place name
-                                            Text(
-                                              // card.name,
-                                              truncateWords(card.name, 4),
-                                              style: const TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                                height: 1.3,
-                                              ),
-                                            ),
+                                              // Place type
+                                              FutureBuilder<String>(
+                                                future: getCityName(
+                                                  card.lat,
+                                                  card.lng,
+                                                ),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Text(
+                                                      "Loading...",
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        color: Color(
+                                                          0xFFA6C5D8,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
 
-                                            const SizedBox(height: 4),
+                                                  if (snapshot.hasError) {
+                                                    return const Text(
+                                                      "Unknown",
+                                                    );
+                                                  }
 
-                                            // Place type
-                                            FutureBuilder<String>(
-                                              future: getCityName(
-                                                card.lat,
-                                                card.lng,
-                                              ),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return const Text(
-                                                    "Loading...",
-                                                    style: TextStyle(
+                                                  return Text(
+                                                    "City:- ${snapshot.data ?? "Unknown"}",
+                                                    style: const TextStyle(
                                                       fontSize: 11,
-                                                      color: Color(0xFFA6C5D8),
+                                                      color:
+                                                          AppTheme.powderBlue,
                                                     ),
                                                   );
-                                                }
-
-                                                if (snapshot.hasError) {
-                                                  return const Text("Unknown");
-                                                }
-
-                                                return Text(
-                                                  "City:- ${snapshot.data ?? "Unknown"}",
-                                                  style: const TextStyle(
-                                                    fontSize: 11,
-                                                    color: AppTheme.powderBlue,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -433,7 +458,11 @@ class _PlacesPageState extends State<PlacesPage> {
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 8, bottom: 5),
+                        padding: const EdgeInsets.only(
+                          left: 10,
+                          top: 8,
+                          bottom: 5,
+                        ),
                         child: Text(
                           'Nearby Places',
                           style: TextStyle(
@@ -448,17 +477,18 @@ class _PlacesPageState extends State<PlacesPage> {
                   // ****** main display *******
                   Expanded(
                     child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: AppTheme.iceBlue,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: AppTheme.iceBlue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       child: BlocBuilder<PlacesBloc, PlacesState>(
                         builder: (context, state) {
-
                           if (state is Loading) {
                             return Center(
-                              child: CircularProgressIndicator(color: Colors.black),
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
                             );
                           }
                           if (state is Failure) {
@@ -476,14 +506,14 @@ class _PlacesPageState extends State<PlacesPage> {
                                 ),
                               );
                             }
-                      
+
                             return ListView.builder(
                               padding: EdgeInsets.only(top: 5),
                               scrollDirection: Axis.vertical,
                               itemCount: state.palceModels.length,
                               itemBuilder: (context, index) {
                                 final card = state.palceModels[index];
-                      
+
                                 return Container(
                                   margin: EdgeInsets.symmetric(
                                     horizontal: 10,
@@ -501,20 +531,22 @@ class _PlacesPageState extends State<PlacesPage> {
                                         height: 60,
                                         decoration: BoxDecoration(
                                           color: AppTheme.primaryColor,
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: Icon(
                                             // change the icon if it is cafe
                                             iconMap[card.placeType],
-                      
+
                                             color: Colors.white,
                                             size: 32,
                                           ),
                                         ),
                                       ),
-                      
+
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -522,7 +554,6 @@ class _PlacesPageState extends State<PlacesPage> {
                                           Text(
                                             // this makes it appear .... after 4 words
                                             truncateWords(card.name, 3),
-                                            // card.name,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
@@ -540,24 +571,24 @@ class _PlacesPageState extends State<PlacesPage> {
                                           ),
                                         ],
                                       ),
-                      
+
                                       Spacer(),
                                       IconButton(
                                         onPressed: () {
                                           // *** on click open the map
-                      
-                                          //   Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //       builder: (context) => MapPage(
-                                          //         stateName: widget.stateName,
-                                          //         // Location of the restaurant and name
-                                          //         name: card.name,
-                                          //         lat: card.lat,
-                                          //         lng: card.lng,
-                                          //       ),
-                                          //     ),
-                                          //   );
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => MapPage(
+                                                stateName: widget.stateName,
+                                                // Location of the restaurant and name
+                                                name: card.name,
+                                                lat: card.lat,
+                                                lng: card.lng,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         icon: Icon(
                                           Icons.arrow_forward_ios,
@@ -571,7 +602,7 @@ class _PlacesPageState extends State<PlacesPage> {
                               },
                             );
                           }
-                      
+
                           return Padding(
                             padding: const EdgeInsets.only(top: 20),
                             child: const Center(
