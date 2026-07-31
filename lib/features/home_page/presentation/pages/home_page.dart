@@ -12,16 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // ThemeData _themeMode = AppTheme.lightTheme;
-
-  // void toggleTheme() {
-  //   setState(() {
-  //     _themeMode = _themeMode == AppTheme.lightTheme
-  //         ? AppTheme.darkTheme
-  //         : AppTheme.lightTheme;
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -65,32 +55,151 @@ class _HomePageState extends State<HomePage> {
         }
       },
       child: Scaffold(
+        drawer: Drawer(
+          backgroundColor: AppTheme.powderBlue,
+          child: SafeArea(
+            child: Column(
+              children: [
+                // Header
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  decoration: BoxDecoration(
+                    color: AppTheme.darkColor.withOpacity(0.08),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 38,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.person,
+                          size: 45,
+                          color: AppTheme.darkColor,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        "Menu",
+                        style: TextStyle(
+                          color: AppTheme.darkColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Menu Items
+                ListTile(
+                  leading: Icon(
+                    Icons.person_outline,
+                    color: AppTheme.darkColor,
+                  ),
+                  title: Text(
+                    "Profile",
+                    style: TextStyle(
+                      color: AppTheme.darkColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: AppTheme.darkColor,
+                  ),
+                  onTap: () {},
+                ),
+
+                ListTile(
+                  leading: Icon(
+                    Icons.favorite_outline,
+                    color: AppTheme.darkColor,
+                  ),
+                  title: Text(
+                    "Saved",
+                    style: TextStyle(
+                      color: AppTheme.darkColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: AppTheme.darkColor,
+                  ),
+                  onTap: () {},
+                ),
+
+                ListTile(
+                  leading: Icon(
+                    Icons.settings_outlined,
+                    color: AppTheme.darkColor,
+                  ),
+                  title: Text(
+                    "Settings",
+                    style: TextStyle(
+                      color: AppTheme.darkColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: AppTheme.darkColor,
+                  ),
+                  onTap: () {},
+                ),
+
+                const Spacer(),
+
+                ListTile(
+                  leading: Icon(
+                    Icons.logout_rounded,
+                    color: Colors.red.shade400,
+                  ),
+                  title: Text(
+                    "Logout",
+                    style: TextStyle(
+                      color: Colors.red.shade400,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onTap: () {
+                    // logout
+                  },
+                ),
+
+                const SizedBox(height: 15),
+              ],
+            ),
+          ),
+        ),
         appBar: AppBar(
-          // **************** App name ****************************************888888
           backgroundColor: Theme.of(context).primaryColor,
-          leading: IconButton(
-            onPressed: () {
-              // sliding profile window
-              // 1. display username
-              // 2. shows the states that have been book marked / saved
-              // 3. add logout feature here ---> and a checkbox to conform it
-            },
-            icon: Icon(Icons.person, size: 35, color: AppTheme.iceBlue),
+
+          title: Text(
+            'Travel India',
+            style: TextStyle(
+              color: AppTheme.iceBlue,
+              fontStyle: FontStyle.italic,
+              fontSize: 26,
+              fontWeight: FontWeight.w500,
+            ),
           ),
 
-          actions: [
-            IconButton(
-              onPressed: () {
-                // sliding settings window
-                // 1. change to a dark/light theme
-              },
-              icon: Icon(
-                Icons.more_vert_outlined,
-                size: 30,
-                color: AppTheme.iceBlue,
-              ),
-            ),
-          ],
+          centerTitle: true,
         ),
 
         body: Container(
