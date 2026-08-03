@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
+import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:travel_india/features/auth/presentation/pages/signup_page.dart';
 import 'package:travel_india/features/home_page/presentation/pages/home_page.dart';
@@ -91,24 +92,35 @@ class _LoginPageState extends State<LoginPage> {
         if (state is AuthLoading) {
           Center(child: CircularProgressIndicator(color: Colors.black));
         }
+        if (state is LoginSuccess) {
+          final UserModel userDetail = state.userModel;
 
-        if (state is LoginSuccess ||
-            state is GoogleSignInSuccess ||
-            state is GuestSignInSuccess) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(
+              builder: (_) => HomePage(userDetails: userDetail),
+            ),
           );
+        }
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Center(
-                child: Text(
-                  'Login Successful',
-                  style: TextStyle(color: Colors.green, fontSize: 18),
-                ),
-              ),
-              backgroundColor: Colors.white.withOpacity(0.2),
+        if (state is GoogleSignInSuccess) {
+          final UserModel userDetail = state.userModel;
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => HomePage(userDetails: userDetail),
+            ),
+          );
+        }
+
+        if (state is GuestSignInSuccess) {
+          final UserModel userDetail = state.userModel;
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => HomePage(userDetails: userDetail),
             ),
           );
         }

@@ -30,12 +30,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         print('calling loginUsecase in AuthBloc');
         final user = await loginUsecase(event.email, event.password);
-        if (user.email.isEmpty) {
+        if (user.email!.isEmpty) {
           emit(LoginFailure(message: "Invalid credentials"));
           return;
         }
 
-        emit(LoginSuccess(email: user.email)); // login Successful
+        emit(LoginSuccess(userModel: user)); // login Successful
       } catch (e) {
         print(e.toString());
         emit(LoginFailure(message: e.toString()));
@@ -55,12 +55,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.phoneNumber,
           event.lastLocation,
         );
-        if (user.email.isEmpty) {
+        if (user.email!.isEmpty) {
           emit(SignUpFailure(message: "Invalid credentials"));
           return;
         }
 
-        emit(SignUpSuccess(email: user.email)); // SignUp Successful
+        emit(SignUpSuccess(userModel: user)); // SignUp Successful
       } catch (e) {
         print(e.toString());
         emit(SignUpFailure(message: e.toString()));

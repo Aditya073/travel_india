@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/Config/Widgets/travel_card.dart';
+import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
+import 'package:travel_india/features/home_page/presentation/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final UserModel userDetails;
+  const HomePage({super.key, required this.userDetails});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -116,7 +119,13 @@ class _HomePageState extends State<HomePage> {
                     size: 16,
                     color: AppTheme.darkColor,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    // profile page ****************
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                    );
+                  },
                 ),
 
                 ListTile(
@@ -163,22 +172,24 @@ class _HomePageState extends State<HomePage> {
 
                 const Spacer(),
 
-                ListTile(
-                  leading: Icon(
-                    Icons.logout_rounded,
-                    color: Colors.red.shade400,
-                  ),
-                  title: Text(
-                    "Logout",
-                    style: TextStyle(
+                Center(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.logout_rounded,
                       color: Colors.red.shade400,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
                     ),
+                    title: Text(
+                      "Logout",
+                      style: TextStyle(
+                        color: Colors.red.shade400,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onTap: () {
+                      // logout
+                    },
                   ),
-                  onTap: () {
-                    // logout
-                  },
                 ),
 
                 const SizedBox(height: 15),

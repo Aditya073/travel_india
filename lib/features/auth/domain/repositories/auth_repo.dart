@@ -15,8 +15,8 @@ import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/domain/entities/users.dart';
 
 abstract class AuthRepo {
-  Future<Users> loginUsingEmailAndPassword(String email, String password);
-  Future<Users> signUpUsingEmailAndPassword(
+  Future<UserModel> loginUsingEmailAndPassword(String email, String password);
+  Future<UserModel> signUpUsingEmailAndPassword(
     String email,
     String password,
     String name,

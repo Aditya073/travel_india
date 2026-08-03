@@ -24,9 +24,6 @@ class AppTheme {
       secondary: Color(0xFFA6C5D8),
       onSecondary: Color(0xFF0E2A47),
 
-      background: Color(0xFFD6E6F3),
-      onBackground: Color(0xFF0A1A2F),
-
       surface: Color(0xFFFFFFFF),
       onSurface: Color(0xFF0A1A2F),
 
@@ -51,9 +48,6 @@ class AppTheme {
 
       secondary: Color(0xFFA6C5D8),
       onSecondary: Color(0xFF000926),
-
-      background: Color(0xFF000926),
-      onBackground: Color(0xFFD6E6F3),
 
       surface: Color(0xFF0A1A3A),
       onSurface: Color(0xFFD6E6F3),

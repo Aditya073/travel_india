@@ -14,7 +14,7 @@ class AuthRepoimpl implements AuthRepo {
   AuthRepoimpl({required this.dataSource});
 
   @override
-  Future<Users> loginUsingEmailAndPassword(
+  Future<UserModel> loginUsingEmailAndPassword(
     String email,
     String password,
   ) async {
@@ -23,11 +23,11 @@ class AuthRepoimpl implements AuthRepo {
       password,
     );
 
-    return Users(email: response.email!);
+    return response;
   }
 
   @override
-  Future<Users> signUpUsingEmailAndPassword(
+  Future<UserModel> signUpUsingEmailAndPassword(
     String email,
     String password,
     String name,
@@ -42,7 +42,7 @@ class AuthRepoimpl implements AuthRepo {
       lastLocation,
     );
 
-    return Users(email: response.email!);
+    return response;
   }
 
   @override

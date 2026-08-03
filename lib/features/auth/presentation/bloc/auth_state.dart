@@ -8,14 +8,14 @@ sealed class AuthState {}
  class AuthLoading extends AuthState {}
 
  class LoginSuccess extends AuthState {
-  final String email;
+  final UserModel userModel;
 
-  LoginSuccess({required this.email});
+  LoginSuccess({required this.userModel});
 }
  class SignUpSuccess extends AuthState {
-  final String email;
+  final UserModel userModel;
 
-  SignUpSuccess({required this.email});
+  SignUpSuccess({required this.userModel});
 }
  class GoogleSignInSuccess extends AuthState {
   final UserModel userModel;

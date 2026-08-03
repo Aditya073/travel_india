@@ -7,7 +7,7 @@ class LoginUsecase {
 
   LoginUsecase(this.repository);
 
-  Future<Users> call(String email, String password) {
+  Future<UserModel> call(String email, String password) {
     print('in LoginUsercase');
     return repository.loginUsingEmailAndPassword(email, password);
   }
@@ -18,7 +18,7 @@ class SignUpUsercase {
 
   SignUpUsercase(this.repository);
 
-  Future<Users> call(
+  Future<UserModel> call(
     String email,
     String password,
     String name,
