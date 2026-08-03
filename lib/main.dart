@@ -13,6 +13,7 @@ import 'package:travel_india/features/auth/domain/usecases/loginUseCase.dart';
 import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/features/auth/data/datasources/firebase_options.dart';
+import 'package:travel_india/features/auth/presentation/pages/login_page.dart';
 import 'package:travel_india/features/home_page/data/datasources/firestoreDataSource.dart';
 import 'package:travel_india/features/home_page/data/repositories/card_repoImpl.dart';
 import 'package:travel_india/features/home_page/domain/usecases/getCardData.dart';
@@ -97,7 +98,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
-        BlocProvider(
+        BlocProvider<PlacesBloc>(
           create: (context) => PlacesBloc(
             GetPlacesData(
               repository: PlacesReopimpl(datasource: DataFromPlacesApi()),
@@ -109,8 +110,8 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Travel India',
         theme: AppTheme.lightTheme,
-        // home: LoginPage(),
-        home: HomePage(),
+        home: LoginPage(),
+        // home: HomePage(userDetails: ,),
       ),
     );
   }

@@ -120,10 +120,13 @@ class _HomePageState extends State<HomePage> {
                     color: AppTheme.darkColor,
                   ),
                   onTap: () {
-                    // profile page ****************
+                    // **************** profile page ****************
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProfilePage(userDetails: widget.userDetails),
+                      ),
                     );
                   },
                 ),
@@ -146,7 +149,16 @@ class _HomePageState extends State<HomePage> {
                     size: 16,
                     color: AppTheme.darkColor,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                       // **************** Saved page ****************
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            // ProfilePage(userDetails: widget.userDetails),
+                      ),
+                    );
+                  },
                 ),
 
                 ListTile(
@@ -167,7 +179,16 @@ class _HomePageState extends State<HomePage> {
                     size: 16,
                     color: AppTheme.darkColor,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                       // **************** Setting page ****************
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            // ProfilePage(userDetails: widget.userDetails),
+                      ),
+                    );
+                  },
                 ),
 
                 const Spacer(),
@@ -187,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onTap: () {
-                      // logout
+                      // call logout function and Navigator.pop()
                     },
                   ),
                 ),
