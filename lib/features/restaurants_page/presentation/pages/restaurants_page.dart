@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
-import 'package:travel_india/Config/Widgets/map_page.dart';
+import 'package:travel_india/Config/Widgets/helper_widget/map_page.dart';
 
 class RestaurantsPage extends StatefulWidget {
   final String stateName;
