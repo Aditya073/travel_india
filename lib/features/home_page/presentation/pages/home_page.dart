@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        "Menu",
+                        widget.userDetails.userName!,
                         style: TextStyle(
                           color: AppTheme.darkColor,
                           fontSize: 24,
@@ -151,13 +151,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onTap: () {
                        // **************** Saved page ****************
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            // ProfilePage(userDetails: widget.userDetails),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         // ProfilePage(userDetails: widget.userDetails),
+                    //   ),
+                    // );
                   },
                 ),
 
@@ -181,13 +181,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onTap: () {
                        // **************** Setting page ****************
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            // ProfilePage(userDetails: widget.userDetails),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         // ProfilePage(userDetails: widget.userDetails),
+                    //   ),
+                    // );
                   },
                 ),
 
