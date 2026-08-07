@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
@@ -23,6 +24,7 @@ class SignUpUsercase {
     String name,
     String phoneNumber,
     String lastLocation,
+    Timestamp timestamp,
   ) {
     print('in SignUpUsercase');
     return repository.signUpUsingEmailAndPassword(
@@ -31,6 +33,7 @@ class SignUpUsercase {
       name,
       phoneNumber,
       lastLocation,
+      timestamp,
     );
   }
 }

@@ -11,6 +11,7 @@
 
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
 
 abstract class AuthRepo {
@@ -21,6 +22,7 @@ abstract class AuthRepo {
     String name,
     String phoneNumber,
     String lastLocation,
+    Timestamp timestamp,
   );
   Future<UserModel> signInWithGoogle();
   Future<UserModel> guestSignInUserCase();

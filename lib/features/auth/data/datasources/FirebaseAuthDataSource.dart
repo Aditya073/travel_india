@@ -73,14 +73,14 @@ class FirebaseAuthDataSource {
       final user = response.user;
 
       //  CHECK IF USER EXISTS IN FIRESTORE
-      final doc = await firestore
-          .collection("users")
-          .doc(response.user!.uid)
-          .get();
+      // final doc = await firestore
+      //     .collection("users")
+      //     .doc(response.user!.uid)
+      //     .get();
 
       final UserModel newUserModel;
 
-      if (!doc.exists) {
+      // if (!doc.exists) {
         // create new user
         Random random = Random();
         int randomNum = 10000 + random.nextInt(90000);
@@ -90,8 +90,9 @@ class FirebaseAuthDataSource {
           email: user.email ?? "",
           password: "",
           lastLocation: "",
-          userName: user.displayName ?? "Guest$randomNum",
+          userName: "Guest$randomNum",
           phoneNumber: user.phoneNumber ?? "",
+          timestamp: Timestamp.now(),
         );
 
         // add the data in firestore
@@ -100,10 +101,10 @@ class FirebaseAuthDataSource {
             .doc(user.uid)
             .set(newUserModel.toMap());
         return newUserModel;
-      }
+      // }
 
       // User already exists, fetch from Firestore
-      return await getUserData(user!.uid);
+      // return await getUserData(user!.uid);
     } catch (e) {
       throw e.toString();
     }
@@ -178,6 +179,7 @@ class FirebaseAuthDataSource {
     String name,
     String phoneNumber,
     String lastLocation,
+    Timestamp timestamp,
   ) async {
     try {
       print('In FirebaseAuthDataSource');
@@ -216,6 +218,7 @@ class FirebaseAuthDataSource {
         email: user.email!,
         phoneNumber: phoneNumber,
         lastLocation: lastLocation,
+        timestamp: Timestamp.now(),
       );
 
       // ALWAYS create Firestore document

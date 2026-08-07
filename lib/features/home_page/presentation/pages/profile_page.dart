@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatelessWidget {
   final UserModel userDetails;
@@ -64,9 +65,9 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
-                        'Member since 2024',
-                        style: TextStyle(
+                      Text(
+                        DateFormat.yMMMd().format(userDetails.timestamp!.toDate()),
+                        style: const TextStyle(
                           fontSize: 12,
                           color: AppTheme.powderBlue,
                         ),
@@ -77,7 +78,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 25),
 
             Container(
               width: double.infinity,
@@ -106,7 +107,11 @@ class ProfilePage extends StatelessWidget {
                   ProfileDetails(
                     icon: Icons.mail_outline,
                     label: 'Email address',
-                    value: userDetails.email!,
+                    value:
+                        (userDetails.email != null &&
+                            userDetails.email!.isNotEmpty)
+                        ? userDetails.email!
+                        : "Not available",
                     trailing: const Icon(
                       Icons.copy_outlined,
                       size: 18,
@@ -126,7 +131,11 @@ class ProfilePage extends StatelessWidget {
                   ProfileDetails(
                     icon: Icons.phone_outlined,
                     label: 'Phone number',
-                    value: userDetails.phoneNumber!,
+                    value:
+                        (userDetails.email != null &&
+                            userDetails.email!.isNotEmpty)
+                        ? userDetails.email!
+                        : "Not available",
                     trailing: const Icon(
                       Icons.copy_outlined,
                       size: 18,
@@ -146,7 +155,11 @@ class ProfilePage extends StatelessWidget {
                   ProfileDetails(
                     icon: Icons.location_on_outlined,
                     label: 'Location',
-                    value: userDetails.lastLocation!,
+                    value:
+                        (userDetails.email != null &&
+                            userDetails.email!.isNotEmpty)
+                        ? userDetails.email!
+                        : "Not found",
                     trailing: const Icon(
                       Icons.chevron_right,
                       size: 18,
@@ -157,7 +170,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 25),
 
             SizedBox(
               width: double.infinity,

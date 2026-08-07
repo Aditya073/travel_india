@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
@@ -54,6 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.name,
           event.phoneNumber,
           event.lastLocation,
+          event.timestamp,
         );
         if (user.email!.isEmpty) {
           emit(SignUpFailure(message: "Invalid credentials"));

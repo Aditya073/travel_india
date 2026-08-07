@@ -18,13 +18,14 @@ class AuthSignUpUsingEmailandPassword extends AuthEvent {
   final String password;
   final String phoneNumber;
   final String lastLocation;
+  final Timestamp timestamp;
 
   AuthSignUpUsingEmailandPassword({
     required this.name,
     required this.email,
     required this.password,
     required this.phoneNumber,
-    required this.lastLocation,
+    required this.lastLocation, required this.timestamp,
   });
 }
 

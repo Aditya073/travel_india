@@ -17,6 +17,7 @@ class UserModel {
   final String? userName;
   final String? phoneNumber;
   final String? lastLocation;
+  final Timestamp? timestamp;
 
   // bool isGuest;
 
@@ -27,6 +28,7 @@ class UserModel {
     this.userName,
     this.phoneNumber,
     this.lastLocation,
+    this.timestamp,
   });
 
   //It’s a named constructor whose job is to convert Firestore data into a UserModel object safely.
@@ -40,6 +42,7 @@ class UserModel {
       userName: data['userName'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
       lastLocation: data['lastLocation'] ?? '',
+      timestamp: data['timestamp'] as Timestamp,
     );
   }
   Map<String, dynamic> toMap() {
@@ -50,6 +53,7 @@ class UserModel {
       "password": password,
       "phoneNumber": phoneNumber,
       "lastLocation": lastLocation,
+      "timestamp": timestamp,
     };
   }
 }

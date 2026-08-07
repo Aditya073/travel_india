@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
@@ -83,7 +84,8 @@ class _SignupPageState extends State<SignupPage> {
           email: newUserEmailID.text.trim(),
           password: newUserPassword.text.trim(),
           phoneNumber: newUserPhoneNumber.text.trim(),
-          lastLocation: " "   // currently null
+          lastLocation: " ", // currently null
+          timestamp: Timestamp.now(),
         ),
       );
     }
@@ -111,7 +113,9 @@ class _SignupPageState extends State<SignupPage> {
         if (state is SignUpSuccess) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomePage(userDetails: state.userModel,)),
+            MaterialPageRoute(
+              builder: (context) => HomePage(userDetails: state.userModel),
+            ),
           );
 
           ScaffoldMessenger.of(context).showSnackBar(
@@ -341,6 +345,20 @@ class _SignupPageState extends State<SignupPage> {
                                     ),
                                   );
                                 },
+                              ),
+                              const SizedBox(height: 15),
+
+                              TextButton(
+                                // Sign Up BUTTON
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  backgroundColor: AppTheme.darkColor,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text('Go back'),
                               ),
 
                               const SizedBox(height: 30),
