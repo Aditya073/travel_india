@@ -18,7 +18,6 @@ import 'package:travel_india/features/home_page/data/datasources/firestoreDataSo
 import 'package:travel_india/features/home_page/data/repositories/card_repoImpl.dart';
 import 'package:travel_india/features/home_page/domain/usecases/getCardData.dart';
 import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
-import 'package:travel_india/features/home_page/presentation/pages/home_page.dart';
 import 'package:travel_india/features/hotels_page/data/datasources/data_from_api.dart';
 import 'package:travel_india/features/hotels_page/data/repositories/hotels_repoImpl.dart';
 import 'package:travel_india/features/hotels_page/domain/usecases/get_data.dart';
@@ -31,6 +30,32 @@ import 'package:travel_india/features/restaurants_page/data/datasource/data_from
 import 'package:travel_india/features/restaurants_page/data/repositories/restaurant_reopimpl.dart';
 import 'package:travel_india/features/restaurants_page/domain/usecase/get_data.dart';
 import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
+
+
+/*           How the Final Architecture should look like
+                    ┌─────────────────┐
+                    │    Flutter UI   │
+                    └────────┬────────┘
+                             ↓
+                         BLoC/Cubit
+                             ↓
+                         Use Case
+                             ↓
+                        Repository
+                             ↓
+                    ┌────────┴─────────┐
+                    ↓                  ↓
+               Local Cache        Remote Source
+                    │                  ↓
+                    │             Your Backend
+                    │                  ↓
+                    │             API Services
+                    │                  ↓
+                    │              Overpass
+                    │                 
+                    └──────────→ Model
+
+                    */
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
