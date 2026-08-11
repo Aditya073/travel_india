@@ -15,8 +15,10 @@ class OverpassClient {
       final response = client
           .post(
             Uri.parse(NetworkConstants.overpassUrl),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'
-          //  //  *** MANDATORY -> Identifies your app to prevent 406/403 blocks
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'User-Agent': 'TravelIndia/1.0',
+              //  //  *** MANDATORY -> Identifies your app to prevent 406/403 blocks
               // 'User-Agent':
               //     'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
               // 'Accept': 'application/json',
@@ -34,6 +36,7 @@ class OverpassClient {
       throw NetworkException('Network error: $e');
     }
   }
+
   /*
     200 → success
     400 → bad request
@@ -43,31 +46,22 @@ class OverpassClient {
     503 → service unavailable
     504 → timeout/gateway timeout
   */
-   Map<String, dynamic> _handleResponse(
-    http.Response response,
-  ) {
+  Map<String, dynamic> _handleResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        return jsonDecode(response.body)
-            as Map<String, dynamic>;
+        return jsonDecode(response.body) as Map<String, dynamic>;
 
       case 400:
-        throw BadRequestException(
-          'Invalid Overpass query.',
-        );
+        throw BadRequestException('Invalid Overpass query.');
 
       case 429:
-        throw RateLimitException(
-          'Too many requests. Please try again later.',
-        );
+        throw RateLimitException('Too many requests. Please try again later.');
 
       case 500:
       case 502:
       case 503:
       case 504:
-        throw ServerException(
-          'Overpass server is temporarily unavailable.',
-        );
+        throw ServerException('Overpass server is temporarily unavailable.');
 
       default:
         throw ServerException(
@@ -76,5 +70,4 @@ class OverpassClient {
         );
     }
   }
-
 }

@@ -30,6 +30,7 @@ import 'package:travel_india/features/restaurants_page/data/datasource/data_from
 import 'package:travel_india/features/restaurants_page/data/repositories/restaurant_reopimpl.dart';
 import 'package:travel_india/features/restaurants_page/domain/usecase/get_data.dart';
 import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
+import 'package:travel_india/networks/overpass_client.dart';
 
 
 /*           How the Final Architecture should look like
@@ -105,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<HotelsBloc>(
           create: (context) => HotelsBloc(
             GetHotelsData(
-              repository: HotelsRepoimpl(dataSource: DataFromApi()),
+              repository: HotelsRepoimpl(dataSource: DataFromApi(overpassClient: OverpassClient())),
             ),
           ),
         ),
