@@ -56,7 +56,7 @@ import 'package:travel_india/networks/overpass_client.dart';
                     │                 
                     └──────────→ Model
 
-                    */
+*/
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -15,11 +15,23 @@ class HotelsPage extends StatefulWidget {
 
 class _HotelsPageState extends State<HotelsPage> {
   Set<Marker> markers = {};
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   context.read<HotelsBloc>().add(GetHotelsEvent(widget.stateName));
+  // }
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    context.read<HotelsBloc>().add(GetHotelsEvent(widget.stateName));
-  }
+void initState() {
+  super.initState();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    context.read<HotelsBloc>().add(
+      GetHotelsEvent(stateName: widget.stateName,
+      ),
+    );
+  });
+}
 
   Set<Marker> gethotelMarker(List<HotelModel> hotels) {
     final List<Map<String, dynamic>> hotelMarker = [];

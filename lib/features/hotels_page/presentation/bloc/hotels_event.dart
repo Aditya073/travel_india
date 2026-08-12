@@ -6,5 +6,7 @@ sealed class HotelsEvent {}
 class GetHotelsEvent extends HotelsEvent {
   final String stateName;
 
-  GetHotelsEvent(this.stateName);
+  GetHotelsEvent({
+    required this.stateName,
+  });
 }
