@@ -1,5 +1,4 @@
 import 'package:travel_india/features/hotels_page/data/models/hotel_model.dart';
-import 'package:travel_india/features/hotels_page/data/models/search_area.dart';
 import 'package:travel_india/networks/overpass_client.dart';
 
 class DataFromApi {
@@ -7,177 +6,73 @@ class DataFromApi {
 
   DataFromApi({required this.overpassClient});
 
-  // main shitttttttt
   Future<List<HotelModel>> getHotels(String stateName) async {
-    try {
-      // Get the bounding box of the selected state dynamically.
-
-      final stateBounds = await _getStateBounds(stateName);
-      if (stateBounds == null) {
-        throw Exception('Could not find geographic bounds for $stateName');
-      }
-
-      print(
-        'State bounds for $stateName: '
-        '${stateBounds.south}, '
-        '${stateBounds.west}, '
-        '${stateBounds.north}, '
-        '${stateBounds.east}',
-      );
-
-      // Divide the state bounding box into smaller areas.
-      final areas = _createGrid(stateBounds);
-
-      print('Created ${areas.length} search areas for $stateName');
-
-      // Search each area.
-      final Map<String, HotelModel> uniqueHotels = {};
-
-      for (int i = 0; i < areas.length; i++) {
-        final area = areas[i];
-
-        print('Searching area ${i + 1}/${areas.length}');
-
-        try {
-          final query = _buildHotelQuery(area);
-
-          final data = await overpassClient.query(query);
-
-          final hotels = _parseHotels(data);
-
-          // Remove duplicates......... Same hotel can appear in overlapping areas.
-          for (final hotel in await hotels) {
-            // added a getter in hotelModel for "uniqueId"
-            uniqueHotels[hotel.uniqueId] = hotel;
-          }
-
-          print('Area ${i + 1} returned ${hotels.length} hotels');
-        } catch (e) {
-          print('Area ${i + 1} failed: $e');
-        }
-      }
-
-      print('Total unique hotels: ${uniqueHotels.length}');
-
-      return uniqueHotels.values.toList();
-    } catch (e) {
-      print('getHotels error: $e');
-      rethrow;
-    }
-  }
-
-
-  Future<SearchArea?> _getStateBounds(String stateName) async {
-    final query =
-        '''
-[out:json][timeout:20];
-
-rel
-  ["boundary"="administrative"]
-  ["admin_level"="4"]
-  ["name"="$stateName"];
-
-out bb;
-''';
+    final query = _buildQuery(stateName);
 
     final data = await overpassClient.query(query);
 
-    final elements = data['elements'];
+    return _parseHotels(data);
+  }
+}
 
-    if (elements == null || elements.isEmpty) {
-      return null;
-    }
+Future<List<HotelModel>> _parseHotels(Map<String, dynamic> data) async {
+  final List elements = data['elements'] ?? [];
 
-    final element = elements.first;
+  // Map JSON array elements safely to your HotelModel list
+  final List<HotelModel> hotels = elements.map((element) {
+    // Ensure your HotelModel has a robust fromJson/fromMap constructor
+    return HotelModel.fromJson(element);
+  }).toList();
 
-    final bounds = element['bounds'];
+  return hotels;
+}
 
-    if (bounds == null) {
-      return null;
-    }
+String _buildQuery(String stateName) {
+  final stateCoordinates = {
+    'Andhra Pradesh': {'lat': 15.9129, 'lon': 79.7400},
+    'Arunachal Pradesh': {'lat': 28.2180, 'lon': 94.7278},
+    'Assam': {'lat': 26.2006, 'lon': 92.9376},
+    'Bihar': {'lat': 25.0961, 'lon': 85.3131},
+    'Chhattisgarh': {'lat': 21.2787, 'lon': 81.8661},
+    'Goa': {'lat': 15.2993, 'lon': 74.1240},
+    'Gujarat': {'lat': 22.2587, 'lon': 71.1924},
+    'Haryana': {'lat': 29.0588, 'lon': 76.0856},
+    'Himachal Pradesh': {'lat': 31.1048, 'lon': 77.1734},
+    'Jharkhand': {'lat': 23.6102, 'lon': 85.2799},
+    'Karnataka': {'lat': 15.3173, 'lon': 75.7139},
+    'Kerala': {'lat': 10.8505, 'lon': 76.2711},
+    'Madhya Pradesh': {'lat': 22.9734, 'lon': 78.6569},
+    'Maharashtra': {'lat': 19.0760, 'lon': 72.8777}, // Mumbai
+    'Manipur': {'lat': 24.6637, 'lon': 93.9063},
+    'Meghalaya': {'lat': 25.4670, 'lon': 91.3662},
+    'Mizoram': {'lat': 23.1645, 'lon': 92.9376},
+    'Nagaland': {'lat': 26.1584, 'lon': 94.5624},
+    'Odisha': {'lat': 20.9517, 'lon': 85.0985},
+    'Punjab': {'lat': 31.1471, 'lon': 75.3412},
+    'Rajasthan': {'lat': 27.0238, 'lon': 74.2179},
+    'Sikkim': {'lat': 27.5330, 'lon': 88.5122},
+    'Tamil Nadu': {'lat': 11.1271, 'lon': 78.6569},
+    'Telangana': {'lat': 18.1124, 'lon': 79.0193},
+    'Tripura': {'lat': 23.9408, 'lon': 91.9882},
+    'Uttar Pradesh': {'lat': 26.8467, 'lon': 80.9462}, // Lucknow
+    'Uttarakhand': {'lat': 30.0668, 'lon': 79.0193},
+    'West Bengal': {'lat': 22.9868, 'lon': 87.8550},
+  };
+  final coords = stateCoordinates[stateName];
 
-    return SearchArea(
-      south: (bounds['minlat'] as num).toDouble(),
-      west: (bounds['minlon'] as num).toDouble(),
-      north: (bounds['maxlat'] as num).toDouble(),
-      east: (bounds['maxlon'] as num).toDouble(),
-    );
+  if (coords == null) {
+    throw Exception("Coordinates not found for $stateName");
   }
 
-
-
-  List<SearchArea> _createGrid(SearchArea bounds) {
-    const double latStep = 1.0;
-    const double lonStep = 1.0;
-
-    final List<SearchArea> areas = [];
-
-    double south = bounds.south;
-
-    while (south < bounds.north) {
-      final double north = (south + latStep > bounds.north)
-          ? bounds.north
-          : south + latStep;
-
-      double west = bounds.west;
-
-      while (west < bounds.east) {
-        final double east = (west + lonStep > bounds.east)
-            ? bounds.east
-            : west + lonStep;
-
-        areas.add(
-          SearchArea(south: south, west: west, north: north, east: east),
-        );
-
-        west += lonStep;
-      }
-
-      south += latStep;
-    }
-
-    return areas;
-  }
-
-
-
-  String _buildHotelQuery(SearchArea area) {
-    return '''
-[out:json][timeout:20];
-
-(
-  nwr
-    ["tourism"="hotel"]
-    ["name"]
+  final lat = coords['lat'];
+  final lon = coords['lon'];
+return '''
+    [out:json][timeout:30];
     (
-      ${area.south},
-      ${area.west},
-      ${area.north},
-      ${area.east}
+      node["tourism"="hotel"](around:50000,$lat,$lon);
+      way["tourism"="hotel"](around:50000,$lat,$lon);
+      relation["tourism"="hotel"](around:50000,$lat,$lon);
     );
-);
-
-out center tags;
-''';
-  }
-
-
-// take the data from the API response and formates it
-  List<HotelModel> _parseHotels(Map<String, dynamic> data) {
-    final List elements = data['elements'] ?? [];
-
-    final List<HotelModel> hotels = [];
-
-    for (final element in elements) {
-      try { // Map JSON array elements safely to your HotelModel list
-        final hotel = HotelModel.fromJson(Map<String, dynamic>.from(element));
-
-        hotels.add(hotel);
-      } catch (e) {
-        print('Failed to parse hotel: $e');
-      }
-    }
-
-    return hotels;
-  }
+    out center;
+    ''';
 }
