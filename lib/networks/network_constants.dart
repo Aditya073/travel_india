@@ -5,6 +5,9 @@ class NetworkConstants {
   static const String overpassUrl =
       'https://overpass-api.de/api/interpreter';
 
+  // https://overpass.kumi.systems/api/interpreter
+  // https://overpass-api.de/api/interpreter
+
   // time out duration for API
   static const Duration connectTimeout =
       Duration(seconds: 10);

@@ -112,14 +112,14 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<AirportsBloc>(
           create: (context) => AirportsBloc(
-            GetAirportData(repository: AirportRepoimpl(dataSource: DataApi())),
+            GetAirportData(repository: AirportRepoimpl(dataSource: DataApi(overpassClient: OverpassClient()))),
           ),
         ),
         BlocProvider<RestaurantsBloc>(
           create: (context) => RestaurantsBloc(
             GetData(
               repository: RestaurantReopimpl(
-                datasource: DataFromApiForResraurent(),
+                datasource: DataFromApiForResraurent(overpassClient: OverpassClient()),
               ),
             ),
           ),
