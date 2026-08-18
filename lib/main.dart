@@ -48,7 +48,7 @@ import 'package:travel_india/networks/overpass_client.dart';
                     ↓                  ↓
                Local Cache        Remote Source
                     │                  ↓
-                    │             Your Backend
+                    │               Backend
                     │                  ↓
                     │             API Services
                     │                  ↓
@@ -127,7 +127,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<PlacesBloc>(
           create: (context) => PlacesBloc(
             GetPlacesData(
-              repository: PlacesReopimpl(datasource: DataFromPlacesApi()),
+              repository: PlacesReopimpl(datasource: DataFromPlacesApi(overpassClient: OverpassClient())),
             ),
           ),
         ),

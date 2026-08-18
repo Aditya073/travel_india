@@ -1,13 +1,9 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:travel_india/features/places_page/data/model/places_model.dart';
+import 'package:travel_india/networks/overpass_client.dart';
 
 class DataFromPlacesApi {
-  static const String _baseUrl =
-    'https://overpass.kumi.systems/api/interpreter';
-  
-  
+  final OverpassClient overpassClient;
+
   static const stateCoordinates = {
     'Andhra Pradesh': {'lat': 15.9129, 'lon': 79.7400},
     'Arunachal Pradesh': {'lat': 28.2180, 'lon': 94.7278},
@@ -39,12 +35,13 @@ class DataFromPlacesApi {
     'West Bengal': {'lat': 22.9868, 'lon': 87.8550},
   };
 
+  DataFromPlacesApi({required this.overpassClient});
+
   // 1.         **********************************************************************************************
 
   Future<List<PlacesModel>> beach(String stateName) async {
-    try {
-      final String query =
-          '''
+    final String query =
+        '''
 [out:json][timeout:120];
 
 area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
@@ -61,47 +58,16 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 out center tags;
 ''';
 
-print(query);
+    final data = await overpassClient.query(query);
 
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'User-Agent':
-                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-              'Accept': 'application/json',
-            },
-            body: {'data': query},
-          )
-          .timeout(const Duration(seconds: 30));
-
-      if (response.statusCode != 200) {
-        print("Status Code: ${response.statusCode}");
-        print(response.body);
-        return [];
-      }
-
-      if (!response.body.trim().startsWith('{')) {
-        print(response.body);
-        throw Exception("Overpass returned HTML instead of JSON.");
-      }
-
-      final json = jsonDecode(response.body);
-      final List elements = json["elements"] ?? [];
-
-      return elements.map((e) => PlacesModel.fromJson(e)).toList();
-    } catch (e) {
-      print("API Error: $e");
-      return [];
-    }
+    return _parsePlaces(data);
   }
 
   // 2.         ***********************************************************************************************
 
   Future<List<PlacesModel>> zoo(String stateName) async {
-    try {
-      final String query =
-          '''
+    final String query =
+        '''
 [out:json][timeout:120];
 
 area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
@@ -118,58 +84,25 @@ area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
 out center tags;
 ''';
 
-print(query);
+    final data = await overpassClient.query(query);
 
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'User-Agent':
-                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-              'Accept': 'application/json',
-            },
-            body: {'data': query},
-          )
-          .timeout(const Duration(seconds: 30));
-
-      if (response.statusCode != 200) {
-        print("Status Code: ${response.statusCode}");
-        print(response.body);
-        return [];
-      }
-
-      if (!response.body.trim().startsWith('{')) {
-        print(response.body);
-        throw Exception("Overpass returned HTML instead of JSON.");
-      }
-
-      final json = jsonDecode(response.body);
-      final List elements = json["elements"] ?? [];
-
-      return elements.map((e) => PlacesModel.fromJson(e)).toList();
-    } catch (e) {
-      print("API Error: $e");
-      return [];
-    }
+    return _parsePlaces(data);
   }
 
   // 3.        ***********************************************************************************************
 
   Future<List<PlacesModel>> waterFall(String stateName) async {
-    try {
+    final coords = stateCoordinates[stateName];
 
-      
-      final coords = stateCoordinates[stateName];
+    if (coords == null) {
+      throw Exception("Coordinates not found for $stateName");
+    }
 
-      if (coords == null) {
-        throw Exception("Coordinates not found for $stateName");
-      }
+    final lat = coords['lat'];
+    final lon = coords['lon'];
 
-      final lat = coords['lat'];
-      final lon = coords['lon'];
-
-      final String query =
-          '''
+    final String query =
+        '''
 [out:json][timeout:120];
 
 (
@@ -185,47 +118,16 @@ out center tags;
 
 ''';
 
-print(query);
+    final data = await overpassClient.query(query);
 
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'User-Agent':
-                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-              'Accept': 'application/json',
-            },
-            body: {'data': query},
-          )
-          .timeout(const Duration(seconds: 1000));
-
-      if (response.statusCode != 200) {
-        print("Status Code: ${response.statusCode}");
-        print(response.body);
-        return [];
-      }
-
-      if (!response.body.trim().startsWith('{')) {
-        print(response.body);
-        throw Exception("Overpass returned HTML instead of JSON.");
-      }
-
-      final json = jsonDecode(response.body);
-      final List elements = json["elements"] ?? [];
-
-      return elements.map((e) => PlacesModel.fromJson(e)).toList();
-    } catch (e) {
-      print("API Error: $e");
-      return [];
-    }
+    return _parsePlaces(data);
   }
 
   // 4.        ***********************************************************************************************
 
   Future<List<PlacesModel>> historic(String stateName) async {
-    try {
-      final String query =
-          '''
+    final String query =
+        '''
 [out:json][timeout:120];
 
 area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
@@ -240,48 +142,16 @@ out center tags;
 
 ''';
 
-print(query);
+    final data = await overpassClient.query(query);
 
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'User-Agent':
-                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-              'Accept': 'application/json',
-            },
-            body: {'data': query},
-          )
-          .timeout(const Duration(seconds: 30));
-
-      if (response.statusCode != 200) {
-        print("Status Code: ${response.statusCode}");
-        print(response.body);
-        return [];
-      }
-
-      if (!response.body.trim().startsWith('{')) {
-        print(response.body);
-        throw Exception("Overpass returned HTML instead of JSON.");
-      }
-
-      final json = jsonDecode(response.body);
-      final List elements = json["elements"] ?? [];
-
-      return elements.map((e) => PlacesModel.fromJson(e)).toList();
-    } catch (e) {
-      print("API Error: $e");
-      return [];
-    }
+    return _parsePlaces(data);
   }
-
 
   // 5.        ***********************************************************************************************
 
   Future<List<PlacesModel>> leisure(String stateName) async {
-    try {
-      final String query =
-          '''
+    final String query =
+        '''
 [out:json][timeout:120];
 
 area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
@@ -296,50 +166,16 @@ out center tags;
 
 ''';
 
+    final data = await overpassClient.query(query);
 
-print(query);
-
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'User-Agent':
-                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-              'Accept': 'application/json',
-            },
-            body: {'data': query},
-          )
-          .timeout(const Duration(seconds: 30));
-
-      if (response.statusCode != 200) {
-        print("Status Code: ${response.statusCode}");
-        print(response.body);
-        return [];
-      }
-
-      if (!response.body.trim().startsWith('{')) {
-        print(response.body);
-        throw Exception("Overpass returned HTML instead of JSON.");
-      }
-
-      final json = jsonDecode(response.body);
-      final List elements = json["elements"] ?? [];
-
-      return elements.map((e) => PlacesModel.fromJson(e)).toList();
-    } catch (e) {
-      print("API Error: $e");
-      return [];
-    }
+    return _parsePlaces(data);
   }
 
-  
-  
   // 6.        ***********************************************************************************************
 
   Future<List<PlacesModel>> museum(String stateName) async {
-    try {
-      final String query =
-          '''
+    final String query =
+        '''
 [out:json][timeout:120];
 
 area["name"="$stateName"]["boundary"="administrative"]->.searchArea;
@@ -357,38 +193,21 @@ out center tags;
 
 ''';
 
-print(query);
+    final data = await overpassClient.query(query);
 
-      final response = await http
-          .post(
-            Uri.parse(_baseUrl),
-            headers: {
-              'User-Agent':
-                  'TravelIndiaApp/1.0 (contact: support@travelindia.com)',
-              'Accept': 'application/json',
-            },
-            body: {'data': query},
-          )
-          .timeout(const Duration(seconds: 30));
+    return _parsePlaces(data);
+  }
 
-      if (response.statusCode != 200) {
-        print("Status Code: ${response.statusCode}");
-        print(response.body);
-        return [];
-      }
 
-      if (!response.body.trim().startsWith('{')) {
-        print(response.body);
-        throw Exception("Overpass returned HTML instead of JSON.");
-      }
+  Future<List<PlacesModel>> _parsePlaces(Map<String, dynamic> data) async {
+    final List elements = data['elements'] ?? [];
 
-      final json = jsonDecode(response.body);
-      final List elements = json["elements"] ?? [];
+    // Map JSON array elements safely to your PlacesModel list
+    final List<PlacesModel> places = elements.map((element) {
+      // Ensure your PlacesModel has a robust fromJson/fromMap constructor
+      return PlacesModel.fromJson(element);
+    }).toList();
 
-      return elements.map((e) => PlacesModel.fromJson(e)).toList();
-    } catch (e) {
-      print("API Error: $e");
-      return [];
-    }
+    return places;
   }
 }
