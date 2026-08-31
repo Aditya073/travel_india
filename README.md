@@ -417,26 +417,6 @@ The main goals of Travel India are:
 
 ---
 
-## 🔮 Future Improvements
-
-Planned improvements can include:
-
-* [ ] Trip planning and itinerary creation
-* [ ] Personalized travel recommendations
-* [ ] Hotel and restaurant reviews
-* [ ] Favorite/bookmark functionality
-* [ ] Advanced search and filtering
-* [ ] Distance-based location sorting
-* [ ] Offline caching
-* [ ] Improved API caching and rate-limit handling
-* [ ] Weather information for destinations
-* [ ] Public transport information
-* [ ] Travel expense tracking
-* [ ] Push notifications
-* [ ] More detailed place information
-* [ ] Automated testing
-* [ ] CI/CD with GitHub Actions
-
 ---
 
 ## 🧪 Testing
