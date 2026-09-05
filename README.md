@@ -71,6 +71,28 @@ The project follows a **feature-based Clean Architecture approach** with **BLoC 
 * State-based map navigation.
 
 ---
+# Travel India
+
+A Flutter application for exploring destinations, hotels, restaurants, and airports across India.
+
+## Screenshots
+
+![Login Screen](assets/images/Picture1.png)
+
+![SignUp Screen](assets/images/Picture2.png)
+
+![Home Screen](assets/images/Picture3.png)
+
+![Explore Screen](assets/images/Picture4.png)
+
+![Destinations Screen](assets/images/Picture5.png)
+
+![Restaurants Screen](assets/images/Picture6.png)
+
+![Airports Screen](assets/images/Picture7.png)
+
+---
+
 
 ## 🏗️ Architecture
 
