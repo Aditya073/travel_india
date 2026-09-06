@@ -24,6 +24,8 @@ class _PlacesPageState extends State<PlacesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Geocoding geocoding = Geocoding();
+
     Set<String> categoriesOfPlaces = {
       'Historic',
       'Beach',
@@ -51,7 +53,10 @@ class _PlacesPageState extends State<PlacesPage> {
 
     Future<String> getCityName(double lat, double lng) async {
       try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+        List<Placemark> placemarks = await geocoding.placemarkFromCoordinates(
+          lat,
+          lng,
+        );
 
         if (placemarks.isNotEmpty) {
           return placemarks.first.locality ??
