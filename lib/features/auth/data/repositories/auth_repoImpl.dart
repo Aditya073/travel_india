@@ -33,7 +33,7 @@ class AuthRepoimpl implements AuthRepo {
     String name,
     String phoneNumber,
     String lastLocation,
-    Timestamp timestamp
+    Timestamp timestamp,
   ) async {
     final response = await dataSource.signUpUsingEmailAndPassword(
       email,
@@ -62,5 +62,10 @@ class AuthRepoimpl implements AuthRepo {
   Future<void> forgotPasswordSignIn(String email) {
     // TODO: implement forgotPasswordSignIn
     return dataSource.forgotPasswordSignIn(email);
+  }
+
+  @override
+  Future<void> signOut() async {
+    return await dataSource.signOut();
   }
 }

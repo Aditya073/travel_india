@@ -54,9 +54,8 @@ class FirebaseAuthDataSource {
   Future<void> forgotPasswordSignIn(String email) async {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
-      
-// loginUsingEmailAndPassword(email, password)
 
+      // loginUsingEmailAndPassword(email, password)
     } catch (e) {
       throw e.toString();
     }
@@ -81,26 +80,26 @@ class FirebaseAuthDataSource {
       final UserModel newUserModel;
 
       // if (!doc.exists) {
-        // create new user
-        Random random = Random();
-        int randomNum = 10000 + random.nextInt(90000);
+      // create new user
+      Random random = Random();
+      int randomNum = 10000 + random.nextInt(90000);
 
-        newUserModel = UserModel(
-          uid: user!.uid,
-          email: user.email ?? "",
-          password: "",
-          lastLocation: "",
-          userName: "Guest$randomNum",
-          phoneNumber: user.phoneNumber ?? "",
-          timestamp: Timestamp.now(),
-        );
+      newUserModel = UserModel(
+        uid: user!.uid,
+        email: user.email ?? "",
+        password: "",
+        lastLocation: "",
+        userName: "Guest$randomNum",
+        phoneNumber: user.phoneNumber ?? "",
+        timestamp: Timestamp.now(),
+      );
 
-        // add the data in firestore
-        await firestore
-            .collection('users')
-            .doc(user.uid)
-            .set(newUserModel.toMap());
-        return newUserModel;
+      // add the data in firestore
+      await firestore
+          .collection('users')
+          .doc(user.uid)
+          .set(newUserModel.toMap());
+      return newUserModel;
       // }
 
       // User already exists, fetch from Firestore
@@ -182,55 +181,90 @@ class FirebaseAuthDataSource {
     Timestamp timestamp,
   ) async {
     try {
-      print('In FirebaseAuthDataSource');
+      print("===== SIGNUP START =====");
 
-      final formattedPhone = phoneNumber.replaceAll(RegExp(r'\s+'), '');
+      final formattedPhone = phoneNumber.replaceAll(RegExp(r'\s+'), '').trim();
 
-      // checks
-      if (await checkEmailExists(email)) {
+      final emailExists = await checkEmailExists(email);
+
+      if (emailExists) {
         throw Exception("Email already exists");
       }
+      final phoneExists = await checkingPhonenumberExists(formattedPhone);
 
-      if (await checkingPhonenumberExists(formattedPhone)) {
+      if (phoneExists) {
         throw Exception("Phone number already exists");
       }
 
-      if (await checkingUsernameExists(name)) {
+      final usernameExists = await checkingUsernameExists(name);
+      if (usernameExists) {
         throw Exception("Username already exists");
       }
 
       final response = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(
+            email: email.trim(),
+            password: password,
+          );
 
       final user = response.user;
-      print("SignUp response - ${response.toString()}");
 
-      if (user == null || user.email == null) {
-        throw Exception("Invalid user data");
+      if (user == null) {
+        throw Exception("Failed to create Firebase user");
       }
 
       await user.updateDisplayName(name);
 
-      print(user.toString());
       final userModel = UserModel(
         uid: user.uid,
         userName: name,
-        email: user.email!,
-        phoneNumber: phoneNumber,
+        email: user.email ?? email,
+        phoneNumber: formattedPhone,
         lastLocation: lastLocation,
-        timestamp: Timestamp.now(),
+        timestamp: timestamp,
       );
 
-      // ALWAYS create Firestore document
       await firestore
           .collection("users")
           .doc(user.uid)
           .set(userModel.toMap(), SetOptions(merge: true));
 
+      print("===== SIGNUP SUCCESS =====");
+
       return userModel;
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.message ?? "SignUp failed");
+      print("AUTH ERROR");
+      print("Code: ${e.code}");
+      print("Message: ${e.message}");
+
+      throw Exception(e.message ?? "Firebase authentication failed");
+    } on FirebaseException catch (e) {
+      print("FIREBASE ERROR");
+      print("Code: ${e.code}");
+      print("Message: ${e.message}");
+
+      throw Exception(e.message ?? "Firebase operation failed");
+    } catch (e) {
+      print("GENERAL SIGNUP ERROR: $e");
+      throw Exception(e.toString());
     }
+  }
+
+  Future<void> signOut() async {
+    // sign out function
+      try {
+    print("Logging out user...");
+
+    await firebaseAuth.signOut();
+
+    print("Logout successful");
+  } on FirebaseAuthException catch (e) {
+    print("Logout Error: ${e.message}");
+    throw Exception(e.message ?? "Logout failed");
+  } catch (e) {
+    print("Logout Error: $e");
+    throw Exception("Logout failed");
+  }
   }
 
   Future<bool> checkEmailExists(String email) async {

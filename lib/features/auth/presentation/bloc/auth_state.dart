@@ -32,6 +32,7 @@ sealed class AuthState {}
 
   ForgotPasswordSignInSuccess();
 }
+class SignoutSuccess extends AuthState {}
 
 
 
@@ -62,3 +63,9 @@ sealed class AuthState {}
 
   ForgotPasswordSignInFailure({required this.message});
  }
+ class SignoutFailure extends AuthState {
+  final String message;
+
+  SignoutFailure({required this.message});
+}
+

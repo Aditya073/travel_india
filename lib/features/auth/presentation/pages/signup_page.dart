@@ -14,8 +14,6 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  // guest signUp method
-  // Google signUp method
 
   final _formkey = GlobalKey<FormState>();
 

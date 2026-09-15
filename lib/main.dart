@@ -32,7 +32,6 @@ import 'package:travel_india/features/restaurants_page/domain/usecase/get_data.d
 import 'package:travel_india/features/restaurants_page/presentation/bloc/restaurants_bloc.dart';
 import 'package:travel_india/networks/overpass_client.dart';
 
-
 /*           How the Final Architecture should look like
                     ┌─────────────────┐
                     │    Flutter UI   │
@@ -94,6 +93,7 @@ class _MyAppState extends State<MyApp> {
             ForgotPasswordSignIn(
               AuthRepoimpl(dataSource: FirebaseAuthDataSource()),
             ),
+            SignOutUseCase(AuthRepoimpl(dataSource: FirebaseAuthDataSource())),
           ),
         ),
         BlocProvider<CardBloc>(
@@ -106,20 +106,28 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<HotelsBloc>(
           create: (context) => HotelsBloc(
             GetHotelsData(
-              repository: HotelsRepoimpl(dataSource: DataFromApi(overpassClient: OverpassClient())),
+              repository: HotelsRepoimpl(
+                dataSource: DataFromApi(overpassClient: OverpassClient()),
+              ),
             ),
           ),
         ),
         BlocProvider<AirportsBloc>(
           create: (context) => AirportsBloc(
-            GetAirportData(repository: AirportRepoimpl(dataSource: DataApi(overpassClient: OverpassClient()))),
+            GetAirportData(
+              repository: AirportRepoimpl(
+                dataSource: DataApi(overpassClient: OverpassClient()),
+              ),
+            ),
           ),
         ),
         BlocProvider<RestaurantsBloc>(
           create: (context) => RestaurantsBloc(
             GetData(
               repository: RestaurantReopimpl(
-                datasource: DataFromApiForResraurent(overpassClient: OverpassClient()),
+                datasource: DataFromApiForResraurent(
+                  overpassClient: OverpassClient(),
+                ),
               ),
             ),
           ),
@@ -127,7 +135,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<PlacesBloc>(
           create: (context) => PlacesBloc(
             GetPlacesData(
-              repository: PlacesReopimpl(datasource: DataFromPlacesApi(overpassClient: OverpassClient())),
+              repository: PlacesReopimpl(
+                datasource: DataFromPlacesApi(overpassClient: OverpassClient()),
+              ),
             ),
           ),
         ),

@@ -38,3 +38,4 @@ class ForgotPassword extends AuthEvent {
 
   ForgotPassword({required this.email});
 }
+class SignOut extends AuthEvent{}

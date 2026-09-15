@@ -132,9 +132,9 @@ class ProfilePage extends StatelessWidget {
                     icon: Icons.phone_outlined,
                     label: 'Phone number',
                     value:
-                        (userDetails.email != null &&
-                            userDetails.email!.isNotEmpty)
-                        ? userDetails.email!
+                        (userDetails.phoneNumber != null &&
+                            userDetails.phoneNumber!.isNotEmpty)
+                        ? userDetails.phoneNumber!
                         : "Not available",
                     trailing: const Icon(
                       Icons.copy_outlined,
@@ -156,9 +156,9 @@ class ProfilePage extends StatelessWidget {
                     icon: Icons.location_on_outlined,
                     label: 'Location',
                     value:
-                        (userDetails.email != null &&
-                            userDetails.email!.isNotEmpty)
-                        ? userDetails.email!
+                        (userDetails.lastLocation != null &&
+                            userDetails.lastLocation!.isNotEmpty)
+                        ? userDetails.lastLocation!
                         : "Not found",
                     trailing: const Icon(
                       Icons.chevron_right,

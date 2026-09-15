@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_india/Config/Theme/app_theme.dart';
 import 'package:travel_india/Config/Widgets/helper_widget/travel_card.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
+import 'package:travel_india/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:travel_india/features/auth/presentation/pages/login_page.dart';
 import 'package:travel_india/features/home_page/presentation/bloc/card_bloc.dart';
 import 'package:travel_india/features/home_page/presentation/pages/profile_page.dart';
 
@@ -57,150 +59,162 @@ class _HomePageState extends State<HomePage> {
           );
         }
       },
-      child: Scaffold(
-        drawer: Drawer(
-          backgroundColor: AppTheme.powderBlue,
-          child: SafeArea(
-            child: Column(
-              children: [
-                // Header
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  decoration: BoxDecoration(
-                    color: AppTheme.darkColor.withOpacity(0.08),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          // ================= LOGOUT SUCCESS =================
+          if (state is SignoutSuccess) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+              (route) => false,
+            );
+          }
+
+          // ================= LOGOUT FAILURE =================
+          if (state is SignoutFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
+
+        child: Scaffold(
+          drawer: Drawer(
+            backgroundColor: AppTheme.powderBlue,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  // Header
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    decoration: BoxDecoration(
+                      color: AppTheme.darkColor.withOpacity(0.08),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 38,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          size: 45,
-                          color: AppTheme.darkColor,
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 38,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            size: 45,
+                            color: AppTheme.darkColor,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        widget.userDetails.userName!,
-                        style: TextStyle(
-                          color: AppTheme.darkColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(height: 12),
+                        Text(
+                          widget.userDetails.userName!,
+                          style: TextStyle(
+                            color: AppTheme.darkColor,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Menu Items
+                  ListTile(
+                    leading: Icon(
+                      Icons.person_outline,
+                      color: AppTheme.darkColor,
+                    ),
+                    title: Text(
+                      "Profile",
+                      style: TextStyle(
+                        color: AppTheme.darkColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // Menu Items
-                ListTile(
-                  leading: Icon(
-                    Icons.person_outline,
-                    color: AppTheme.darkColor,
-                  ),
-                  title: Text(
-                    "Profile",
-                    style: TextStyle(
-                      color: AppTheme.darkColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                    color: AppTheme.darkColor,
-                  ),
-                  onTap: () {
-                    // **************** profile page ****************
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ProfilePage(userDetails: widget.userDetails),
-                      ),
-                    );
-                  },
-                ),
-
-                ListTile(
-                  leading: Icon(
-                    Icons.favorite_outline,
-                    color: AppTheme.darkColor,
-                  ),
-                  title: Text(
-                    "Saved",
-                    style: TextStyle(
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
                       color: AppTheme.darkColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                    color: AppTheme.darkColor,
-                  ),
-                  onTap: () {
-                    // **************** Saved page ****************
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) =>
-                    //         // ProfilePage(userDetails: widget.userDetails),
-                    //   ),
-                    // );
-                  },
-                ),
-
-                ListTile(
-                  leading: Icon(
-                    Icons.settings_outlined,
-                    color: AppTheme.darkColor,
-                  ),
-                  title: Text(
-                    "Settings",
-                    style: TextStyle(
-                      color: AppTheme.darkColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                    color: AppTheme.darkColor,
-                  ),
-                  onTap: () {
-                    // **************** Setting page ****************
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) =>
-                    //         // ProfilePage(userDetails: widget.userDetails),
-                    //   ),
-                    // );
-                  },
-                ),
-
-                const Spacer(),
-
-                Center(
-                  child: GestureDetector(
                     onTap: () {
-                      
-                      // Future<void> signOut() async {  // sign out function
-                      //   await FirebaseAuth.instance.signOut();
-                      // }
+                      // **************** profile page ****************
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage(userDetails: widget.userDetails),
+                        ),
+                      );
                     },
+                  ),
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.favorite_outline,
+                      color: AppTheme.darkColor,
+                    ),
+                    title: Text(
+                      "Saved",
+                      style: TextStyle(
+                        color: AppTheme.darkColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: AppTheme.darkColor,
+                    ),
+                    onTap: () {
+                      // **************** Saved page ****************
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         // ProfilePage(userDetails: widget.userDetails),
+                      //   ),
+                      // );
+                    },
+                  ),
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.settings_outlined,
+                      color: AppTheme.darkColor,
+                    ),
+                    title: Text(
+                      "Settings",
+                      style: TextStyle(
+                        color: AppTheme.darkColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: AppTheme.darkColor,
+                    ),
+                    onTap: () {
+                      // **************** Setting page ****************
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         // ProfilePage(userDetails: widget.userDetails),
+                      //   ),
+                      // );
+                    },
+                  ),
+
+                  const Spacer(),
+
+                  Center(
                     child: ListTile(
                       leading: Icon(
                         Icons.logout_rounded,
@@ -215,132 +229,139 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       onTap: () {
-                        // call logout function and Navigator.pop()
+                        print(
+                          "********************* LogOut ***********************",
+                        );
+
+                        context.read<AuthBloc>().add(SignOut());
+
+                        // Close drawer
+                        Navigator.pop(context);
                       },
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 15),
-              ],
+                  const SizedBox(height: 15),
+                ],
+              ),
             ),
           ),
-        ),
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
 
-          title: Text(
-            'Travel India',
-            style: TextStyle(
-              color: AppTheme.iceBlue,
-              fontStyle: FontStyle.italic,
-              fontSize: 26,
-              fontWeight: FontWeight.w500,
+            title: Text(
+              'Travel India',
+              style: TextStyle(
+                color: AppTheme.iceBlue,
+                fontStyle: FontStyle.italic,
+                fontSize: 26,
+                fontWeight: FontWeight.w500,
+              ),
             ),
+
+            centerTitle: true,
           ),
 
-          centerTitle: true,
-        ),
+          body: Container(
+            color: Colors.white,
+            width: double.infinity,
+            height: double.infinity,
 
-        body: Container(
-          color: Colors.white,
-          width: double.infinity,
-          height: double.infinity,
+            child: Column(
+              children: [
+                // SEARCH BAR
+                Padding(
+                  padding: const EdgeInsets.all(15),
 
-          child: Column(
-            children: [
-              // SEARCH BAR
-              Padding(
-                padding: const EdgeInsets.all(15),
+                  child: Container(
+                    height: 55,
+                    width: double.infinity,
 
-                child: Container(
-                  height: 55,
-                  width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(16),
 
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey[100],
-                    borderRadius: BorderRadius.circular(16),
-
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: const TextField(
-                      // this should show the only results that is being typed
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search, color: Colors.black),
-                        hintText: "Search Destination",
-                        hintStyle: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 18,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
                         ),
-                        border: InputBorder.none,
+                      ],
+                    ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: const TextField(
+                        // this should show the only results that is being typed
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search, color: Colors.black),
+                          hintText: "Search Destination",
+                          hintStyle: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 18,
+                          ),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // CARD SECTION
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      BlocBuilder<CardBloc, CardState>(
-                        builder: (context, state) {
-                          if (state is CardLoading) {
+                // CARD SECTION
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        BlocBuilder<CardBloc, CardState>(
+                          builder: (context, state) {
+                            if (state is CardLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (state is Failure) {
+                              return Center(
+                                child: Text(
+                                  state.message,
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                              );
+                            }
+                            if (state is Success) {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: state.card.length,
+                                itemBuilder: (context, index) {
+                                  final card = state.card[index];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 25,
+                                      left: 20,
+                                      right: 20,
+                                    ),
+                                    child: TravelCard(
+                                      stateName: card.stateName,
+                                      image: card.imageUrl,
+                                      description: card.description,
+                                    ),
+                                  );
+                                },
+                              );
+                            }
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: Text("Something went wrong"),
                             );
-                          }
-                          if (state is Failure) {
-                            return Center(
-                              child: Text(
-                                state.message,
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            );
-                          }
-                          if (state is Success) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: state.card.length,
-                              itemBuilder: (context, index) {
-                                final card = state.card[index];
-
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 25,
-                                    left: 20,
-                                    right: 20,
-                                  ),
-                                  child: TravelCard(
-                                    stateName: card.stateName,
-                                    image: card.imageUrl,
-                                    description: card.description,
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                          return const Center(
-                            child: Text("Something went wrong"),
-                          );
-                        },
-                      ),
-                    ],
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

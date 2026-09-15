@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travel_india/features/auth/data/models/user_model.dart';
+import 'package:travel_india/features/auth/data/repositories/auth_repoImpl.dart';
 import 'package:travel_india/features/auth/domain/repositories/auth_repo.dart';
 
 class LoginUsecase {
@@ -65,5 +66,15 @@ class ForgotPasswordSignIn {
 
   Future<void> call(String email) {
     return repository.forgotPasswordSignIn(email);
+  }
+}
+
+class SignOutUseCase {
+  final AuthRepo repository;
+
+  SignOutUseCase(this.repository);
+
+  Future<void> call() {
+    return repository.signOut();
   }
 }

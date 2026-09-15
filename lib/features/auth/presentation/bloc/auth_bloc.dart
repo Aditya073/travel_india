@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GoogleSignInUseCase googleSignInUseCase;
   final GuestSignInUserCase guestSignInUserCase;
   final ForgotPasswordSignIn forgotPasswordSignIn;
+  final SignOutUseCase signOutUseCase;
 
   AuthBloc(
     this.loginUsecase,
@@ -23,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this.googleSignInUseCase,
     this.guestSignInUserCase,
     this.forgotPasswordSignIn,
+    this.signOutUseCase,
   ) : super(AuthInitial()) {
     on<AuthLoginUsingEmailandPassword>((event, emit) async {
       // Show loding till the data is fetched
@@ -48,7 +50,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
 
       try {
-        print('In AuthSignUp');
+        print("In AuthSignUp");
+
         final user = await signUpUsercase(
           event.email,
           event.password,
@@ -57,19 +60,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.lastLocation,
           event.timestamp,
         );
-        if (user.email!.isEmpty) {
-          emit(SignUpFailure(message: "Invalid credentials"));
-          return;
-        }
 
-        emit(SignUpSuccess(userModel: user)); // SignUp Successful
+        emit(SignUpSuccess(userModel: user));
       } catch (e) {
-        print(e.toString());
+        print("AuthBloc Signup Error: $e");
+
         emit(SignUpFailure(message: e.toString()));
-        throw e.toString();
       }
     });
-
     on<GoogleSignIn>((event, emit) async {
       emit(AuthLoading());
 
@@ -108,6 +106,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(ForgotPasswordSignInFailure(message: e.toString()));
 
         throw e.toString();
+      }
+    });
+
+    on<SignOut>((event, emit) async {
+      emit(AuthLoading());
+
+      try {
+        await signOutUseCase();
+
+        emit(SignoutSuccess());
+      } catch (e) {
+        print("AuthBloc: Logout failed - $e");
+
+        emit(SignoutFailure(message: e.toString()));
       }
     });
   }
