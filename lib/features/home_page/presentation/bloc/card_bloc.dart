@@ -15,9 +15,6 @@ class CardBloc extends Bloc<CardEvent, CardState> {
       try {
         final  cards = await getCardData();
 
-        // print("Card data from {card_block}");
-        // print(cards.asMap());
-
         emit(Success(card: cards));
       } catch (e) {
         

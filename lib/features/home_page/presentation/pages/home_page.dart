@@ -17,6 +17,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController searchController = TextEditingController();
+
+  bool showSuggestion = false;
+  List<dynamic> searchResults = [];
+
+  @override // to avoid leackage
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -229,12 +240,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       onTap: () {
-                        print(
-                          "********************* LogOut ***********************",
-                        );
-
                         context.read<AuthBloc>().add(SignOut());
-
                         // Close drawer
                         Navigator.pop(context);
                       },
@@ -292,9 +298,37 @@ class _HomePageState extends State<HomePage> {
 
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
-                      child: const TextField(
-                        // this should show the only results that is being typed
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: searchController,
+                        onChanged: (value) {
+                          if (value.trim().isEmpty) {
+                            // no search ----> the user is not typing
+                            setState(() {
+                              showSuggestion = false;
+                              searchResults = [];
+                            });
+                            return;
+                          }
+
+                          final query = value.toLowerCase().trim();
+                          final cardState = context.read<CardBloc>().state;
+
+                          if (cardState is Success) {
+                            // add the state to the list which
+                            final result = cardState.card.where((card) {
+                              return card.stateName!.toLowerCase().contains(
+                                query,
+                              );
+                            }).toList();
+
+                            setState(() {
+                              showSuggestion = true;
+                              searchResults = result; // update the "searchResults" list
+                            });
+                          }
+                        },
+                        
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.search, color: Colors.black),
                           hintText: "Search Destination",
                           hintStyle: TextStyle(

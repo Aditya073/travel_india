@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_india/networks/network_constants.dart';
@@ -25,6 +24,7 @@ class OverpassClient {
   OverpassClient({http.Client? client}) : client = client ?? http.Client();
 
   Future<Map<String, dynamic>> query(String query) async {
+
     // check the cash data first
     final cachedData = await _getCachedData(query);
 
@@ -197,7 +197,7 @@ class OverpassClient {
 
       final age = DateTime.now().difference(cacheTime);
 
-      // Cache expired.
+      // Cache expires in 30 min
       if (age > NetworkConstants.cacheDuration) {
         await prefs.remove(cacheKey);
         return null;
